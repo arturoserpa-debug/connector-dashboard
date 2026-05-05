@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connector Agency — Programa de Trabajo 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f5f4f0; --surface: #ffffff; --surface2: #f1efe8;
+    --text: #1a1a18; --text2: #6b6b66; --text3: #9e9e98;
+    --border: rgba(0,0,0,0.1); --border2: rgba(0,0,0,0.18);
+    --blue: #3266ad; --blue-light: #E6F1FB; --blue-dark: #0C447C;
+    --green: #2d9e6b; --green-light: #EAF3DE; --green-dark: #27500A;
+    --amber: #BA7517; --amber-light: #FAEEDA; --amber-dark: #633806;
+    --red: #E24B4A; --red-light: #FCEBEB; --red-dark: #501313;
+    --gray-light: #F1EFE8; --gray-dark: #444441;
+    --radius: 8px; --radius-lg: 12px;
+  }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* LOGIN */
+  #login-screen { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+  .login-box { background:var(--surface); border-radius:14px; padding:2.5rem 2rem; width:340px; box-shadow:0 4px 24px rgba(0,0,0,0.10); text-align:center; }
+  .login-logo { width:48px; height:48px; border-radius:10px; background:var(--blue); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:18px; margin:0 auto 14px; }
+  .login-title { font-size:18px; font-weight:700; color:var(--text); margin-bottom:4px; }
+  .login-sub { font-size:13px; color:var(--text2); margin-bottom:1.5rem; }
+  .login-box input { width:100%; padding:10px 14px; border:1px solid rgba(0,0,0,0.15); border-radius:8px; font-size:14px; margin-bottom:10px; outline:none; transition:border 0.2s; }
+  .login-box input:focus { border-color:var(--blue); }
+  .login-box button { width:100%; padding:10px; background:var(--blue); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:background 0.2s; }
+  .login-box button:hover { background:var(--blue-dark); }
+  #login-error { color:var(--red); font-size:12px; margin-top:8px; display:none; }
+
+  /* APP */
+  #app { display:none; }
+  header { background:var(--surface); border-bottom:0.5px solid var(--border); padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+  header .brand { display:flex; align-items:center; gap:12px; }
+  header .logo { width:36px; height:36px; border-radius:8px; background:var(--blue); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:14px; }
+  header h1 { font-size:16px; font-weight:600; color:var(--text); }
+  header .meta { font-size:12px; color:var(--text2); }
+  .dash { max-width:1100px; margin:0 auto; padding:28px 24px; }
+  .tabs { display:flex; gap:2px; margin-bottom:24px; background:var(--surface); border-radius:var(--radius-lg); padding:4px; border:0.5px solid var(--border); width:fit-content; }
+  .tab { padding:8px 18px; font-size:13px; cursor:pointer; border:none; background:transparent; color:var(--text2); border-radius:var(--radius); transition:all .2s; font-weight:500; }
+  .tab.active { background:var(--blue); color:white; }
+  .tab:hover:not(.active) { background:var(--surface2); color:var(--text); }
+  .metrics { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:12px; margin-bottom:20px; }
+  .metric { background:var(--surface); border-radius:var(--radius-lg); padding:16px 18px; border:0.5px solid var(--border); }
+  .metric .label { font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; }
+  .metric .val { font-size:28px; font-weight:600; color:var(--text); line-height:1; }
+  .metric .sub { font-size:11px; color:var(--text3); margin-top:4px; }
+  .metric.danger .val { color:var(--red); }
+  .metric.warn .val { color:var(--amber); }
+  .metric.ok .val { color:var(--green); }
+  .charts-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+  @media (max-width:680px) { .charts-row { grid-template-columns:1fr; } }
+  .card { background:var(--surface); border-radius:var(--radius-lg); padding:18px 20px; border:0.5px solid var(--border); }
+  .card h3 { font-size:12px; font-weight:600; color:var(--text2); margin-bottom:14px; text-transform:uppercase; letter-spacing:.05em; }
+  .full { grid-column:1 / -1; }
+  .page { display:none; }
+  .page.active { display:block; }
+  .legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:10px; font-size:12px; color:var(--text2); }
+  .legend span { display:flex; align-items:center; gap:5px; }
+  .legend-sq { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
+  .stopper-badge { display:inline-block; font-size:11px; background:var(--amber-light); color:var(--amber-dark); border-radius:4px; padding:3px 9px; margin-top:5px; border:0.5px solid rgba(186,117,23,0.2); }
+  .progress-item { margin-bottom:18px; }
+  .pi-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  .pi-label { font-size:13px; color:var(--text); font-weight:500; }
+  .pi-pct { font-size:13px; font-weight:700; }
+  .bar-bg { height:8px; border-radius:4px; background:var(--surface2); overflow:hidden; }
+  .bar-fill { height:100%; border-radius:4px; }
+  .pi-sub { font-size:11px; color:var(--text3); margin-top:5px; display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+  .filter-row { display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; align-items:center; }
+  .filter-row label { font-size:12px; color:var(--text2); font-weight:500; }
+  select { font-size:12px; padding:6px 10px; border-radius:var(--radius); border:0.5px solid var(--border2); background:var(--surface); color:var(--text); cursor:pointer; outline:none; }
+  select:hover { border-color:var(--blue); }
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { text-align:left; padding:8px 10px; font-weight:600; font-size:11px; color:var(--text2); border-bottom:0.5px solid var(--border2); text-transform:uppercase; letter-spacing:.04em; white-space:nowrap; }
+  tbody td { padding:10px 10px; border-bottom:0.5px solid var(--border); color:var(--text); vertical-align:middle; }
+  tbody tr:hover td { background:var(--surface2); }
+  .pill { display:inline-block; border-radius:20px; padding:3px 9px; font-size:11px; font-weight:600; white-space:nowrap; }
+  .pill-green { background:var(--green-light); color:var(--green-dark); }
+  .pill-amber { background:var(--amber-light); color:var(--amber-dark); }
+  .pill-red { background:var(--red-light); color:var(--red-dark); }
+  .pill-blue { background:var(--blue-light); color:var(--blue-dark); }
+  .pill-gray { background:var(--gray-light); color:var(--gray-dark); }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:600px) { .two-col { grid-template-columns:1fr; } }
+  .phase-title { font-size:12px; font-weight:600; color:var(--text2); margin-bottom:14px; text-transform:uppercase; letter-spacing:.05em; }
+  .insight-box { margin-top:14px; padding:14px 16px; background:var(--blue-light); border-radius:var(--radius); border-left:3px solid var(--blue); font-size:13px; color:var(--blue-dark); line-height:1.6; }
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">CA</div>
+    <div class="login-title">Connector Agency</div>
+    <div class="login-sub">Dashboard de seguimiento · Acceso restringido</div>
+    <input type="password" id="pwd-input" placeholder="Contraseña" onkeydown="if(event.key==='Enter') checkPwd()" />
+    <button onclick="checkPwd()">Ingresar</button>
+    <div id="login-error">Contraseña incorrecta. Intenta de nuevo.</div>
+  </div>
+</div>
+
+<div id="app">
+<header>
+  <div class="brand">
+    <div class="logo">CA</div>
+    <div>
+      <h1>Connector Agency — Programa de Trabajo 2026</h1>
+      <div class="meta">Dashboard de seguimiento · Actualizado abril 2026</div>
+    </div>
+  </div>
+  <div class="meta">2 Fases · 10 Módulos</div>
+</header>
+<div class="dash">
+  <div class="tabs">
+    <button class="tab active" onclick="showPage('resumen',this)">Resumen</button>
+    <button class="tab" onclick="showPage('modulos',this)">Módulos</button>
+    <button class="tab" onclick="showPage('horas',this)">Horas</button>
+    <button class="tab" onclick="showPage('detalle',this)">Detalle completo</button>
+  </div>
+  <div class="page active" id="page-resumen">
+    <div class="metrics">
+      <div class="metric"><div class="label">Módulos activos</div><div class="val">10</div><div class="sub">en 2 fases</div></div>
+      <div class="metric warn"><div class="label">Avance global</div><div class="val" id="global-pct">—</div><div class="sub">promedio ponderado</div></div>
+      <div class="metric danger"><div class="label">Actividades pendientes</div><div class="val">56.4</div><div class="sub">de 110 totales</div></div>
+      <div class="metric ok"><div class="label">Horas restantes</div><div class="val">251.5h</div><div class="sub">de 350 contratadas</div></div>
+    </div>
+    <div class="charts-row">
+      <div class="card"><h3>Avance por módulo (Fase 2)</h3><div style="position:relative;height:280px;"><canvas id="chartBar"></canvas></div></div>
+      <div class="card"><h3>Actividades completadas vs pendientes</h3><div style="position:relative;height:220px;"><canvas id="chartDonut"></canvas></div><div class="legend"><span><span class="legend-sq" style="background:#3266ad;"></span>Completadas: 53.6</span><span><span class="legend-sq" style="background:#e2e0d8;"></span>Pendientes: 56.4</span></div></div>
+    </div>
+    <div class="card full"><h3>Estado por fase</h3>
+      <div class="two-col" style="padding-top:6px;">
+        <div>
+          <div class="phase-title">Fase 1 — Migración de datos</div>
+          <div class="progress-item"><div class="pi-header"><span class="pi-label">Clientes y proveedores</span><span class="pi-pct" style="color:var(--green);">100%</span></div><div class="bar-bg"><div class="bar-fill" style="width:100%;background:var(--green);"></div></div><div class="pi-sub"><span>1 / 1 actividades</span><span class="pill pill-green">Entregado 23/04</span></div></div>
+          <div class="progress-item"><div class="pi-header"><span class="pi-label">Otros contactos y registros</span><span class="pi-pct" style="color:var(--green);">100%</span></div><div class="bar-bg"><div class="bar-fill" style="width:100%;background:var(--green);"></div></div><div class="pi-sub"><span>1 / 1 actividades</span><span class="pill pill-green">Entregado 23/04</span></div></div>
+          <div class="progress-item"><div class="pi-header"><span class="pi-label">Productos y servicios</span><span class="pi-pct" style="color:var(--red);">14%</span></div><div class="bar-bg"><div class="bar-fill" style="width:14%;background:var(--red);"></div></div><div class="pi-sub"><span>1 / 7 actividades</span></div><div class="stopper-badge">⚠ Stopper: info pendiente del equipo Connector</div></div>
+        </div>
+        <div>
+          <div class="phase-title">Fase 2 — Configuración e implementación</div>
+          <div class="progress-item"><div class="pi-header"><span class="pi-label">Discovery</span><span class="pi-pct" style="color:var(--green);">100%</span></div><div class="bar-bg"><div class="bar-fill" style="width:100%;background:var(--green);"></div></div><div class="pi-sub"><span>10 / 10</span><span class="pill pill-green">Entregado 23/04</span></div></div>
+          <div class="progress-item"><div class="pi-header"><span class="pi-label">CRM</span><span class="pi-pct" style="color:var(--amber);">57.6%</span></div><div class="bar-bg"><div class="bar-fill" style="width:57.6%;background:var(--amber);"></div></div><div class="pi-sub"><span>9.8 / 17</span></div></div>
+          <div class="progress-item"><div class="pi-header"><span class="pi-label">Ventas</span><span class="pi-pct" style="color:var(--amber);">88.8%</span></div><div class="bar-bg"><div class="bar-fill" style="width:88.8%;background:var(--amber);"></div></div><div class="pi-sub"><span>16 / 18</span></div></div>
+          <div class="progress-item"><div class="pi-header"><span class="pi-label">Contabilidad</span><span class="pi-pct" style="color:var(--red);">16.6%</span></div><div class="bar-bg"><div class="bar-fill" style="width:16.6%;background:var(--red);"></div></div><div class="pi-sub"><span>2 / 12</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page" id="page-modulos">
+    <div class="filter-row">
+      <label>Filtrar por fase:</label>
+      <select id="faseFilter" onchange="renderModulos()"><option value="all">Todas las fases</option><option value="1">Fase 1 — Migración</option><option value="2">Fase 2 — Configuración</option></select>
+      <label>Ordenar por:</label>
+      <select id="sortFilter" onchange="renderModulos()"><option value="pct-asc">Avance ↑ (menor primero)</option><option value="pct-desc">Avance ↓ (mayor primero)</option><option value="nombre">Nombre A→Z</option></select>
+    </div>
+    <div class="card" id="modulos-container"></div>
+  </div>
+  <div class="page" id="page-horas">
+    <div class="metrics">
+      <div class="metric"><div class="label">Horas contratadas</div><div class="val">350h</div></div>
+      <div class="metric warn"><div class="label">Horas consumidas</div><div class="val">98.5h</div><div class="sub">28.1% del total</div></div>
+      <div class="metric ok"><div class="label">Horas restantes</div><div class="val">251.5h</div><div class="sub">71.9% disponibles</div></div>
+      <div class="metric"><div class="label">Burn rate</div><div class="val">28%</div><div class="sub">horas usadas vs total</div></div>
+    </div>
+    <div class="charts-row">
+      <div class="card"><h3>Distribución de horas</h3><div style="position:relative;height:240px;"><canvas id="chartHoras"></canvas></div></div>
+      <div class="card"><h3>Proporción consumida</h3><div style="position:relative;height:200px;"><canvas id="chartHorasPie"></canvas></div><div class="legend"><span><span class="legend-sq" style="background:#3266ad;"></span>Consumidas: 98.5h</span><span><span class="legend-sq" style="background:#e2e0d8;"></span>Restantes: 251.5h</span></div></div>
+    </div>
+    <div class="card full"><h3>Barra de progreso de horas</h3>
+      <div style="margin:10px 0 6px;display:flex;justify-content:space-between;font-size:12px;color:var(--text2);"><span>0h</span><span style="font-weight:600;color:var(--text);">98.5h consumidas de 350h</span><span>350h</span></div>
+      <div style="height:24px;border-radius:8px;background:var(--surface2);overflow:hidden;"><div style="width:28.1%;height:100%;background:var(--blue);border-radius:8px;position:relative;"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;color:white;font-weight:600;">28.1%</span></div></div>
+      <div class="insight-box">Con 98.5h consumidas y un avance global aproximado del <strong>~42%</strong>, el proyecto muestra una buena eficiencia de recursos. Las 251.5h restantes son suficientes para completar el trabajo pendiente si el ritmo se mantiene. Sin embargo, el stopper en <strong>Productos y servicios</strong> y el bajo avance en Fabricación (0%), Inventario (8%) y Contabilidad (16.6%) requieren atención inmediata.</div>
+    </div>
+  </div>
+  <div class="page" id="page-detalle">
+    <div class="card full"><h3>Tabla completa del programa de trabajo</h3>
+      <div class="table-wrap" style="margin-top:10px;">
+        <table><thead><tr><th>Fase</th><th>Módulo / Actividad</th><th>Avance</th><th>Total act.</th><th>Completadas</th><th>Pendientes</th><th>Entrega estimada</th><th>Estado</th></tr></thead><tbody id="tabla-body"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const PASS = 'zublime-connector';
+const data = [
+  {fase:1,modulo:'Clientes y proveedores',pct:100,total:1,comp:1,pend:0,fecha:'23/04/2026',stopper:''},
+  {fase:1,modulo:'Otros contactos y registros',pct:100,total:1,comp:1,pend:0,fecha:'23/04/2026',stopper:''},
+  {fase:1,modulo:'Productos y servicios',pct:14,total:7,comp:1,pend:6,fecha:'',stopper:'Info pendiente del equipo Connector'},
+  {fase:2,modulo:'Discovery',pct:100,total:10,comp:10,pend:0,fecha:'23/04/2026',stopper:''},
+  {fase:2,modulo:'CRM',pct:57.6,total:17,comp:9.8,pend:6.2,fecha:'',stopper:''},
+  {fase:2,modulo:'Ventas',pct:88.8,total:18,comp:16,pend:2,fecha:'',stopper:''},
+  {fase:2,modulo:'Contabilidad',pct:16.6,total:12,comp:2,pend:10,fecha:'',stopper:''},
+  {fase:2,modulo:'Compras',pct:56.25,total:16,comp:9,pend:7,fecha:'',stopper:''},
+  {fase:2,modulo:'Proyectos',pct:18,total:10,comp:1.8,pend:8.2,fecha:'',stopper:''},
+  {fase:2,modulo:'Inventario',pct:8,total:13,comp:1,pend:12,fecha:'',stopper:''},
+  {fase:2,modulo:'Fabricación',pct:0,total:5,comp:0,pend:5,fecha:'',stopper:''},
+];
+
+function getColor(pct){if(pct>=80)return'#2d9e6b';if(pct>=40)return'#BA7517';return'#E24B4A';}
+function getPill(pct,stopper){if(stopper)return'<span class="pill pill-amber">⚠ Stopper</span>';if(pct===100)return'<span class="pill pill-green">Completado</span>';if(pct>=80)return'<span class="pill pill-blue">Casi listo</span>';if(pct>=40)return'<span class="pill pill-amber">En curso</span>';if(pct>0)return'<span class="pill pill-red">Retrasado</span>';return'<span class="pill pill-gray">Sin iniciar</span>';}
+
+let horasChart, horasPieChart;
+
+function checkPwd(){
+  if(document.getElementById('pwd-input').value===PASS){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    initDashboard();
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('pwd-input').value='';
+  }
+}
+
+function initDashboard(){
+  document.getElementById('global-pct').textContent=Math.round(data.reduce((a,d)=>a+d.pct,0)/data.length)+'%';
+  const f2=data.filter(d=>d.fase===2);
+  new Chart(document.getElementById('chartBar'),{type:'bar',data:{labels:f2.map(d=>d.modulo),datasets:[{axis:'y',data:f2.map(d=>d.pct),backgroundColor:f2.map(d=>getColor(d.pct)),borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},y:{ticks:{font:{size:10}},grid:{display:false}}}}});
+  const tc=data.reduce((a,d)=>a+d.comp,0),tp=data.reduce((a,d)=>a+d.pend,0);
+  new Chart(document.getElementById('chartDonut'),{type:'doughnut',data:{labels:['Completadas','Pendientes'],datasets:[{data:[Math.round(tc*10)/10,Math.round(tp*10)/10],backgroundColor:['#3266ad','#e2e0d8'],borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}});
+}
+
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='modulos')renderModulos();
+  if(id==='horas')renderHoras();
+  if(id==='detalle')renderTabla();
+}
+function renderModulos(){
+  const fase=document.getElementById('faseFilter').value,sort=document.getElementById('sortFilter').value;
+  let rows=fase==='all'?[...data]:data.filter(d=>d.fase==fase);
+  if(sort==='pct-asc')rows.sort((a,b)=>a.pct-b.pct);
+  if(sort==='pct-desc')rows.sort((a,b)=>b.pct-a.pct);
+  if(sort==='nombre')rows.sort((a,b)=>a.modulo.localeCompare(b.modulo));
+  document.getElementById('modulos-container').innerHTML='<h3 style="margin-bottom:16px;">'+rows.length+' módulos encontrados</h3>'+rows.map(d=>`<div class="progress-item"><div class="pi-header"><span class="pi-label">${d.modulo}</span><span class="pi-pct" style="color:${getColor(d.pct)};">${d.pct.toFixed(1)}%</span></div><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(d.pct,100)}%;background:${getColor(d.pct)};"></div></div><div class="pi-sub"><span>Fase ${d.fase}</span><span>${d.comp}/${d.total} actividades</span><span>${d.pend} pendientes</span>${d.fecha?'<span class="pill pill-green">'+d.fecha+'</span>':''}${d.stopper?'<span class="pill pill-amber">Stopper</span>':''}</div>${d.stopper?'<div class="stopper-badge">⚠ '+d.stopper+'</div>':''}</div>`).join('');
+}
+function renderTabla(){
+  document.getElementById('tabla-body').innerHTML=data.map(d=>`<tr><td><span class="pill ${d.fase===1?'pill-blue':'pill-gray'}">Fase ${d.fase}</span></td><td style="font-weight:500;">${d.modulo}</td><td><span style="font-weight:700;color:${getColor(d.pct)};">${d.pct.toFixed(1)}%</span></td><td style="text-align:center;">${d.total}</td><td style="text-align:center;">${d.comp}</td><td style="text-align:center;color:${d.pend>0?'var(--red)':'var(--green)'};font-weight:600;">${d.pend}</td><td>${d.fecha||'—'}</td><td>${getPill(d.pct,d.stopper)}</td></tr>`).join('');
+}
+function renderHoras(){
+  if(horasChart)horasChart.destroy();
+  if(horasPieChart)horasPieChart.destroy();
+  horasChart=new Chart(document.getElementById('chartHoras'),{type:'bar',data:{labels:['Contratadas','Consumidas','Restantes'],datasets:[{data:[350,98.5,251.5],backgroundColor:['#B5D4F4','#3266ad','#2d9e6b'],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'h',font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}});
+  horasPieChart=new Chart(document.getElementById('chartHorasPie'),{type:'doughnut',data:{labels:['Consumidas','Restantes'],datasets:[{data:[98.5,251.5],backgroundColor:['#3266ad','#e2e0d8'],borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}});
+}
+</script>
+</body>
+</html>
