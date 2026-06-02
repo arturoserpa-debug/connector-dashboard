@@ -6,125 +6,90 @@
 <title>Connector Agency — Cuadro de Mando 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #f7f7f5; --card: #ffffff; --border: rgba(0,0,0,0.08);
-    --text: #1a1a18; --muted: #6b6b66; --hint: #9e9e99;
-    --blue: #1a6fdb; --blue-bg: #e8f0fc; --blue-light: #b5d4f4;
-    --green: #0f7a56; --green-bg: #e1f5ee;
-    --amber: #b56b0c; --amber-bg: #fdf0da;
-    --red: #c0332e; --red-bg: #fceaea;
-    --rad: 12px; --rad-sm: 8px;
-  }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f5f4f0;
+  --color-text-primary:#1a1a18;
+  --color-text-secondary:#6b6b66;
+  --color-text-tertiary:#9e9e99;
+  --color-border-secondary:rgba(0,0,0,0.12);
+  --color-border-tertiary:rgba(0,0,0,0.07);
+  --border-radius-md:8px;
+  --border-radius-lg:12px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f4f0;color:var(--color-text-primary);min-height:100vh}
 
-  /* ── LOGIN ── */
-  #login-screen {
-    display: flex; align-items: center; justify-content: center;
-    min-height: 100vh; background: var(--bg);
-  }
-  .login-box {
-    background: var(--card); border-radius: 16px; padding: 2.8rem 2.2rem;
-    width: 360px; box-shadow: 0 8px 40px rgba(0,0,0,0.10); text-align: center;
-    border: 1px solid var(--border);
-  }
-  .login-logo {
-    width: 52px; height: 52px; border-radius: 12px; background: var(--blue);
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-weight: 700; font-size: 20px; margin: 0 auto 16px;
-    box-shadow: 0 4px 16px rgba(26,111,219,0.3);
-  }
-  .login-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-  .login-sub { font-size: 13px; color: var(--muted); margin-bottom: 1.8rem; }
-  .login-box input {
-    width: 100%; padding: 11px 14px; border: 1px solid rgba(0,0,0,0.14);
-    border-radius: var(--rad-sm); font-size: 14px; margin-bottom: 12px;
-    outline: none; transition: border 0.2s; color: var(--text); background: var(--bg);
-  }
-  .login-box input:focus { border-color: var(--blue); background: #fff; }
-  .login-box button {
-    width: 100%; padding: 11px; background: var(--blue); color: #fff;
-    border: none; border-radius: var(--rad-sm); font-size: 14px;
-    font-weight: 600; cursor: pointer; transition: background 0.2s;
-  }
-  .login-box button:hover { background: #155fc2; }
-  #login-error { color: var(--red); font-size: 12px; margin-top: 10px; display: none; }
+/* ── LOGIN ── */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f5f4f0}
+.login-box{background:#fff;border-radius:16px;padding:2.8rem 2.2rem;width:360px;box-shadow:0 8px 40px rgba(0,0,0,0.10);text-align:center;border:1px solid rgba(0,0,0,0.08)}
+.login-logo{width:52px;height:52px;border-radius:12px;background:#185FA5;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;margin:0 auto 16px;box-shadow:0 4px 16px rgba(24,95,165,0.3)}
+.login-title{font-size:18px;font-weight:700;color:var(--color-text-primary);margin-bottom:4px}
+.login-sub{font-size:13px;color:var(--color-text-secondary);margin-bottom:1.8rem}
+.login-box input{width:100%;padding:11px 14px;border:1px solid rgba(0,0,0,0.14);border-radius:var(--border-radius-md);font-size:14px;margin-bottom:12px;outline:none;transition:border 0.2s;color:var(--color-text-primary);background:#f5f4f0}
+.login-box input:focus{border-color:#185FA5;background:#fff}
+.login-box button{width:100%;padding:11px;background:#185FA5;color:#fff;border:none;border-radius:var(--border-radius-md);font-size:14px;font-weight:600;cursor:pointer;transition:background 0.2s}
+.login-box button:hover{background:#0e4a84}
+#login-error{color:#791F1F;font-size:12px;margin-top:10px;display:none}
 
-  /* ── APP ── */
-  #app { display: none; }
-  header {
-    background: var(--card); border-bottom: 1px solid var(--border);
-    padding: 14px 28px; display: flex; align-items: center;
-    justify-content: space-between; flex-wrap: wrap; gap: 8px;
-  }
-  header h1 { font-size: 15px; font-weight: 600; }
-  .header-meta { display: flex; gap: 8px; flex-wrap: wrap; }
-  .tag { font-size: 11px; color: var(--muted); background: var(--bg); padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); }
-  .tag.warn { background: var(--amber-bg); color: var(--amber); border-color: transparent; }
-  .tag.alert { background: var(--red-bg); color: var(--red); border-color: transparent; }
-  .nav { display: flex; gap: 4px; padding: 16px 28px 0; flex-wrap: wrap; }
-  .nav button {
-    font-size: 13px; padding: 7px 16px; border-radius: var(--rad-sm);
-    border: 1px solid var(--border); background: var(--card); color: var(--muted);
-    cursor: pointer; font-weight: 500; transition: all 0.15s;
-  }
-  .nav button:hover { background: var(--bg); }
-  .nav button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
-  main { padding: 20px 28px 40px; }
-  .panel { display: none; }
-  .panel.active { display: block; }
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
-  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: var(--rad); padding: 16px 18px; }
-  .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; font-weight: 500; }
-  .kpi-val { font-size: 26px; font-weight: 600; color: var(--text); line-height: 1; }
-  .kpi-sub { font-size: 11px; color: var(--hint); margin-top: 4px; }
-  .kpi.alert-kpi { border-color: #f7c1c1; background: #fffafa; }
-  .kpi.alert-kpi .kpi-val { color: var(--red); }
-  .kpi.ok-kpi .kpi-val { color: var(--green); }
-  .kpi.warn-kpi { border-color: #f7d9a8; background: #fffcf5; }
-  .kpi.warn-kpi .kpi-val { color: var(--amber); }
-  .charts-row { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; margin-bottom: 20px; }
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--rad); padding: 18px 20px; }
-  .card-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 14px; }
-  .prog-item { margin-bottom: 13px; }
-  .prog-header { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; align-items: baseline; }
-  .prog-name { font-weight: 500; }
-  .prog-meta { font-size: 11px; color: var(--hint); margin-left: 6px; font-weight: 400; }
-  .prog-pct { color: var(--muted); font-weight: 600; white-space: nowrap; }
-  .prog-track { height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
-  .prog-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
-  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-  thead th { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
-  tbody td { padding: 9px 10px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
-  tbody tr:last-child td { border-bottom: none; }
-  tbody tr:hover { background: var(--bg); }
-  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
-  .b-done { background: var(--green-bg); color: var(--green); }
-  .b-prog { background: var(--amber-bg); color: var(--amber); }
-  .b-todo { background: var(--red-bg); color: var(--red); }
-  .b-int  { background: #e8f0fc; color: #1a6fdb; }
-  .b-hold { background: #f1efe8; color: #5f5e5a; }
-  .filter-bar { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
-  .filter-bar label { font-size: 12px; color: var(--muted); font-weight: 500; }
-  .filter-btn { font-size: 12px; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--card); color: var(--muted); cursor: pointer; font-weight: 500; transition: all .15s; }
-  .filter-btn.active { background: var(--blue-bg); color: var(--blue); border-color: var(--blue); }
-  .hours-track { height: 24px; background: var(--bg); border-radius: 6px; overflow: hidden; margin: 10px 0 6px; }
-  .hours-fill { height: 100%; border-radius: 6px; }
-  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
-  .leg-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 5px; vertical-align: middle; }
-  .alert-box { background: #fffbf0; border: 1px solid #f7c175; border-radius: var(--rad); padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #854f0b; line-height: 1.6; }
-  .cron-item { padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; gap: 16px; align-items: flex-start; }
-  .cron-item:last-child { border-bottom: none; }
-  .cron-date { font-size: 12px; color: var(--hint); min-width: 110px; }
-  .cron-text { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
-  .cron-sub { font-size: 12px; color: var(--muted); }
-  @media (max-width: 700px) {
-    .charts-row, .two-col { grid-template-columns: 1fr; }
-    header { flex-direction: column; align-items: flex-start; }
-    main { padding: 16px; }
-    .nav { padding: 12px 16px 0; }
-  }
+/* ── APP ── */
+#app{display:none}
+.wrap{padding:1.5rem 1.5rem 3rem;max-width:1200px;margin:0 auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.logo{width:34px;height:34px;border-radius:var(--border-radius-md);background:#185FA5;display:flex;align-items:center;justify-content:center;color:#E6F1FB;font-size:12px;font-weight:500}
+.topbar-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.sub{font-size:12px;color:var(--color-text-secondary)}
+.tabs{display:flex;gap:2px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;width:fit-content;margin-bottom:1.25rem;border:0.5px solid var(--color-border-tertiary)}
+.tab{padding:7px 16px;font-size:13px;cursor:pointer;border:none;background:transparent;color:var(--color-text-secondary);border-radius:var(--border-radius-md);transition:all .15s;font-weight:400}
+.tab.active{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500;border:0.5px solid var(--color-border-secondary)}
+.tab:hover:not(.active){color:var(--color-text-primary)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.25rem}
+.kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px}
+.kpi .lbl{font-size:11px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.kpi .val{font-size:26px;font-weight:500;color:var(--color-text-primary);line-height:1}
+.kpi .hint{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
+.row2{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:12px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px 18px}
+.card-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:12px}
+.full{grid-column:1/-1}
+.page{display:none}
+.page.active{display:block}
+.pi{margin-bottom:14px}
+.pi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.pi-name{font-size:13px;color:var(--color-text-primary)}
+.pi-pct{font-size:13px;font-weight:500}
+.bar-bg{height:7px;border-radius:4px;background:var(--color-background-secondary);overflow:hidden}
+.bar-fg{height:100%;border-radius:4px;transition:width .5s ease}
+.pi-meta{font-size:11px;color:var(--color-text-tertiary);margin-top:4px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-block;border-radius:20px;padding:2px 8px;font-size:11px;font-weight:500;white-space:nowrap}
+.pg{background:#EAF3DE;color:#27500A}
+.pa{background:#FAEEDA;color:#633806}
+.pr{background:#FCEBEB;color:#791F1F}
+.pb{background:#E6F1FB;color:#0C447C}
+.pgy{background:#F1EFE8;color:#444441}
+.stopper{display:inline-block;font-size:11px;background:#FAEEDA;color:#633806;border-radius:4px;padding:3px 9px;margin-top:4px;border:0.5px solid #FAC775}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px;color:var(--color-text-secondary)}
+.lsq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.filter-bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.filter-bar label{font-size:12px;color:var(--color-text-secondary)}
+select{font-size:12px;padding:5px 9px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{text-align:left;padding:7px 10px;font-size:11px;font-weight:500;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-secondary);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.tbl td{padding:9px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle}
+.tbl tr:hover td{background:var(--color-background-secondary)}
+.insight{padding:12px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border-left:3px solid #378ADD;border-bottom-left-radius:0;border-top-left-radius:0;font-size:13px;color:var(--color-text-primary);line-height:1.6;margin-top:12px}
+.timeline-item{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.tl-body{flex:1}
+.tl-date{font-size:11px;color:var(--color-text-secondary)}
+.tl-title{font-size:13px;color:var(--color-text-primary);font-weight:500}
+.tl-desc{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+
+@media(max-width:700px){
+  .row2{grid-template-columns:1fr}
+  .wrap{padding:1rem 1rem 2rem}
+}
 </style>
 </head>
 <body>
@@ -144,199 +109,304 @@
 
 <!-- ══════════ APP ══════════ -->
 <div id="app">
+<div class="wrap">
 
-<header>
-  <h1>Connector Agency — Programa de Trabajo 2026</h1>
-  <div class="header-meta">
-    <span class="tag">Datos al 12/05/2026</span>
-    <span class="tag warn">⚠ 4 semanas de desfase</span>
-    <span class="tag alert">156.1 / 350 hrs (44.6% consumidas)</span>
-  </div>
-</header>
-
-<div class="nav">
-  <button class="active" data-panel="resumen">Resumen</button>
-  <button data-panel="modulos">Módulos</button>
-  <button data-panel="actividades">Actividades</button>
-  <button data-panel="horas">Horas</button>
-  <button data-panel="cronograma">Cronograma</button>
-  <button data-panel="reuniones">Reuniones</button>
-</div>
-
-<main>
-
-<!-- ======== RESUMEN ======== -->
-<div class="panel active" id="panel-resumen">
-  <div class="alert-box">
-    <strong>🚨 Riesgos activos:</strong> Bloqueo de 4 semanas acumuladas por falta de información del cliente. Inventario (8%) y Fabricación (0%) sin avance real. Las horas consumidas subieron de 98.5 → <strong>156.1 hrs</strong> (+57.6 hrs). Riesgo principal: pruebas funcionales requieren alta interacción del equipo Connector.
-  </div>
-  <div class="kpi-grid">
-    <div class="kpi"><div class="kpi-label">Horas contratadas</div><div class="kpi-val">350</div></div>
-    <div class="kpi alert-kpi"><div class="kpi-label">Horas consumidas</div><div class="kpi-val">156.1</div><div class="kpi-sub">↑ +57.6 vs versión anterior</div></div>
-    <div class="kpi"><div class="kpi-label">Horas restantes</div><div class="kpi-val">193.9</div><div class="kpi-sub">55.4% disponible</div></div>
-    <div class="kpi ok-kpi"><div class="kpi-label">Avance global aprox.</div><div class="kpi-val">56%</div><div class="kpi-sub">Promedio ponderado</div></div>
-    <div class="kpi warn-kpi"><div class="kpi-label">Módulos críticos</div><div class="kpi-val">2</div><div class="kpi-sub">Inventario · Fabricación</div></div>
-    <div class="kpi"><div class="kpi-label">Reuniones realizadas</div><div class="kpi-val">18</div></div>
-  </div>
-
-  <div class="charts-row">
-    <div class="card">
-      <div class="card-title">Avance por módulo (%) — datos duros</div>
-      <div style="position:relative;height:290px;">
-        <canvas id="barChart"></canvas>
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="logo">CA</div>
+      <div>
+        <div class="topbar-title">Connector Agency — Programa Odoo 2026</div>
+        <div class="sub">Seguimiento de implementación · Datos actualizados al 28 mayo 2026</div>
       </div>
     </div>
-    <div class="card">
-      <div class="card-title">Estado de actividades</div>
-      <div style="position:relative;height:200px;">
-        <canvas id="donut"></canvas>
+    <div class="sub">2 Fases · 11 módulos</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="nav('resumen',this)">Resumen</button>
+    <button class="tab" onclick="nav('modulos',this)">Módulos</button>
+    <button class="tab" onclick="nav('horas',this)">Horas</button>
+    <button class="tab" onclick="nav('cronograma',this)">Cronograma</button>
+    <button class="tab" onclick="nav('detalle',this)">Detalle</button>
+  </div>
+
+  <!-- ======== RESUMEN ======== -->
+  <div class="page active" id="page-resumen">
+    <div class="kpis">
+      <div class="kpi">
+        <div class="lbl">Módulos</div>
+        <div class="val">11</div>
+        <div class="hint">2 fases de proyecto</div>
       </div>
-      <div id="donutLeg" class="legend" style="margin-top:10px;"></div>
+      <div class="kpi">
+        <div class="lbl">Avance global</div>
+        <div class="val" id="kpi-global" style="color:#185FA5">—</div>
+        <div class="hint">promedio ponderado</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Act. completadas</div>
+        <div class="val" style="color:#3B6D11" id="kpi-comp">—</div>
+        <div class="hint" id="kpi-comp-hint">—</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Horas consumidas</div>
+        <div class="val" style="color:#854F0B">225.7</div>
+        <div class="hint">de 350h contratadas</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Horas restantes</div>
+        <div class="val" style="color:#3B6D11">124.3</div>
+        <div class="hint">35.5% disponibles</div>
+      </div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="card-title">Consumo de horas — 156.1 de 350 hrs (44.6%)</div>
-    <div class="hours-track"><div class="hours-fill" style="width:44.6%;background:var(--blue);"></div></div>
-    <div class="legend">
-      <span><span class="leg-dot" style="background:#1a6fdb;"></span>Consumidas 156.1 hrs</span>
-      <span><span class="leg-dot" style="background:#e8f0fc;border:1px solid #c0d0f0;"></span>Restantes 193.9 hrs</span>
+    <div class="row2">
+      <div class="card">
+        <div class="card-title">Avance por módulo (Fase 2)</div>
+        <div style="position:relative;height:280px">
+          <canvas id="cBar"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Actividades completadas vs pendientes</div>
+        <div style="position:relative;height:200px">
+          <canvas id="cDonut"></canvas>
+        </div>
+        <div class="legend">
+          <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#185FA5"></span>Completadas: <span id="leg-comp">—</span></span>
+          <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#D3D1C7"></span>Pendientes: <span id="leg-pend">—</span></span>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- ======== MÓDULOS ======== -->
-<div class="panel" id="panel-modulos">
-  <div class="kpi-grid">
-    <div class="kpi ok-kpi"><div class="kpi-label">Fase 1 — Migración</div><div class="kpi-val">98%</div><div class="kpi-sub">Casi completa</div></div>
-    <div class="kpi warn-kpi"><div class="kpi-label">Fase 2 — Config.</div><div class="kpi-val">48%</div><div class="kpi-sub">8 módulos</div></div>
-    <div class="kpi ok-kpi"><div class="kpi-label">Al 100%</div><div class="kpi-val">3</div><div class="kpi-sub">Clientes, Otros cont., Discovery</div></div>
-    <div class="kpi alert-kpi"><div class="kpi-label">Sin avance real</div><div class="kpi-val">2</div><div class="kpi-sub">Inventario 8% · Fabricación 0%</div></div>
-  </div>
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title">Progreso por módulo</div>
-    <div id="modProgress"></div>
-  </div>
-  <div class="card">
-    <div class="card-title">Tabla resumen — datos duros</div>
-    <div style="overflow-x:auto;">
-      <table>
-        <thead><tr><th>Módulo</th><th>Fase</th><th>Total acts.</th><th>Completadas</th><th>Pendientes</th><th>Avance</th><th>Estado</th></tr></thead>
-        <tbody id="modulosTable"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<!-- ======== ACTIVIDADES ======== -->
-<div class="panel" id="panel-actividades">
-  <div class="filter-bar">
-    <label>Filtrar:</label>
-    <button class="filter-btn active" data-f="all">Todos</button>
-    <button class="filter-btn" data-f="done">Hecho</button>
-    <button class="filter-btn" data-f="prog">En proceso</button>
-    <button class="filter-btn" data-f="todo">Por hacer</button>
-    <button class="filter-btn" data-f="int">Pruebas int.</button>
-    <button class="filter-btn" data-f="dev">Solo Desarrollo</button>
-  </div>
-  <div class="card" style="overflow-x:auto;">
-    <table>
-      <thead><tr><th>ID</th><th>Módulo</th><th>Actividad</th><th>Responsable</th><th>Tipo</th><th>Estado</th><th>%</th></tr></thead>
-      <tbody id="actTable"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- ======== HORAS ======== -->
-<div class="panel" id="panel-horas">
-  <div class="kpi-grid">
-    <div class="kpi"><div class="kpi-label">Contratadas</div><div class="kpi-val">350 hrs</div></div>
-    <div class="kpi alert-kpi"><div class="kpi-label">Consumidas</div><div class="kpi-val">156.1 hrs</div><div class="kpi-sub">44.6% del total</div></div>
-    <div class="kpi"><div class="kpi-label">Restantes</div><div class="kpi-val">193.9 hrs</div><div class="kpi-sub">55.4%</div></div>
-    <div class="kpi warn-kpi"><div class="kpi-label">Concentración</div><div class="kpi-val">Mizraim</div><div class="kpi-sub">~76% de las horas reales</div></div>
-  </div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-title">Horas reales registradas por responsable</div>
-      <div style="position:relative;height:260px;"><canvas id="hoursChart"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Estimadas vs reales por área</div>
-      <div style="position:relative;height:260px;"><canvas id="estVsReal"></canvas></div>
-      <div class="legend" style="margin-top:10px;">
-        <span><span class="leg-dot" style="background:#b5d4f4;"></span>Estimadas</span>
-        <span><span class="leg-dot" style="background:#1a6fdb;"></span>Reales</span>
+    <div class="card full">
+      <div class="card-title">Estado rápido por fase</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;padding-top:4px">
+        <div>
+          <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em">Fase 1 — Migración de datos</div>
+          <div class="pi">
+            <div class="pi-top"><span class="pi-name">Clientes y proveedores</span><span class="pi-pct" style="color:#3B6D11">100%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:100%;background:#639922"></div></div>
+            <div class="pi-meta"><span>1/1 actividades</span><span class="pill pg">Entregado 23/04</span></div>
+          </div>
+          <div class="pi">
+            <div class="pi-top"><span class="pi-name">Otros contactos y registros</span><span class="pi-pct" style="color:#3B6D11">100%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:100%;background:#639922"></div></div>
+            <div class="pi-meta"><span>1/1 actividades</span><span class="pill pg">Entregado 23/04</span></div>
+          </div>
+          <div class="pi">
+            <div class="pi-top"><span class="pi-name">Productos y servicios</span><span class="pi-pct" style="color:#854F0B">94.3%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:94.3%;background:#BA7517"></div></div>
+            <div class="pi-meta"><span>6.6/7 actividades</span></div>
+            <div class="stopper">⚠ En espera de info del equipo Connector</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em">Fase 2 — Configuración e implementación</div>
+          <div class="pi">
+            <div class="pi-top"><span class="pi-name">Discovery</span><span class="pi-pct" style="color:#3B6D11">100%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:100%;background:#639922"></div></div>
+            <div class="pi-meta"><span>10/10</span><span class="pill pg">Entregado 23/04</span></div>
+          </div>
+          <div class="pi">
+            <div class="pi-top"><span class="pi-name">Ventas</span><span class="pi-pct" style="color:#185FA5">89.5%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:89.5%;background:#378ADD"></div></div>
+            <div class="pi-meta"><span>17/19 actividades</span></div>
+          </div>
+          <div class="pi">
+            <div class="pi-top"><span class="pi-name">Proyectos</span><span class="pi-pct" style="color:#185FA5">76.5%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:76.5%;background:#378ADD"></div></div>
+            <div class="pi-meta"><span>13/17 actividades</span></div>
+          </div>
+          <div class="pi">
+            <div class="pi-top"><span class="pi-name">Contabilidad</span><span class="pi-pct" style="color:#854F0B">66.7%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:66.7%;background:#BA7517"></div></div>
+            <div class="pi-meta"><span>8/12 actividades</span></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ======== CRONOGRAMA ======== -->
-<div class="panel" id="panel-cronograma">
-  <div class="kpi-grid">
-    <div class="kpi ok-kpi"><div class="kpi-label">Módulos con avance</div><div class="kpi-val">5 / 7</div></div>
-    <div class="kpi alert-kpi"><div class="kpi-label">Sin iniciar</div><div class="kpi-val">2</div><div class="kpi-sub">Bloqueados por información</div></div>
-    <div class="kpi alert-kpi"><div class="kpi-label">Desfase acumulado</div><div class="kpi-val">4 sem.</div><div class="kpi-sub">vs plan original</div></div>
-    <div class="kpi warn-kpi"><div class="kpi-label">Resp. cliente</div><div class="kpi-val">~1 sem.</div><div class="kpi-sub">por solicitud</div></div>
+  <!-- ======== MÓDULOS ======== -->
+  <div class="page" id="page-modulos">
+    <div class="filter-bar">
+      <label>Fase:</label>
+      <select id="selFase" onchange="renderModulos()">
+        <option value="all">Todas</option>
+        <option value="1">Fase 1 — Migración</option>
+        <option value="2">Fase 2 — Configuración</option>
+      </select>
+      <label>Ordenar:</label>
+      <select id="selSort" onchange="renderModulos()">
+        <option value="asc">Avance ↑</option>
+        <option value="desc">Avance ↓</option>
+        <option value="nombre">Nombre</option>
+      </select>
+    </div>
+    <div class="card" id="modulos-wrap"></div>
   </div>
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title">Hitos del proyecto</div>
-    <div id="cronList"></div>
-  </div>
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title">Periodos</div>
-    <div style="overflow-x:auto;">
-      <table>
-        <thead><tr><th>Periodo</th><th>Tipo</th><th>Duración</th><th>Causa</th><th>Efecto acumulado</th></tr></thead>
-        <tbody>
-          <tr><td>26-feb → 10-abr</td><td><span class="badge b-todo">Espera</span></td><td>5 semanas</td><td>Falta entrega de plantillas</td><td>Desfase en configuraciones</td></tr>
-          <tr><td>13-abr → 9-may</td><td><span class="badge b-done">Activo</span></td><td>4 semanas</td><td>Trabajo interno</td><td>Avance parcial a 5 módulos</td></tr>
-          <tr><td>Actual</td><td><span class="badge b-int">Bloqueo</span></td><td>4 sem. acum.</td><td>Falta info 2 módulos + cierre ventas</td><td>Retraso en cronograma</td></tr>
-        </tbody>
-      </table>
+
+  <!-- ======== HORAS ======== -->
+  <div class="page" id="page-horas">
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">Contratadas</div><div class="val">350h</div></div>
+      <div class="kpi"><div class="lbl">Consumidas</div><div class="val" style="color:#854F0B">225.7h</div><div class="hint">64.5% del total</div></div>
+      <div class="kpi"><div class="lbl">Restantes</div><div class="val" style="color:#3B6D11">124.3h</div><div class="hint">35.5% disponibles</div></div>
+      <div class="kpi"><div class="lbl">Burn rate</div><div class="val" style="color:#854F0B">64.5%</div><div class="hint">vs ~80% avance global</div></div>
+    </div>
+    <div class="row2">
+      <div class="card">
+        <div class="card-title">Desglose de horas</div>
+        <div style="position:relative;height:220px">
+          <canvas id="cHoras"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Proporción consumida</div>
+        <div style="position:relative;height:180px">
+          <canvas id="cHorasPie"></canvas>
+        </div>
+        <div class="legend">
+          <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#854F0B"></span>Consumidas 225.7h</span>
+          <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#D3D1C7"></span>Restantes 124.3h</span>
+        </div>
+      </div>
+    </div>
+    <div class="card full">
+      <div class="card-title">Progreso de horas</div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--color-text-secondary);margin-bottom:5px">
+        <span>0h</span>
+        <span style="font-weight:500;color:var(--color-text-primary)">225.7h consumidas de 350h contratadas</span>
+        <span>350h</span>
+      </div>
+      <div style="height:22px;border-radius:6px;background:var(--color-background-secondary);overflow:hidden">
+        <div style="width:64.5%;height:100%;background:#BA7517;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
+          <span style="font-size:11px;color:#FAEEDA;font-weight:500">64.5%</span>
+        </div>
+      </div>
+      <div class="insight">
+        <strong style="font-weight:500">Análisis de eficiencia:</strong> Se han consumido 225.7h (64.5%) con un avance global del ~80%. Esto indica una buena relación esfuerzo-resultado. Las 124.3h restantes deberían ser suficientes para cerrar las actividades pendientes, especialmente en Contabilidad (4 pend.), CRM (6 pend.) y Compras (5 pend.).
+      </div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-title">Dimensiones de riesgo</div>
-    <div style="position:relative;height:230px;"><canvas id="riskChart"></canvas></div>
-  </div>
-</div>
 
-<!-- ======== REUNIONES ======== -->
-<div class="panel" id="panel-reuniones">
-  <div class="kpi-grid">
-    <div class="kpi"><div class="kpi-label">Total</div><div class="kpi-val">18</div></div>
-    <div class="kpi"><div class="kpi-label">Alineación</div><div class="kpi-val">12</div></div>
-    <div class="kpi"><div class="kpi-label">Capacitación</div><div class="kpi-val">3</div></div>
-    <div class="kpi"><div class="kpi-label">Requerimientos</div><div class="kpi-val">2</div></div>
-    <div class="kpi"><div class="kpi-label">Pruebas func.</div><div class="kpi-val">1</div></div>
-  </div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-title">Por objetivo</div>
-      <div style="position:relative;height:220px;"><canvas id="meetChart"></canvas></div>
+  <!-- ======== CRONOGRAMA ======== -->
+  <div class="page" id="page-cronograma">
+    <div class="row2">
+      <div class="card">
+        <div class="card-title">Hitos del proyecto</div>
+        <div class="timeline-item">
+          <div class="tl-dot" style="background:#639922;margin-top:5px"></div>
+          <div class="tl-body">
+            <div class="tl-date">26 feb 2026</div>
+            <div class="tl-title">Envío de plantillas de levantamiento</div>
+            <div class="tl-desc">Inicio condicionado a entrega de datos del cliente</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot" style="background:#639922;margin-top:5px"></div>
+          <div class="tl-body">
+            <div class="tl-date">10 abr 2026</div>
+            <div class="tl-title">Recepción completa de plantillas</div>
+            <div class="tl-desc">Se habilita inicio de configuraciones</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot" style="background:#639922;margin-top:5px"></div>
+          <div class="tl-body">
+            <div class="tl-date">13 abr 2026</div>
+            <div class="tl-title">Entrega de primeros avances</div>
+            <div class="tl-desc">3 de 7 módulos avanzados</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot" style="background:#BA7517;margin-top:5px"></div>
+          <div class="tl-body">
+            <div class="tl-date">9 may 2026 (plan)</div>
+            <div class="tl-title">Entrega proyectada</div>
+            <div class="tl-desc">5 módulos: 3 pruebas, 2 configuración y 2 cierres</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot" style="background:#639922;margin-top:5px"></div>
+          <div class="tl-body">
+            <div class="tl-date">25 may 2026</div>
+            <div class="tl-title">Entrega Fase 2</div>
+            <div class="tl-desc">5 módulos en configuración e implementación</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot" style="background:#E24B4A;margin-top:5px"></div>
+          <div class="tl-body">
+            <div class="tl-date">Actual — bloqueo activo</div>
+            <div class="tl-title">Pruebas funcionales pendientes</div>
+            <div class="tl-desc">Requiere participación activa del equipo Connector</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Análisis de periodos</div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em">Espera por información</div>
+          <div style="font-size:13px;color:var(--color-text-primary);font-weight:500">26 feb → 10 abr · 5 semanas</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Causa: falta de entrega de plantillas completas</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Efecto: desfase en inicio de configuraciones</div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em">Configuración e implementación</div>
+          <div style="font-size:13px;color:var(--color-text-primary);font-weight:500">13 abr → 25 may · 6 semanas</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">7 módulos avanzados a segunda fase</div>
+        </div>
+        <div style="border-top:0.5px solid var(--color-border-tertiary);padding-top:14px">
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em">Métricas clave</div>
+          <table style="width:100%;font-size:12px">
+            <tr><td style="color:var(--color-text-secondary);padding:4px 0">Módulos con avance</td><td style="text-align:right;font-weight:500;color:var(--color-text-primary)">7 / 7</td></tr>
+            <tr><td style="color:var(--color-text-secondary);padding:4px 0">Módulos sin iniciar</td><td style="text-align:right;font-weight:500;color:#3B6D11">0 — resuelto</td></tr>
+            <tr><td style="color:var(--color-text-secondary);padding:4px 0">Tiempo de respuesta cliente</td><td style="text-align:right;font-weight:500;color:#854F0B">~2 semanas</td></tr>
+            <tr><td style="color:var(--color-text-secondary);padding:4px 0">Riesgo principal</td><td style="text-align:right"><span class="pill pr">Pruebas funcionales</span></td></tr>
+            <tr><td style="color:var(--color-text-secondary);padding:4px 0">Desfase vs plan original</td><td style="text-align:right;font-weight:500;color:#854F0B">~2 meses</td></tr>
+          </table>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-title">Distribución</div>
-      <div style="position:relative;height:220px;"><canvas id="meetDonut"></canvas></div>
+    <div class="card full">
+      <div class="card-title">Sesiones realizadas con el cliente (30 en total)</div>
+      <div style="position:relative;height:200px">
+        <canvas id="cSesiones"></canvas>
+      </div>
+      <div class="legend" style="margin-top:8px">
+        <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#185FA5"></span>Alineación 16</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#3B6D11"></span>Capacitación 8</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#854F0B"></span>Requerimientos 4</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#0C447C"></span>Pruebas funcionales 2</span>
+      </div>
     </div>
   </div>
-  <div class="card" style="margin-top:16px;">
-    <div class="card-title">Historial</div>
-    <table>
-      <thead><tr><th>Reunión</th><th>Objetivo</th><th>Fecha</th></tr></thead>
-      <tbody id="meetTable"></tbody>
-    </table>
-  </div>
-</div>
 
-</main>
+  <!-- ======== DETALLE ======== -->
+  <div class="page" id="page-detalle">
+    <div class="card full">
+      <div class="card-title">Tabla completa — todos los módulos</div>
+      <div style="overflow-x:auto;margin-top:8px">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Fase</th><th>Módulo</th><th>Avance</th><th>Total</th><th>Completadas</th><th>Pendientes</th><th>Entrega</th><th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
 </div><!-- /app -->
 
 <script>
 // ══════════ LOGIN ══════════
 const PASS = 'zublime-connector';
-
 function checkPwd() {
   if (document.getElementById('pwd-input').value === PASS) {
     document.getElementById('login-screen').style.display = 'none';
@@ -349,314 +419,129 @@ function checkPwd() {
 }
 
 // ══════════ DATOS ══════════
-const modules = [
-  { name:'Clientes/Proveedores',  fase:1, pct:100, total:1,  done:1,   pending:0   },
-  { name:'Otros contactos',       fase:1, pct:100, total:1,  done:1,   pending:0   },
-  { name:'Productos/Servicios',   fase:1, pct:94,  total:7,  done:6.6, pending:0.4, stopper:'En espera de info del cliente' },
-  { name:'Discovery',             fase:2, pct:100, total:10, done:10,  pending:0   },
-  { name:'CRM',                   fase:2, pct:57,  total:19, done:10.8,pending:8.2 },
-  { name:'Ventas',                fase:2, pct:89,  total:18, done:16,  pending:2   },
-  { name:'Contabilidad',          fase:2, pct:48,  total:12, done:5.8, pending:6.2 },
-  { name:'Compras',               fase:2, pct:71,  total:17, done:12,  pending:5   },
-  { name:'Proyectos',             fase:2, pct:42,  total:12, done:5,   pending:7   },
-  { name:'Inventario',            fase:2, pct:8,   total:13, done:1,   pending:12, stopper:'Sin info del cliente' },
-  { name:'Fabricación',           fase:2, pct:0,   total:5,  done:0,   pending:5,  stopper:'Sin info del cliente' },
+const mods = [
+  {fase:1, mod:'Clientes y proveedores',       pct:100,  tot:1,  comp:1,   pend:0, fecha:'23/04/2026', stopper:''},
+  {fase:1, mod:'Otros contactos y registros',  pct:100,  tot:1,  comp:1,   pend:0, fecha:'23/04/2026', stopper:''},
+  {fase:1, mod:'Productos y servicios',        pct:94.3, tot:7,  comp:6.6, pend:0.4, fecha:'',         stopper:'En espera de info del equipo Connector'},
+  {fase:2, mod:'Discovery',                    pct:100,  tot:10, comp:10,  pend:0, fecha:'23/04/2026', stopper:''},
+  {fase:2, mod:'CRM',                          pct:72.7, tot:22, comp:16,  pend:6, fecha:'',           stopper:'Módulo configurado; avanza a fase de incrementos'},
+  {fase:2, mod:'Ventas',                       pct:89.5, tot:19, comp:17,  pend:2, fecha:'',           stopper:''},
+  {fase:2, mod:'Contabilidad',                 pct:66.7, tot:12, comp:8,   pend:4, fecha:'',           stopper:''},
+  {fase:2, mod:'Compras',                      pct:73.7, tot:19, comp:14,  pend:5, fecha:'',           stopper:''},
+  {fase:2, mod:'Proyectos',                    pct:76.5, tot:17, comp:13,  pend:4, fecha:'',           stopper:''},
+  {fase:2, mod:'Inventario',                   pct:76.9, tot:13, comp:10,  pend:3, fecha:'',           stopper:''},
+  {fase:2, mod:'Fabricación',                  pct:80,   tot:5,  comp:4,   pend:1, fecha:'',           stopper:''},
 ];
 
-const activities = [
-  { id:'2.5',  mod:'General',      act:'Carga de usuarios a BD de producción',          resp:'Mizraim Avila',   tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'2.6',  mod:'General',      act:'Verificación kickoff comercial',                resp:'Mizraim Avila',   tipo:'Análisis',       estado:'done', pct:100 },
-  { id:'2.7',  mod:'General',      act:'Verificación kickoff inventario',               resp:'Mizraim Avila',   tipo:'Análisis',       estado:'done', pct:100 },
-  { id:'2.7b', mod:'General',      act:'Revisión formatos del cliente',                 resp:'Mizraim Avila',   tipo:'Análisis',       estado:'done', pct:100 },
-  { id:'2.8',  mod:'General',      act:'Creación empleados en base a usuarios',         resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'3.1',  mod:'Comercial',    act:'Configuraciones generales CRM',                 resp:'Mizraim Avila',   tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'3.2',  mod:'Comercial',    act:'Creación de pipeline',                          resp:'Mizraim Avila',   tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'3.3',  mod:'Comercial',    act:'Actividades para equipos de ventas',            resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'3.4',  mod:'Comercial',    act:'Asignación clientes a vendedor',                resp:'Mizraim Avila',   tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'3.5',  mod:'Comercial',    act:'Campos en oportunidades CRM',                   resp:'Mizraim Avila',   tipo:'Desarrollo',     estado:'done', pct:100 },
-  { id:'3.6a', mod:'Comercial',    act:'Pruebas campos y sincronización CRM-Ventas',    resp:'Mizraim Avila',   tipo:'Desarrollo',     estado:'done', pct:100 },
-  { id:'3.6b', mod:'Comercial',    act:'Planeación comercial y diseño creativo',        resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'3.7',  mod:'Comercial',    act:'Flujo validación viabilidad prospecto',         resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'3.8a', mod:'Comercial',    act:'Nuevo flujo módulo de artículos',               resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'3.9a', mod:'Comercial',    act:'[Dev] Vincular CRM a artículos',               resp:'Mizraim Avila',   tipo:'Desarrollo',     estado:'done', pct:100 },
-  { id:'3.8b', mod:'Comercial',    act:'Flujo cotizaciones y cambios',                  resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'3.9b', mod:'Comercial',    act:'Solicitud nuevos requerimientos',               resp:'Abigail Diaz',    tipo:'Análisis',       estado:'prog', pct:80  },
-  { id:'3.91', mod:'Comercial',    act:'[Dev] Info oportunidad → proyecto',            resp:'—',               tipo:'Desarrollo',     estado:'todo', pct:0   },
-  { id:'3.92', mod:'Comercial',    act:'[Dev] Campo egreso esperado',                  resp:'—',               tipo:'Desarrollo',     estado:'todo', pct:0   },
-  { id:'3.93', mod:'Comercial',    act:'[Dev] Asignación múltiple en actividades',     resp:'—',               tipo:'Desarrollo',     estado:'todo', pct:0   },
-  { id:'3.94', mod:'Comercial',    act:'[Dev] Hilo de actividades en CRM',             resp:'—',               tipo:'Desarrollo',     estado:'todo', pct:0   },
-  { id:'3.95', mod:'Comercial',    act:'[Dev] Editar actividades cerradas',            resp:'—',               tipo:'Desarrollo',     estado:'todo', pct:0   },
-  { id:'3.96', mod:'Comercial',    act:'Cargar archivos >67 MB',                        resp:'—',               tipo:'Configuración',  estado:'todo', pct:0   },
-  { id:'4.1',  mod:'Ventas',       act:'Configuraciones generales ventas',              resp:'Mizraim Avila',   tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'4.2a', mod:'Ventas',       act:'Implementación equipo de ventas',               resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'4.2b', mod:'Ventas',       act:'Equipos de ventas',                             resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'4.3a', mod:'Ventas',       act:'Asignación miembros de equipos',                resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'4.3b', mod:'Ventas',       act:'Creación de campos necesarios',                 resp:'Mizraim Avila',   tipo:'Desarrollo',     estado:'done', pct:100 },
-  { id:'4.4',  mod:'Ventas',       act:'Términos de pago',                              resp:'Salvador Macías', tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'4.5a', mod:'Ventas',       act:'[Dev] Notificación al confirmar venta',        resp:'Mizraim Avila',   tipo:'Desarrollo',     estado:'done', pct:100 },
-  { id:'4.6a', mod:'Ventas',       act:'Pruebas notificación confirmar venta',          resp:'Mizraim Avila',   tipo:'Desarrollo',     estado:'done', pct:100 },
-  { id:'4.6b', mod:'Ventas',       act:'Firma de propuestas',                           resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'4.8',  mod:'Ventas',       act:'Términos y condiciones en cotizaciones',        resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'4.9',  mod:'Ventas',       act:'T&C predeterminados',                           resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'4.91', mod:'Ventas',       act:'Carga productos tabulados',                     resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'4.93', mod:'Ventas',       act:'Acomodo plantilla de productos',                resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'4.94', mod:'Ventas',       act:'Creación de categorías',                        resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'4.95', mod:'Ventas',       act:'Creación unidades de medida',                   resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'4.96', mod:'Ventas',       act:'Pruebas cargas de productos',                   resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'5.1',  mod:'Contabilidad', act:'Análisis plan contable',                        resp:'Salvador Macías', tipo:'Análisis',       estado:'done', pct:100 },
-  { id:'5.2',  mod:'Contabilidad', act:'Plantilla plan de cuentas / clientes / prov.',  resp:'Salvador Macías', tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'5.3',  mod:'Contabilidad', act:'Alta cuentas bancarias',                        resp:'Salvador Macías', tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'5.4',  mod:'Contabilidad', act:'Centros de costos',                             resp:'Laura Ávila',     tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'5.5',  mod:'Contabilidad', act:'Préstamos y líneas de crédito',                 resp:'Laura Ávila',     tipo:'Configuración',  estado:'todo', pct:0   },
-  { id:'5.6',  mod:'Contabilidad', act:'Configuración impuestos básicos',               resp:'Laura Ávila',     tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'5.7',  mod:'Contabilidad', act:'Importación activos históricos',                resp:'Salvador Macías', tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'5.8',  mod:'Contabilidad', act:'Importación saldos iniciales',                  resp:'—',               tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'5.9',  mod:'Contabilidad', act:'Cuentas contables para costeos',                resp:'—',               tipo:'Configuración',  estado:'prog', pct:0   },
-  { id:'5.91', mod:'Contabilidad', act:'Config. facturación CFDI',                      resp:'—',               tipo:'Configuración',  estado:'todo', pct:0   },
-  { id:'5.92', mod:'Contabilidad', act:'Claves unidades de medida',                     resp:'—',               tipo:'Configuración',  estado:'prog', pct:80  },
-  { id:'5.93', mod:'Contabilidad', act:'Claves de productos',                           resp:'—',               tipo:'Configuración',  estado:'todo', pct:0   },
-  { id:'6.2',  mod:'Compras',      act:'[Dev] Bloqueo límite presupuesto (50%)',        resp:'Arturo Serpa',    tipo:'Desarrollo',     estado:'int',  pct:100 },
-  { id:'6.3',  mod:'Compras',      act:'[Dev] Grupo permisos desbloqueo presupuesto',  resp:'Arturo Serpa',    tipo:'Desarrollo',     estado:'int',  pct:100 },
-  { id:'3.31', mod:'Compras',      act:'Pruebas permisos límite presupuesto',           resp:'Mizraim Avila',   tipo:'Análisis',       estado:'done', pct:100 },
-  { id:'6.4',  mod:'Compras',      act:'Validación info proveedores',                   resp:'Mizraim Avila',   tipo:'Análisis',       estado:'done', pct:100 },
-  { id:'6.5',  mod:'Compras',      act:'Plazos de pago proveedor',                      resp:'Mizraim Avila',   tipo:'Análisis',       estado:'done', pct:100 },
-  { id:'6.6',  mod:'Compras',      act:'Gestión de presupuestos',                       resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'6.7',  mod:'Compras',      act:'Analíticas requisiciones por proyecto',         resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'6.8',  mod:'Compras',      act:'Solicitud requisiciones de compra',             resp:'Mizraim Avila',   tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'6.9',  mod:'Compras',      act:'Anticipos a proveedores',                       resp:'Mizraim Avila',   tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'6.93', mod:'Compras',      act:'Flujo compras hasta recepción/entrega',         resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'6.95', mod:'Compras',      act:'[Dev] Notificación factura proveedor',         resp:'Mizraim Avila',   tipo:'Desarrollo',     estado:'done', pct:100 },
-  { id:'6.97', mod:'Compras',      act:'Pruebas notificación factura proveedor',        resp:'Mizraim Avila',   tipo:'Desarrollo',     estado:'done', pct:100 },
-  { id:'6.91', mod:'Compras',      act:'Facturas proveedor con requisición',            resp:'—',               tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'6.94', mod:'Compras',      act:'Tablero de seguimiento compras',                resp:'—',               tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'7.1',  mod:'Proyectos',    act:'Analítica proyectos en OV',                     resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'7.2',  mod:'Proyectos',    act:'Productos que gestionan proyectos',             resp:'Mizraim Avila',   tipo:'Implementación', estado:'done', pct:100 },
-  { id:'7.9',  mod:'Proyectos',    act:'Gestión de tiempo y módulo de horas',           resp:'Mizraim Avila',   tipo:'Configuración',  estado:'done', pct:100 },
-  { id:'7.91', mod:'Proyectos',    act:'Pruebas permiso límite compra',                 resp:'Mizraim Avila',   tipo:'Análisis',       estado:'done', pct:100 },
-  { id:'7.92', mod:'Proyectos',    act:'Pruebas límite compra en presupuesto',          resp:'Mizraim Avila',   tipo:'Análisis',       estado:'done', pct:100 },
-  { id:'7.3',  mod:'Proyectos',    act:'Diseño tareas entregables y subtareas',         resp:'—',               tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'7.6',  mod:'Proyectos',    act:'Definición etapas del proyecto',                resp:'—',               tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'7.7',  mod:'Proyectos',    act:'[Dev] Notificación cambio de etapa',           resp:'—',               tipo:'Desarrollo',     estado:'todo', pct:0   },
-  { id:'7.8',  mod:'Proyectos',    act:'Match campos proyectos con bitácora',           resp:'—',               tipo:'Análisis',       estado:'todo', pct:0   },
-  { id:'8.L',  mod:'Inventario',   act:'Llenado de plantillas',                         resp:'Abigail Diaz',    tipo:'Capacitación',   estado:'done', pct:100 },
-  { id:'8.1',  mod:'Inventario',   act:'Productos inventario propios',                  resp:'—',               tipo:'Configuración',  estado:'todo', pct:0   },
-  { id:'8.2',  mod:'Inventario',   act:'Productos inventariados de terceros',           resp:'—',               tipo:'Configuración',  estado:'todo', pct:0   },
-  { id:'8.3',  mod:'Inventario',   act:'Productos por código de barras',                resp:'—',               tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'8.4',  mod:'Inventario',   act:'Productos y unidades de medida',                resp:'—',               tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'8.7',  mod:'Inventario',   act:'Ubicaciones de inventario',                     resp:'—',               tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'8.8',  mod:'Inventario',   act:'Recepciones de compras',                        resp:'—',               tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'9.1',  mod:'Fabricación',  act:'Plantillas listas de materiales',               resp:'Israel Ocadiz',   tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'9.2',  mod:'Fabricación',  act:'Subir plantillas listas de materiales',         resp:'Israel Ocadiz',   tipo:'Implementación', estado:'todo', pct:0   },
-  { id:'9.3',  mod:'Fabricación',  act:'Estaciones de fabricación',                     resp:'Israel Ocadiz',   tipo:'Configuración',  estado:'todo', pct:0   },
-  { id:'9.4',  mod:'Fabricación',  act:'Control de calidad',                            resp:'Israel Ocadiz',   tipo:'Configuración',  estado:'todo', pct:0   },
-  { id:'9.5',  mod:'Fabricación',  act:'Configurar operaciones',                        resp:'Israel Ocadiz',   tipo:'Configuración',  estado:'todo', pct:0   },
-];
+// ══════════ KPIs calculados ══════════
+const totalComp = mods.reduce((a,m)=>a+m.comp, 0);
+const totalPend = mods.reduce((a,m)=>a+m.pend, 0);
+const globalPct = Math.round(mods.reduce((a,m)=>a+m.pct,0)/mods.length);
 
-const meetings = [
-  { name:'Demo Connector Agency',          obj:'Alineación',         fecha:'20/02/2026' },
-  { name:'Kickoff Implementación Odoo',    obj:'Alineación',         fecha:'10/12/2025' },
-  { name:'Kickoff Contabilidad',           obj:'Alineación',         fecha:'03/02/2026' },
-  { name:'Kickoff Comercial',              obj:'Alineación',         fecha:'04/02/2026' },
-  { name:'Kickoff Compras',               obj:'Alineación',         fecha:'04/02/2026' },
-  { name:'Kickoff Comercial continuación', obj:'Alineación',         fecha:'05/02/2026' },
-  { name:'Revisión plan contable',         obj:'Alineación',         fecha:'16/02/2026' },
-  { name:'Kickoff Inventario y Logística', obj:'Alineación',         fecha:'17/02/2026' },
-  { name:'Implementación Odoo',            obj:'Alineación',         fecha:'17/02/2026' },
-  { name:'Revisión proyecto',              obj:'Alineación',         fecha:'19/03/2026' },
-  { name:'Revisión de avances',            obj:'Alineación',         fecha:'30/03/2026' },
-  { name:'Pruebas de usuarios',            obj:'Capacitación',       fecha:'13/04/2026' },
-  { name:'Seguimiento comercial',          obj:'Requerimientos',     fecha:'13/04/2026' },
-  { name:'Seguimiento del proyecto',       obj:'Alineación',         fecha:'21/04/2026' },
-  { name:'Inventario: llenado plantillas', obj:'Capacitación',       fecha:'21/04/2026' },
-  { name:'Ventas: alineación del flujo',   obj:'Requerimientos',     fecha:'22/04/2026' },
-  { name:'Contabilidad: flujo de trabajo', obj:'Pruebas funcionales',fecha:'22/04/2026' },
-  { name:'Proyectos: plantillas',          obj:'Capacitación',       fecha:'24/04/2026' },
-];
-
-const cronItems = [
-  { fecha:'26/02/2026',        hito:'Envío plantillas de levantamiento', resultado:'Información solicitada al equipo', tipo:'todo' },
-  { fecha:'10/04/2026',        hito:'Recepción completa de plantillas',  resultado:'Se habilita inicio de configuraciones', tipo:'done' },
-  { fecha:'13/04/2026',        hito:'Entrega de primeros avances',       resultado:'3 de 7 módulos avanzados', tipo:'done' },
-  { fecha:'09/05/2026 (plan)', hito:'Entrega proyectada',                resultado:'5 módulos — sujeto a información del cliente', tipo:'prog' },
-];
+document.getElementById('kpi-global').textContent = globalPct + '%';
+document.getElementById('kpi-comp').textContent   = totalComp.toFixed(1);
+document.getElementById('kpi-comp-hint').textContent = 'de ' + (totalComp+totalPend).toFixed(1) + ' totales';
+document.getElementById('leg-comp').textContent   = totalComp.toFixed(1);
+document.getElementById('leg-pend').textContent   = totalPend.toFixed(1);
 
 // ══════════ HELPERS ══════════
-function gc(p) { return p >= 70 ? '#0f7a56' : p >= 35 ? '#b56b0c' : '#c0332e'; }
-function bClass(e) { return {done:'b-done',prog:'b-prog',todo:'b-todo',int:'b-int'}[e] || 'b-hold'; }
-function bText(e)  { return {done:'Hecho',prog:'En proceso',todo:'Por hacer',int:'Pruebas int.'}[e] || 'Hold'; }
+function gc(p){ return p>=80?'#639922': p>=65?'#378ADD':'#BA7517'; }
 
-// ══════════ INIT ══════════
-let chartsInitialized = false;
-
-function initDashboard() {
-  initModulos();
-  renderActs('all');
-  initCron();
-  initMeetings();
-  initCharts();
-}
-
-function initCharts() {
-  if (chartsInitialized) return;
-  chartsInitialized = true;
-  const tc = '#6b6b66';
-
-  // Avance por módulo
-  new Chart(document.getElementById('barChart'), {
-    type:'bar',
-    data:{
-      labels:['Clientes/Prov.','Otros cont.','Productos','Discovery','CRM','Ventas','Contabilidad','Compras','Proyectos','Inventario','Fabricación'],
-      datasets:[{ label:'Avance (%)', data:[100,100,94,100,57,89,48,71,42,8,0],
-        backgroundColor:[100,100,94,100,57,89,48,71,42,8,0].map(v=>gc(v)+'CC'),
-        borderRadius:5, borderSkipped:false }]
-    },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-      scales:{ x:{ticks:{color:tc,font:{size:10},autoSkip:false,maxRotation:42},grid:{display:false}},
-               y:{max:100,ticks:{color:tc,callback:v=>v+'%'},grid:{color:'rgba(0,0,0,0.05)'}} } }
-  });
-
-  // Donut estado
-  const dC=['#0f7a56','#b56b0c','#c0332e','#1a6fdb'];
-  const dL=['Hecho','En proceso','Por hacer','Pruebas int.'];
-  const dD=[49,4,28,2];
-  new Chart(document.getElementById('donut'), {
-    type:'doughnut',
-    data:{labels:dL, datasets:[{data:dD, backgroundColor:dC, borderWidth:0, hoverOffset:6}]},
-    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, cutout:'65%'}
-  });
-  document.getElementById('donutLeg').innerHTML = dL.map((l,i)=>`<span><span class="leg-dot" style="background:${dC[i]};"></span>${l} (${dD[i]})</span>`).join('');
-
-  // Horas por responsable
-  new Chart(document.getElementById('hoursChart'), {
-    type:'bar',
-    data:{
-      labels:['Mizraim Avila','Salvador Macías','Ricardo Morales','Laura Ávila','Abigail Diaz'],
-      datasets:[{ label:'Horas', data:[119.9,6,6.8,0,0.2],
-        backgroundColor:'#1a6fdbCC', borderRadius:5, borderSkipped:false }]
-    },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-      scales:{ x:{ticks:{color:tc,font:{size:11},maxRotation:25},grid:{display:false}},
-               y:{ticks:{color:tc},grid:{color:'rgba(0,0,0,0.05)'}} } }
-  });
-
-  // Estimadas vs Reales
-  new Chart(document.getElementById('estVsReal'), {
-    type:'bar',
-    data:{
-      labels:['General','Comercial','Ventas','Compras','Proyectos','Contabilidad'],
-      datasets:[
-        {label:'Estimadas', data:[9.8,34,15.1,27.3,9.6,16], backgroundColor:'#b5d4f4', borderRadius:4},
-        {label:'Reales',    data:[17,27.68,38.6,25.46,14.5,6], backgroundColor:'#1a6fdbCC', borderRadius:4}
-      ]
-    },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-      scales:{ x:{ticks:{color:tc,font:{size:10}},grid:{display:false}},
-               y:{ticks:{color:tc},grid:{color:'rgba(0,0,0,0.05)'}} } }
-  });
-
-  // Riesgo
-  new Chart(document.getElementById('riskChart'), {
-    type:'bar',
-    data:{
-      labels:['Módulos con avance','Módulos sin iniciar','Semanas de desfase','Semanas resp. cliente'],
-      datasets:[{ data:[5,2,4,1],
-        backgroundColor:['#0f7a56CC','#c0332eCC','#c0332eCC','#b56b0cCC'],
-        borderRadius:5, borderSkipped:false }]
-    },
-    options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-      scales:{ x:{ticks:{color:tc,stepSize:1},grid:{color:'rgba(0,0,0,0.05)'}},
-               y:{ticks:{color:tc},grid:{display:false}} } }
-  });
-
-  // Reuniones
-  const mC=['#1a6fdbCC','#0f7a56CC','#b56b0cCC','#c0332eCC'];
-  new Chart(document.getElementById('meetChart'), {
-    type:'bar',
-    data:{
-      labels:['Alineación','Capacitación','Requerimientos','Pruebas func.'],
-      datasets:[{data:[12,3,2,1], backgroundColor:mC, borderRadius:5, borderSkipped:false}]
-    },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-      scales:{ x:{ticks:{color:tc},grid:{display:false}}, y:{ticks:{color:tc,stepSize:2},grid:{color:'rgba(0,0,0,0.05)'}} } }
-  });
-  new Chart(document.getElementById('meetDonut'), {
-    type:'doughnut',
-    data:{
-      labels:['Alineación','Capacitación','Requerimientos','Pruebas func.'],
-      datasets:[{data:[12,3,2,1], backgroundColor:mC, borderWidth:0, hoverOffset:6}]
-    },
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{position:'right', labels:{color:tc,font:{size:11},boxWidth:12}}}, cutout:'55%' }
-  });
-}
-
-// ══════════ RENDER FUNCTIONS ══════════
-function initModulos() {
-  document.getElementById('modProgress').innerHTML = modules.map(m => `
-    <div class="prog-item">
-      <div class="prog-header">
-        <span class="prog-name">${m.name}<span class="prog-meta">Fase ${m.fase}${m.stopper ? ' · ⚠ ' + m.stopper : ''}</span></span>
-        <span class="prog-pct">${m.pct}%</span>
-      </div>
-      <div class="prog-track"><div class="prog-fill" style="width:${m.pct}%;background:${gc(m.pct)};"></div></div>
-    </div>`).join('');
-
-  document.getElementById('modulosTable').innerHTML = modules.map(m => `
-    <tr>
-      <td><strong>${m.name}</strong></td><td>Fase ${m.fase}</td>
-      <td>${m.total}</td><td>${m.done}</td><td>${m.pending}</td>
-      <td><strong>${m.pct}%</strong></td>
-      <td><span class="badge" style="background:${gc(m.pct)}18;color:${gc(m.pct)};">${m.pct>=70?'Avanzado':m.pct>=30?'En curso':'Crítico'}</span></td>
-    </tr>`).join('');
-}
-
-function renderActs(f) {
-  const map = { all:()=>true, done:a=>a.estado==='done', prog:a=>a.estado==='prog',
-                todo:a=>a.estado==='todo', int:a=>a.estado==='int', dev:a=>a.tipo==='Desarrollo' };
-  const list = activities.filter(map[f] || map.all);
-  document.getElementById('actTable').innerHTML = list.map(a => `
-    <tr>
-      <td style="color:#9e9e99">${a.id}</td>
-      <td><span class="badge b-hold" style="font-size:10px;">${a.mod}</span></td>
-      <td>${a.act}</td>
-      <td style="color:#6b6b66;font-size:12px;">${a.resp}</td>
-      <td style="color:#6b6b66;font-size:12px;">${a.tipo}</td>
-      <td><span class="badge ${bClass(a.estado)}">${bText(a.estado)}</span></td>
-      <td><strong>${a.pct}%</strong></td>
-    </tr>`).join('');
-}
-
-function initCron() {
-  document.getElementById('cronList').innerHTML = cronItems.map(c => `
-    <div class="cron-item">
-      <div class="cron-date">${c.fecha}</div>
-      <div>
-        <div class="cron-text">${c.hito} <span class="badge ${bClass(c.tipo)}" style="margin-left:6px;">${bText(c.tipo)}</span></div>
-        <div class="cron-sub">${c.resultado}</div>
-      </div>
-    </div>`).join('');
-}
-
-function initMeetings() {
-  document.getElementById('meetTable').innerHTML = meetings.map(m => `
-    <tr><td>${m.name}</td><td><span class="badge b-hold">${m.obj}</span></td><td style="color:#6b6b66">${m.fecha}</td></tr>`).join('');
+function pillStatus(pct, stopper){
+  if(stopper && pct<100) return '<span class="pill pa">Stopper</span>';
+  if(pct===100)          return '<span class="pill pg">Completado</span>';
+  if(pct>=80)            return '<span class="pill pb">Casi listo</span>';
+  if(pct>=65)            return '<span class="pill pb">En curso</span>';
+  return '<span class="pill pa">En progreso</span>';
 }
 
 // ══════════ NAV ══════════
-document.querySelector('.nav').addEventListener('click', e => {
-  const b = e.target.closest('[data-panel]'); if (!b) return;
-  document.querySelectorAll('.nav button').forEach(x => x.classList.remove('active'));
-  b.classList.add('active');
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + b.dataset.panel).classList.add('active');
-});
+let horasInit=false, cronInit=false;
+function nav(id, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='modulos')   renderModulos();
+  if(id==='horas')     renderHoras();
+  if(id==='cronograma')renderCronograma();
+  if(id==='detalle')   renderTabla();
+}
 
-document.querySelector('.filter-bar').addEventListener('click', e => {
-  const b = e.target.closest('[data-f]'); if (!b) return;
-  document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
-  b.classList.add('active');
-  renderActs(b.dataset.f);
-});
+// ══════════ MÓDULOS ══════════
+function renderModulos(){
+  const fase = document.getElementById('selFase').value;
+  const sort = document.getElementById('selSort').value;
+  let rows = fase==='all' ? [...mods] : mods.filter(m=>m.fase==fase);
+  if(sort==='asc')  rows.sort((a,b)=>a.pct-b.pct);
+  else if(sort==='desc') rows.sort((a,b)=>b.pct-a.pct);
+  else rows.sort((a,b)=>a.mod.localeCompare(b.mod));
+  document.getElementById('modulos-wrap').innerHTML =
+    '<div class="card-title">'+rows.length+' módulos</div>' +
+    rows.map(m=>`<div class="pi">
+      <div class="pi-top"><span class="pi-name" style="font-weight:500">${m.mod}</span><span class="pi-pct" style="color:${gc(m.pct)}">${m.pct.toFixed(1)}%</span></div>
+      <div class="bar-bg"><div class="bar-fg" style="width:${Math.min(m.pct,100)}%;background:${gc(m.pct)}"></div></div>
+      <div class="pi-meta"><span>Fase ${m.fase}</span><span>${m.comp}/${m.tot} act.</span><span>${m.pend} pend.</span>${m.fecha?'<span class="pill pg">'+m.fecha+'</span>':''}${m.stopper?'<span class="pill pa">Stopper</span>':''}</div>
+      ${m.stopper?'<div class="stopper">⚠ '+m.stopper+'</div>':''}
+    </div>`).join('');
+}
+
+// ══════════ DETALLE ══════════
+function renderTabla(){
+  document.getElementById('tbody').innerHTML = mods.map(m=>`<tr>
+    <td><span class="pill ${m.fase===1?'pb':'pgy'}">Fase ${m.fase}</span></td>
+    <td style="font-weight:500">${m.mod}</td>
+    <td><span style="font-weight:500;color:${gc(m.pct)}">${m.pct.toFixed(1)}%</span></td>
+    <td style="text-align:center">${m.tot}</td>
+    <td style="text-align:center">${m.comp}</td>
+    <td style="text-align:center;color:${m.pend>0?'#854F0B':'#3B6D11'};font-weight:500">${m.pend}</td>
+    <td>${m.fecha||'—'}</td>
+    <td>${pillStatus(m.pct,m.stopper)}</td>
+  </tr>`).join('');
+}
+
+// ══════════ CHARTS ══════════
+let hChart, hPie, sChart;
+
+function renderHoras(){
+  if(horasInit) return; horasInit=true;
+  hChart = new Chart(document.getElementById('cHoras'),{
+    type:'bar',
+    data:{labels:['Contratadas','Consumidas','Restantes'],datasets:[{data:[350,225.71,124.29],backgroundColor:['#B5D4F4','#BA7517','#639922'],borderRadius:5}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'h',font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}
+  });
+  hPie = new Chart(document.getElementById('cHorasPie'),{
+    type:'doughnut',
+    data:{labels:['Consumidas','Restantes'],datasets:[{data:[225.71,124.29],backgroundColor:['#BA7517','#D3D1C7'],borderWidth:0,hoverOffset:4}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}
+  });
+}
+
+function renderCronograma(){
+  if(cronInit) return; cronInit=true;
+  sChart = new Chart(document.getElementById('cSesiones'),{
+    type:'bar',
+    data:{labels:['Alineación','Capacitación','Requerimientos','Pruebas funcionales'],datasets:[{data:[16,8,4,2],backgroundColor:['#185FA5','#3B6D11','#854F0B','#0C447C'],borderRadius:5}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:4,font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}
+  });
+}
+
+// ══════════ INIT CHARTS RESUMEN ══════════
+function initDashboard(){
+  // Barra horizontal Fase 2
+  const f2 = mods.filter(m=>m.fase===2 && m.mod!=='Discovery');
+  new Chart(document.getElementById('cBar'),{
+    type:'bar',
+    data:{labels:f2.map(m=>m.mod), datasets:[{axis:'y', data:f2.map(m=>m.pct), backgroundColor:f2.map(m=>gc(m.pct)), borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},y:{ticks:{font:{size:10}},grid:{display:false}}}}
+  });
+  // Donut actividades
+  new Chart(document.getElementById('cDonut'),{
+    type:'doughnut',
+    data:{labels:['Completadas','Pendientes'], datasets:[{data:[Math.round(totalComp*10)/10, Math.round(totalPend*10)/10], backgroundColor:['#185FA5','#D3D1C7'], borderWidth:0, hoverOffset:4}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}
+  });
+}
 </script>
 </body>
 </html>
