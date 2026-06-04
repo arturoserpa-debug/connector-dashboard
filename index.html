@@ -17,8 +17,9 @@
   --color-border-tertiary:rgba(0,0,0,0.07);
   --border-radius-md:8px;
   --border-radius-lg:12px;
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f4f0;color:var(--color-text-primary);min-height:100vh}
+body{font-family:var(--font-sans);background:#f5f4f0;color:var(--color-text-primary);min-height:100vh}
 
 /* ── LOGIN ── */
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f5f4f0}
@@ -34,61 +35,67 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 /* ── APP ── */
 #app{display:none}
-.wrap{padding:1.5rem 1.5rem 3rem;max-width:1200px;margin:0 auto}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px}
-.topbar-left{display:flex;align-items:center;gap:10px}
-.logo{width:34px;height:34px;border-radius:var(--border-radius-md);background:#185FA5;display:flex;align-items:center;justify-content:center;color:#E6F1FB;font-size:12px;font-weight:500}
-.topbar-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
-.sub{font-size:12px;color:var(--color-text-secondary)}
-.tabs{display:flex;gap:2px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;width:fit-content;margin-bottom:1.25rem;border:0.5px solid var(--color-border-tertiary)}
-.tab{padding:7px 16px;font-size:13px;cursor:pointer;border:none;background:transparent;color:var(--color-text-secondary);border-radius:var(--border-radius-md);transition:all .15s;font-weight:400}
+.w{padding:1.25rem 1.5rem 3rem;max-width:1200px;margin:0 auto}
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px}
+.hdr-l{display:flex;align-items:center;gap:10px}
+.logo{width:34px;height:34px;border-radius:var(--border-radius-md);background:#185FA5;display:flex;align-items:center;justify-content:center;color:#E6F1FB;font-size:12px;font-weight:500;flex-shrink:0}
+.h1{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.sub{font-size:11px;color:var(--color-text-secondary)}
+.tabs{display:flex;gap:2px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;width:fit-content;margin-bottom:1.25rem;border:0.5px solid var(--color-border-tertiary);flex-wrap:wrap}
+.tab{padding:6px 14px;font-size:12px;cursor:pointer;border:none;background:transparent;color:var(--color-text-secondary);border-radius:var(--border-radius-md);transition:all .15s;font-weight:400}
 .tab.active{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500;border:0.5px solid var(--color-border-secondary)}
-.tab:hover:not(.active){color:var(--color-text-primary)}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.25rem}
+.tab:hover:not(.active){color:var(--color-text-primary);background:var(--color-background-primary)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.25rem}
 .kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px}
-.kpi .lbl{font-size:11px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
-.kpi .val{font-size:26px;font-weight:500;color:var(--color-text-primary);line-height:1}
-.kpi .hint{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
+.kl{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.kv{font-size:24px;font-weight:500;line-height:1;color:var(--color-text-primary)}
+.kh{font-size:11px;color:var(--color-text-tertiary);margin-top:3px}
 .row2{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:12px}
-.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px 18px}
-.card-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:12px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px}
+.ct{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:12px}
 .full{grid-column:1/-1}
 .page{display:none}
 .page.active{display:block}
-.pi{margin-bottom:14px}
+.pi{margin-bottom:13px}
 .pi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
-.pi-name{font-size:13px;color:var(--color-text-primary)}
-.pi-pct{font-size:13px;font-weight:500}
+.pi-n{font-size:13px;color:var(--color-text-primary)}
+.pi-p{font-size:12px;font-weight:500}
 .bar-bg{height:7px;border-radius:4px;background:var(--color-background-secondary);overflow:hidden}
-.bar-fg{height:100%;border-radius:4px;transition:width .5s ease}
-.pi-meta{font-size:11px;color:var(--color-text-tertiary);margin-top:4px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.pill{display:inline-block;border-radius:20px;padding:2px 8px;font-size:11px;font-weight:500;white-space:nowrap}
+.bar-fg{height:100%;border-radius:4px}
+.pi-m{font-size:11px;color:var(--color-text-tertiary);margin-top:4px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-block;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:500;white-space:nowrap}
 .pg{background:#EAF3DE;color:#27500A}
 .pa{background:#FAEEDA;color:#633806}
 .pr{background:#FCEBEB;color:#791F1F}
 .pb{background:#E6F1FB;color:#0C447C}
 .pgy{background:#F1EFE8;color:#444441}
-.stopper{display:inline-block;font-size:11px;background:#FAEEDA;color:#633806;border-radius:4px;padding:3px 9px;margin-top:4px;border:0.5px solid #FAC775}
-.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px;color:var(--color-text-secondary)}
-.lsq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
-.filter-bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
-.filter-bar label{font-size:12px;color:var(--color-text-secondary)}
-select{font-size:12px;padding:5px 9px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer}
+.pp{background:#EEEDFE;color:#26215C}
+.stopper{display:inline-block;font-size:10px;background:#FAEEDA;color:#633806;border-radius:4px;padding:2px 8px;margin-top:4px;border:0.5px solid #FAC775}
+.leg{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:11px;color:var(--color-text-secondary)}
+.lsq{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.fbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.fbar label{font-size:12px;color:var(--color-text-secondary)}
+select{font-size:12px;padding:5px 8px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer}
 .tbl{width:100%;border-collapse:collapse;font-size:12px}
-.tbl th{text-align:left;padding:7px 10px;font-size:11px;font-weight:500;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-secondary);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
-.tbl td{padding:9px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle}
+.tbl th{text-align:left;padding:6px 9px;font-size:10px;font-weight:500;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-secondary);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.tbl td{padding:8px 9px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle}
 .tbl tr:hover td{background:var(--color-background-secondary)}
-.insight{padding:12px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border-left:3px solid #378ADD;border-bottom-left-radius:0;border-top-left-radius:0;font-size:13px;color:var(--color-text-primary);line-height:1.6;margin-top:12px}
-.timeline-item{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+.insight{padding:11px 13px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border-left:3px solid #378ADD;border-bottom-left-radius:0;border-top-left-radius:0;font-size:12px;color:var(--color-text-primary);line-height:1.6;margin-top:10px}
+.tl-item{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
 .tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.tl-body{flex:1}
-.tl-date{font-size:11px;color:var(--color-text-secondary)}
-.tl-title{font-size:13px;color:var(--color-text-primary);font-weight:500}
-.tl-desc{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
-
+.tl-d{font-size:10px;color:var(--color-text-secondary)}
+.tl-t{font-size:12px;color:var(--color-text-primary);font-weight:500}
+.tl-s{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.dev-item{padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.dev-item:last-child{border-bottom:none}
+.dev-txt{font-size:12px;color:var(--color-text-primary);line-height:1.5;margin-bottom:5px}
+.dev-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.alert-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:10px;border-left:3px solid #E24B4A;border-bottom-left-radius:0;border-top-left-radius:0}
+.alert-t{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.alert-s{font-size:11px;color:var(--color-text-secondary)}
 @media(max-width:700px){
   .row2{grid-template-columns:1fr}
-  .wrap{padding:1rem 1rem 2rem}
+  .w{padding:1rem 1rem 2rem}
 }
 </style>
 </head>
@@ -109,17 +116,18 @@ select{font-size:12px;padding:5px 9px;border-radius:var(--border-radius-md);bord
 
 <!-- ══════════ APP ══════════ -->
 <div id="app">
-<div class="wrap">
+<div class="w">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Cuadro de mando Connector Agency 2026 — implementación Odoo, avance por módulo, horas, sesiones y backlog de desarrollo</h2>
 
-  <div class="topbar">
-    <div class="topbar-left">
+  <div class="hdr">
+    <div class="hdr-l">
       <div class="logo">CA</div>
       <div>
-        <div class="topbar-title">Connector Agency — Programa Odoo 2026</div>
-        <div class="sub">Seguimiento de implementación · Datos actualizados al 28 mayo 2026</div>
+        <div class="h1">Connector Agency — Implementación Odoo 2026</div>
+        <div class="sub">Cuadro de mando · Datos al 28 mayo 2026 · 33 sesiones realizadas</div>
       </div>
     </div>
-    <div class="sub">2 Fases · 11 módulos</div>
+    <span class="pill pgy">2 Fases · 11 módulos</span>
   </div>
 
   <div class="tabs">
@@ -127,285 +135,247 @@ select{font-size:12px;padding:5px 9px;border-radius:var(--border-radius-md);bord
     <button class="tab" onclick="nav('modulos',this)">Módulos</button>
     <button class="tab" onclick="nav('horas',this)">Horas</button>
     <button class="tab" onclick="nav('cronograma',this)">Cronograma</button>
+    <button class="tab" onclick="nav('backlog',this)">Backlog dev</button>
     <button class="tab" onclick="nav('detalle',this)">Detalle</button>
   </div>
 
-  <!-- ======== RESUMEN ======== -->
+  <!-- ── RESUMEN ── -->
   <div class="page active" id="page-resumen">
     <div class="kpis">
-      <div class="kpi">
-        <div class="lbl">Módulos</div>
-        <div class="val">11</div>
-        <div class="hint">2 fases de proyecto</div>
-      </div>
-      <div class="kpi">
-        <div class="lbl">Avance global</div>
-        <div class="val" id="kpi-global" style="color:#185FA5">—</div>
-        <div class="hint">promedio ponderado</div>
-      </div>
-      <div class="kpi">
-        <div class="lbl">Act. completadas</div>
-        <div class="val" style="color:#3B6D11" id="kpi-comp">—</div>
-        <div class="hint" id="kpi-comp-hint">—</div>
-      </div>
-      <div class="kpi">
-        <div class="lbl">Horas consumidas</div>
-        <div class="val" style="color:#854F0B">225.7</div>
-        <div class="hint">de 350h contratadas</div>
-      </div>
-      <div class="kpi">
-        <div class="lbl">Horas restantes</div>
-        <div class="val" style="color:#3B6D11">124.3</div>
-        <div class="hint">35.5% disponibles</div>
-      </div>
+      <div class="kpi"><div class="kl">Avance global</div><div class="kv" style="color:#185FA5" id="kg">—</div><div class="kh">prom. ponderado</div></div>
+      <div class="kpi"><div class="kl">Módulos 100%</div><div class="kv" style="color:#3B6D11">2</div><div class="kh">Clientes, Discovery</div></div>
+      <div class="kpi"><div class="kl">Act. completadas</div><div class="kv" id="kcomp">—</div><div class="kh" id="kcomp-h">—</div></div>
+      <div class="kpi"><div class="kl">Horas consumidas</div><div class="kv" style="color:#854F0B">253.6</div><div class="kh">de 350h (72.5%)</div></div>
+      <div class="kpi"><div class="kl">Horas restantes</div><div class="kv" style="color:#3B6D11">96.4</div><div class="kh">27.5% disponibles</div></div>
+      <div class="kpi"><div class="kl">Backlog dev</div><div class="kv" style="color:#534AB7">53</div><div class="kh">requerimientos</div></div>
     </div>
-
     <div class="row2">
       <div class="card">
-        <div class="card-title">Avance por módulo (Fase 2)</div>
-        <div style="position:relative;height:280px">
-          <canvas id="cBar"></canvas>
-        </div>
+        <div class="ct">Avance por módulo — Fase 2</div>
+        <div style="position:relative;height:260px"><canvas id="cBar"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Actividades completadas vs pendientes</div>
-        <div style="position:relative;height:200px">
-          <canvas id="cDonut"></canvas>
-        </div>
-        <div class="legend">
-          <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#185FA5"></span>Completadas: <span id="leg-comp">—</span></span>
-          <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#D3D1C7"></span>Pendientes: <span id="leg-pend">—</span></span>
+        <div class="ct">Actividades: completadas vs pendientes</div>
+        <div style="position:relative;height:180px"><canvas id="cDonut"></canvas></div>
+        <div class="leg">
+          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#185FA5"></span>Completadas <span id="leg-comp"></span></span>
+          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#D3D1C7"></span>Pendientes <span id="leg-pend"></span></span>
         </div>
       </div>
     </div>
-
-    <div class="card full">
-      <div class="card-title">Estado rápido por fase</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;padding-top:4px">
-        <div>
-          <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em">Fase 1 — Migración de datos</div>
-          <div class="pi">
-            <div class="pi-top"><span class="pi-name">Clientes y proveedores</span><span class="pi-pct" style="color:#3B6D11">100%</span></div>
-            <div class="bar-bg"><div class="bar-fg" style="width:100%;background:#639922"></div></div>
-            <div class="pi-meta"><span>1/1 actividades</span><span class="pill pg">Entregado 23/04</span></div>
-          </div>
-          <div class="pi">
-            <div class="pi-top"><span class="pi-name">Otros contactos y registros</span><span class="pi-pct" style="color:#3B6D11">100%</span></div>
-            <div class="bar-bg"><div class="bar-fg" style="width:100%;background:#639922"></div></div>
-            <div class="pi-meta"><span>1/1 actividades</span><span class="pill pg">Entregado 23/04</span></div>
-          </div>
-          <div class="pi">
-            <div class="pi-top"><span class="pi-name">Productos y servicios</span><span class="pi-pct" style="color:#854F0B">94.3%</span></div>
-            <div class="bar-bg"><div class="bar-fg" style="width:94.3%;background:#BA7517"></div></div>
-            <div class="pi-meta"><span>6.6/7 actividades</span></div>
-            <div class="stopper">⚠ En espera de info del equipo Connector</div>
-          </div>
+    <div class="row2" style="margin-bottom:12px">
+      <div class="card">
+        <div class="ct">Fase 1 — Migración de datos</div>
+        <div class="pi">
+          <div class="pi-top"><span class="pi-n">Clientes y proveedores</span><span class="pi-p" style="color:#3B6D11">100%</span></div>
+          <div class="bar-bg"><div class="bar-fg" style="width:100%;background:#639922"></div></div>
+          <div class="pi-m"><span>1/1</span><span class="pill pg">Entregado 23/04</span></div>
         </div>
-        <div>
-          <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em">Fase 2 — Configuración e implementación</div>
-          <div class="pi">
-            <div class="pi-top"><span class="pi-name">Discovery</span><span class="pi-pct" style="color:#3B6D11">100%</span></div>
-            <div class="bar-bg"><div class="bar-fg" style="width:100%;background:#639922"></div></div>
-            <div class="pi-meta"><span>10/10</span><span class="pill pg">Entregado 23/04</span></div>
-          </div>
-          <div class="pi">
-            <div class="pi-top"><span class="pi-name">Ventas</span><span class="pi-pct" style="color:#185FA5">89.5%</span></div>
-            <div class="bar-bg"><div class="bar-fg" style="width:89.5%;background:#378ADD"></div></div>
-            <div class="pi-meta"><span>17/19 actividades</span></div>
-          </div>
-          <div class="pi">
-            <div class="pi-top"><span class="pi-name">Proyectos</span><span class="pi-pct" style="color:#185FA5">76.5%</span></div>
-            <div class="bar-bg"><div class="bar-fg" style="width:76.5%;background:#378ADD"></div></div>
-            <div class="pi-meta"><span>13/17 actividades</span></div>
-          </div>
-          <div class="pi">
-            <div class="pi-top"><span class="pi-name">Contabilidad</span><span class="pi-pct" style="color:#854F0B">66.7%</span></div>
-            <div class="bar-bg"><div class="bar-fg" style="width:66.7%;background:#BA7517"></div></div>
-            <div class="pi-meta"><span>8/12 actividades</span></div>
-          </div>
+        <div class="pi">
+          <div class="pi-top"><span class="pi-n">Otros contactos</span><span class="pi-p" style="color:#3B6D11">100%</span></div>
+          <div class="bar-bg"><div class="bar-fg" style="width:100%;background:#639922"></div></div>
+          <div class="pi-m"><span>1/1</span><span class="pill pg">Entregado 23/04</span></div>
+        </div>
+        <div class="pi">
+          <div class="pi-top"><span class="pi-n">Productos y servicios</span><span class="pi-p" style="color:#854F0B">94.3%</span></div>
+          <div class="bar-bg"><div class="bar-fg" style="width:94.3%;background:#BA7517"></div></div>
+          <div class="pi-m"><span>6.6/7</span></div>
+          <div class="stopper">⚠ En espera de info del equipo Connector</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ct">Riesgos activos</div>
+        <div class="alert-box">
+          <div class="alert-t">Bloqueo activo: pruebas funcionales</div>
+          <div class="alert-s">Requiere participación activa del equipo Connector para avanzar</div>
+        </div>
+        <div class="alert-box" style="border-color:#BA7517">
+          <div class="alert-t">72.5% de horas consumidas</div>
+          <div class="alert-s">Quedan 96.4h para cerrar 26.4 actividades pendientes</div>
+        </div>
+        <div class="alert-box" style="border-color:#7F77DD">
+          <div class="alert-t">53 requerimientos en backlog</div>
+          <div class="alert-s">Ninguno aprobado aún — todos marcados como pendientes</div>
+        </div>
+        <div class="alert-box" style="border-color:#3B6D11;margin-bottom:0">
+          <div class="alert-t">Desfase vs plan: ~2 meses</div>
+          <div class="alert-s">Afectado por dependencias de información y participación del cliente</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ======== MÓDULOS ======== -->
+  <!-- ── MÓDULOS ── -->
   <div class="page" id="page-modulos">
-    <div class="filter-bar">
+    <div class="fbar">
       <label>Fase:</label>
-      <select id="selFase" onchange="renderModulos()">
+      <select id="selF" onchange="renderMods()">
         <option value="all">Todas</option>
         <option value="1">Fase 1 — Migración</option>
         <option value="2">Fase 2 — Configuración</option>
       </select>
       <label>Ordenar:</label>
-      <select id="selSort" onchange="renderModulos()">
+      <select id="selS" onchange="renderMods()">
         <option value="asc">Avance ↑</option>
         <option value="desc">Avance ↓</option>
-        <option value="nombre">Nombre</option>
+        <option value="nom">Nombre</option>
       </select>
     </div>
-    <div class="card" id="modulos-wrap"></div>
+    <div class="card" id="mods-wrap"></div>
   </div>
 
-  <!-- ======== HORAS ======== -->
+  <!-- ── HORAS ── -->
   <div class="page" id="page-horas">
     <div class="kpis">
-      <div class="kpi"><div class="lbl">Contratadas</div><div class="val">350h</div></div>
-      <div class="kpi"><div class="lbl">Consumidas</div><div class="val" style="color:#854F0B">225.7h</div><div class="hint">64.5% del total</div></div>
-      <div class="kpi"><div class="lbl">Restantes</div><div class="val" style="color:#3B6D11">124.3h</div><div class="hint">35.5% disponibles</div></div>
-      <div class="kpi"><div class="lbl">Burn rate</div><div class="val" style="color:#854F0B">64.5%</div><div class="hint">vs ~80% avance global</div></div>
+      <div class="kpi"><div class="kl">Contratadas</div><div class="kv">350h</div></div>
+      <div class="kpi"><div class="kl">Consumidas</div><div class="kv" style="color:#854F0B">253.6h</div><div class="kh">72.5% del total</div></div>
+      <div class="kpi"><div class="kl">Restantes</div><div class="kv" style="color:#3B6D11">96.4h</div><div class="kh">27.5% disponible</div></div>
+      <div class="kpi"><div class="kl">Sesiones</div><div class="kv">33</div><div class="kh">27h 9min totales</div></div>
+      <div class="kpi"><div class="kl">Burn rate</div><div class="kv" style="color:#854F0B">72.5%</div><div class="kh">vs ~80% de avance</div></div>
     </div>
     <div class="row2">
       <div class="card">
-        <div class="card-title">Desglose de horas</div>
-        <div style="position:relative;height:220px">
-          <canvas id="cHoras"></canvas>
-        </div>
+        <div class="ct">Distribución de horas</div>
+        <div style="position:relative;height:200px"><canvas id="cHoras"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Proporción consumida</div>
-        <div style="position:relative;height:180px">
-          <canvas id="cHorasPie"></canvas>
-        </div>
-        <div class="legend">
-          <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#854F0B"></span>Consumidas 225.7h</span>
-          <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#D3D1C7"></span>Restantes 124.3h</span>
+        <div class="ct">Proporción consumida vs disponible</div>
+        <div style="position:relative;height:160px"><canvas id="cHPie"></canvas></div>
+        <div class="leg">
+          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#BA7517"></span>Consumidas 253.6h</span>
+          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#D3D1C7"></span>Restantes 96.4h</span>
         </div>
       </div>
     </div>
     <div class="card full">
-      <div class="card-title">Progreso de horas</div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--color-text-secondary);margin-bottom:5px">
-        <span>0h</span>
-        <span style="font-weight:500;color:var(--color-text-primary)">225.7h consumidas de 350h contratadas</span>
-        <span>350h</span>
+      <div class="ct">Barra de progreso de horas</div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--color-text-secondary);margin-bottom:5px">
+        <span>0h</span><span style="font-weight:500;color:var(--color-text-primary)">253.6h consumidas de 350h contratadas</span><span>350h</span>
       </div>
       <div style="height:22px;border-radius:6px;background:var(--color-background-secondary);overflow:hidden">
-        <div style="width:64.5%;height:100%;background:#BA7517;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
-          <span style="font-size:11px;color:#FAEEDA;font-weight:500">64.5%</span>
+        <div style="width:72.5%;height:100%;background:#BA7517;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
+          <span style="font-size:11px;color:#FAEEDA;font-weight:500">72.5%</span>
         </div>
       </div>
       <div class="insight">
-        <strong style="font-weight:500">Análisis de eficiencia:</strong> Se han consumido 225.7h (64.5%) con un avance global del ~80%. Esto indica una buena relación esfuerzo-resultado. Las 124.3h restantes deberían ser suficientes para cerrar las actividades pendientes, especialmente en Contabilidad (4 pend.), CRM (6 pend.) y Compras (5 pend.).
+        Con 253.6h consumidas (72.5%) y un avance global del ~80%, la relación esfuerzo-resultado es positiva. Sin embargo, las 96.4h restantes son ajustadas para cerrar 26.4 actividades pendientes más el backlog de 53 requerimientos de desarrollo aún sin aprobar.
       </div>
     </div>
   </div>
 
-  <!-- ======== CRONOGRAMA ======== -->
+  <!-- ── CRONOGRAMA ── -->
   <div class="page" id="page-cronograma">
     <div class="row2">
       <div class="card">
-        <div class="card-title">Hitos del proyecto</div>
-        <div class="timeline-item">
-          <div class="tl-dot" style="background:#639922;margin-top:5px"></div>
-          <div class="tl-body">
-            <div class="tl-date">26 feb 2026</div>
-            <div class="tl-title">Envío de plantillas de levantamiento</div>
-            <div class="tl-desc">Inicio condicionado a entrega de datos del cliente</div>
-          </div>
+        <div class="ct">Hitos del proyecto</div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#639922"></div>
+          <div><div class="tl-d">26 feb 2026</div><div class="tl-t">Envío de plantillas de levantamiento</div><div class="tl-s">Inicio condicionado a entrega de datos del cliente</div></div>
         </div>
-        <div class="timeline-item">
-          <div class="tl-dot" style="background:#639922;margin-top:5px"></div>
-          <div class="tl-body">
-            <div class="tl-date">10 abr 2026</div>
-            <div class="tl-title">Recepción completa de plantillas</div>
-            <div class="tl-desc">Se habilita inicio de configuraciones</div>
-          </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#639922"></div>
+          <div><div class="tl-d">10 abr 2026</div><div class="tl-t">Recepción completa de plantillas</div><div class="tl-s">Se habilitó el inicio de configuraciones</div></div>
         </div>
-        <div class="timeline-item">
-          <div class="tl-dot" style="background:#639922;margin-top:5px"></div>
-          <div class="tl-body">
-            <div class="tl-date">13 abr 2026</div>
-            <div class="tl-title">Entrega de primeros avances</div>
-            <div class="tl-desc">3 de 7 módulos avanzados</div>
-          </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#639922"></div>
+          <div><div class="tl-d">13 abr 2026</div><div class="tl-t">Entrega de primeros avances</div><div class="tl-s">3 de 7 módulos avanzados</div></div>
         </div>
-        <div class="timeline-item">
-          <div class="tl-dot" style="background:#BA7517;margin-top:5px"></div>
-          <div class="tl-body">
-            <div class="tl-date">9 may 2026 (plan)</div>
-            <div class="tl-title">Entrega proyectada</div>
-            <div class="tl-desc">5 módulos: 3 pruebas, 2 configuración y 2 cierres</div>
-          </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#BA7517"></div>
+          <div><div class="tl-d">9 may 2026 (plan)</div><div class="tl-t">Entrega proyectada</div><div class="tl-s">5 módulos: 3 pruebas, 2 conf. y 2 cierres — cumplimiento parcial</div></div>
         </div>
-        <div class="timeline-item">
-          <div class="tl-dot" style="background:#639922;margin-top:5px"></div>
-          <div class="tl-body">
-            <div class="tl-date">25 may 2026</div>
-            <div class="tl-title">Entrega Fase 2</div>
-            <div class="tl-desc">5 módulos en configuración e implementación</div>
-          </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#639922"></div>
+          <div><div class="tl-d">25 may 2026</div><div class="tl-t">Entrega Fase 2 — configuración e implementación</div><div class="tl-s">5 módulos entregados</div></div>
         </div>
-        <div class="timeline-item">
-          <div class="tl-dot" style="background:#E24B4A;margin-top:5px"></div>
-          <div class="tl-body">
-            <div class="tl-date">Actual — bloqueo activo</div>
-            <div class="tl-title">Pruebas funcionales pendientes</div>
-            <div class="tl-desc">Requiere participación activa del equipo Connector</div>
-          </div>
+        <div class="tl-item" style="margin-bottom:0">
+          <div class="tl-dot" style="background:#E24B4A"></div>
+          <div><div class="tl-d">Actualidad — bloqueo activo</div><div class="tl-t">Pruebas funcionales pendientes</div><div class="tl-s">Requiere participación del equipo Connector</div></div>
         </div>
       </div>
       <div class="card">
-        <div class="card-title">Análisis de periodos</div>
+        <div class="ct">Periodos y métricas</div>
         <div style="margin-bottom:14px">
-          <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em">Espera por información</div>
-          <div style="font-size:13px;color:var(--color-text-primary);font-weight:500">26 feb → 10 abr · 5 semanas</div>
-          <div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Causa: falta de entrega de plantillas completas</div>
-          <div style="font-size:12px;color:var(--color-text-secondary)">Efecto: desfase en inicio de configuraciones</div>
+          <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em">Espera por información</div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">26 feb → 10 abr · 5 semanas</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">Efecto: desfase en inicio de configuraciones</div>
         </div>
         <div style="margin-bottom:14px">
-          <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em">Configuración e implementación</div>
-          <div style="font-size:13px;color:var(--color-text-primary);font-weight:500">13 abr → 25 may · 6 semanas</div>
-          <div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">7 módulos avanzados a segunda fase</div>
+          <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em">Configuración e implementación</div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">13 abr → 25 may · 6 semanas</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">7 módulos en segunda fase</div>
         </div>
-        <div style="border-top:0.5px solid var(--color-border-tertiary);padding-top:14px">
-          <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em">Métricas clave</div>
+        <div style="border-top:0.5px solid var(--color-border-tertiary);padding-top:12px">
           <table style="width:100%;font-size:12px">
-            <tr><td style="color:var(--color-text-secondary);padding:4px 0">Módulos con avance</td><td style="text-align:right;font-weight:500;color:var(--color-text-primary)">7 / 7</td></tr>
-            <tr><td style="color:var(--color-text-secondary);padding:4px 0">Módulos sin iniciar</td><td style="text-align:right;font-weight:500;color:#3B6D11">0 — resuelto</td></tr>
-            <tr><td style="color:var(--color-text-secondary);padding:4px 0">Tiempo de respuesta cliente</td><td style="text-align:right;font-weight:500;color:#854F0B">~2 semanas</td></tr>
-            <tr><td style="color:var(--color-text-secondary);padding:4px 0">Riesgo principal</td><td style="text-align:right"><span class="pill pr">Pruebas funcionales</span></td></tr>
-            <tr><td style="color:var(--color-text-secondary);padding:4px 0">Desfase vs plan original</td><td style="text-align:right;font-weight:500;color:#854F0B">~2 meses</td></tr>
+            <tr><td style="color:var(--color-text-secondary);padding:3px 0">Módulos con avance</td><td style="text-align:right;font-weight:500">7 / 7</td></tr>
+            <tr><td style="color:var(--color-text-secondary);padding:3px 0">Módulos sin iniciar</td><td style="text-align:right;font-weight:500;color:#3B6D11">0 — resuelto</td></tr>
+            <tr><td style="color:var(--color-text-secondary);padding:3px 0">Resp. del equipo cliente</td><td style="text-align:right"><span class="pill pa">~2 semanas</span></td></tr>
+            <tr><td style="color:var(--color-text-secondary);padding:3px 0">Riesgo principal</td><td style="text-align:right"><span class="pill pr">Pruebas funcionales</span></td></tr>
+            <tr><td style="color:var(--color-text-secondary);padding:3px 0">Desfase vs plan</td><td style="text-align:right;font-weight:500;color:#854F0B">~2 meses</td></tr>
           </table>
         </div>
       </div>
     </div>
     <div class="card full">
-      <div class="card-title">Sesiones realizadas con el cliente (30 en total)</div>
-      <div style="position:relative;height:200px">
-        <canvas id="cSesiones"></canvas>
-      </div>
-      <div class="legend" style="margin-top:8px">
-        <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#185FA5"></span>Alineación 16</span>
-        <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#3B6D11"></span>Capacitación 8</span>
-        <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#854F0B"></span>Requerimientos 4</span>
-        <span style="display:flex;align-items:center;gap:5px"><span class="lsq" style="background:#0C447C"></span>Pruebas funcionales 2</span>
+      <div class="ct">Sesiones con el cliente — por tipo de objetivo (33 sesiones · 27h 9min)</div>
+      <div style="position:relative;height:180px"><canvas id="cSes"></canvas></div>
+      <div class="leg" style="margin-top:8px">
+        <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#185FA5"></span>Alineación 16</span>
+        <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#3B6D11"></span>Capacitación 9</span>
+        <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#854F0B"></span>Requerimientos 4</span>
+        <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#0C447C"></span>Pruebas func. 2</span>
+        <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#888780"></span>Otros 2</span>
       </div>
     </div>
   </div>
 
-  <!-- ======== DETALLE ======== -->
+  <!-- ── BACKLOG DEV ── -->
+  <div class="page" id="page-backlog">
+    <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi"><div class="kl">Total reqs.</div><div class="kv" style="color:#534AB7">53</div></div>
+      <div class="kpi"><div class="kl">Aprobados</div><div class="kv" style="color:#E24B4A">0</div><div class="kh">todos pendientes</div></div>
+      <div class="kpi"><div class="kl">Módulo + reqs.</div><div class="kv" style="color:#534AB7">Diseño</div><div class="kh">30 requerimientos</div></div>
+      <div class="kpi"><div class="kl">En sesión</div><div class="kv">20</div><div class="kh">captados en reuniones</div></div>
+    </div>
+    <div class="row2" style="margin-bottom:12px">
+      <div class="card">
+        <div class="ct">Requerimientos por módulo</div>
+        <div style="position:relative;height:240px"><canvas id="cDev"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="ct">Fuente de captura</div>
+        <div style="position:relative;height:180px"><canvas id="cDevFuente"></canvas></div>
+        <div class="leg">
+          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#185FA5"></span>Sesión cliente 20</span>
+          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#534AB7"></span>Whiteboard 4</span>
+          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#E24B4A"></span>Pain points 29</span>
+        </div>
+      </div>
+    </div>
+    <div class="card full">
+      <div class="ct">Lista de requerimientos — muestra principales</div>
+      <div id="dev-list"></div>
+    </div>
+  </div>
+
+  <!-- ── DETALLE ── -->
   <div class="page" id="page-detalle">
     <div class="card full">
-      <div class="card-title">Tabla completa — todos los módulos</div>
-      <div style="overflow-x:auto;margin-top:8px">
+      <div class="ct">Tabla completa de módulos</div>
+      <div style="overflow-x:auto;margin-top:6px">
         <table class="tbl">
-          <thead>
-            <tr>
-              <th>Fase</th><th>Módulo</th><th>Avance</th><th>Total</th><th>Completadas</th><th>Pendientes</th><th>Entrega</th><th>Estado</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Fase</th><th>Módulo</th><th>Avance</th><th>Total</th><th>Comp.</th><th>Pend.</th><th>Entrega</th><th>Estado</th></tr></thead>
           <tbody id="tbody"></tbody>
         </table>
       </div>
     </div>
   </div>
 
-</div><!-- /wrap -->
+</div><!-- /w -->
 </div><!-- /app -->
 
 <script>
-// ══════════ LOGIN ══════════
+// ── LOGIN ──
 const PASS = 'zublime-connector';
 function checkPwd() {
   if (document.getElementById('pwd-input').value === PASS) {
@@ -418,129 +388,160 @@ function checkPwd() {
   }
 }
 
-// ══════════ DATOS ══════════
+// ── DATOS ──
 const mods = [
-  {fase:1, mod:'Clientes y proveedores',       pct:100,  tot:1,  comp:1,   pend:0, fecha:'23/04/2026', stopper:''},
-  {fase:1, mod:'Otros contactos y registros',  pct:100,  tot:1,  comp:1,   pend:0, fecha:'23/04/2026', stopper:''},
-  {fase:1, mod:'Productos y servicios',        pct:94.3, tot:7,  comp:6.6, pend:0.4, fecha:'',         stopper:'En espera de info del equipo Connector'},
-  {fase:2, mod:'Discovery',                    pct:100,  tot:10, comp:10,  pend:0, fecha:'23/04/2026', stopper:''},
-  {fase:2, mod:'CRM',                          pct:72.7, tot:22, comp:16,  pend:6, fecha:'',           stopper:'Módulo configurado; avanza a fase de incrementos'},
-  {fase:2, mod:'Ventas',                       pct:89.5, tot:19, comp:17,  pend:2, fecha:'',           stopper:''},
-  {fase:2, mod:'Contabilidad',                 pct:66.7, tot:12, comp:8,   pend:4, fecha:'',           stopper:''},
-  {fase:2, mod:'Compras',                      pct:73.7, tot:19, comp:14,  pend:5, fecha:'',           stopper:''},
-  {fase:2, mod:'Proyectos',                    pct:76.5, tot:17, comp:13,  pend:4, fecha:'',           stopper:''},
-  {fase:2, mod:'Inventario',                   pct:76.9, tot:13, comp:10,  pend:3, fecha:'',           stopper:''},
-  {fase:2, mod:'Fabricación',                  pct:80,   tot:5,  comp:4,   pend:1, fecha:'',           stopper:''},
+  {f:1,n:'Clientes y proveedores',       p:100,  t:1,  c:1,   pe:0,   d:'23/04/2026', s:''},
+  {f:1,n:'Otros contactos y registros',  p:100,  t:1,  c:1,   pe:0,   d:'23/04/2026', s:''},
+  {f:1,n:'Productos y servicios',        p:94.3, t:7,  c:6.6, pe:0.4, d:'',           s:'En espera de info del equipo Connector'},
+  {f:2,n:'Discovery',                    p:100,  t:10, c:10,  pe:0,   d:'23/04/2026', s:''},
+  {f:2,n:'CRM',                          p:72.7, t:22, c:16,  pe:6,   d:'',           s:'Módulo impl.; avanza a fase de incrementos'},
+  {f:2,n:'Ventas',                       p:89.5, t:19, c:17,  pe:2,   d:'',           s:''},
+  {f:2,n:'Contabilidad',                 p:66.7, t:12, c:8,   pe:4,   d:'',           s:''},
+  {f:2,n:'Compras',                      p:73.7, t:19, c:14,  pe:5,   d:'',           s:''},
+  {f:2,n:'Proyectos',                    p:76.5, t:17, c:13,  pe:4,   d:'',           s:''},
+  {f:2,n:'Inventario',                   p:76.9, t:13, c:10,  pe:3,   d:'',           s:''},
+  {f:2,n:'Fabricación',                  p:80,   t:5,  c:4,   pe:1,   d:'',           s:''},
 ];
 
-// ══════════ KPIs calculados ══════════
-const totalComp = mods.reduce((a,m)=>a+m.comp, 0);
-const totalPend = mods.reduce((a,m)=>a+m.pend, 0);
-const globalPct = Math.round(mods.reduce((a,m)=>a+m.pct,0)/mods.length);
+const devItems = [
+  {txt:'Cambiar idioma perfil de usuario a español en preferencias',                         mod:'Comercial', fuente:'Sesión',      fecha:'13/04'},
+  {txt:'Corregir permisos de usuario en todos los módulos',                                  mod:'Todos',     fuente:'Sesión',      fecha:''},
+  {txt:'Transferir oportunidades ganadas automáticamente desde CRM a Proyectos',             mod:'Comercial', fuente:'Sesión',      fecha:'22/04'},
+  {txt:'Agregar campo de Gasto Esperado (informativo) al CRM',                               mod:'Comercial', fuente:'Sesión',      fecha:'22/04'},
+  {txt:'Exportar tablero de proyectos a PDF con resumen de tareas',                          mod:'Proyectos', fuente:'Sesión',      fecha:'11/05'},
+  {txt:'Configurar restricciones de etapa hasta completar subtareas requeridas',             mod:'Proyectos', fuente:'Sesión',      fecha:'15/05'},
+  {txt:'QR para visualizar imágenes de contenido de cajas en inventario',                    mod:'Inventario',fuente:'Sesión',      fecha:'22/05'},
+  {txt:'Notificación automática al realizar salida de productos en bodega',                  mod:'Inventario',fuente:'Sesión',      fecha:'22/05'},
+  {txt:'Crear sección de Brief con checklist de lectura para diseñadores',                   mod:'Diseño',    fuente:'Pain point',  fecha:''},
+  {txt:'Sección de To-Dos con responsable, fecha de entrega y adjuntos por tarea',           mod:'Diseño',    fuente:'Pain point',  fecha:''},
+  {txt:'Restricción de finalización de To-Do únicamente a la persona asignada',              mod:'Diseño',    fuente:'Pain point',  fecha:''},
+  {txt:'Calendario automático que refleje tareas y fechas de To-Dos',                        mod:'Diseño',    fuente:'Pain point',  fecha:''},
+  {txt:'Carpeta de Recursos de Marca y Archivos Finales/Aprobados con permisos',             mod:'Diseño',    fuente:'Pain point',  fecha:''},
+  {txt:'Sección de Planos con aprobación doble (Comercial + PM) y notificación a taller',   mod:'Diseño',    fuente:'Pain point',  fecha:''},
+  {txt:'Botones: Solicitud de Cambios, Archivos de Impresión y Planos',                     mod:'Diseño',    fuente:'Pain point',  fecha:''},
+  {txt:'Automatización de reporting: hit rate, proyectos por creativo, tiempo promedio',     mod:'General',   fuente:'Whiteboard',  fecha:''},
+];
 
-document.getElementById('kpi-global').textContent = globalPct + '%';
-document.getElementById('kpi-comp').textContent   = totalComp.toFixed(1);
-document.getElementById('kpi-comp-hint').textContent = 'de ' + (totalComp+totalPend).toFixed(1) + ' totales';
-document.getElementById('leg-comp').textContent   = totalComp.toFixed(1);
-document.getElementById('leg-pend').textContent   = totalPend.toFixed(1);
-
-// ══════════ HELPERS ══════════
+// ── HELPERS ──
 function gc(p){ return p>=80?'#639922': p>=65?'#378ADD':'#BA7517'; }
-
-function pillStatus(pct, stopper){
-  if(stopper && pct<100) return '<span class="pill pa">Stopper</span>';
-  if(pct===100)          return '<span class="pill pg">Completado</span>';
-  if(pct>=80)            return '<span class="pill pb">Casi listo</span>';
-  if(pct>=65)            return '<span class="pill pb">En curso</span>';
+function ps(p){
+  if(p===100) return '<span class="pill pg">Completado</span>';
+  if(p>=80)   return '<span class="pill pb">Casi listo</span>';
+  if(p>=65)   return '<span class="pill pb">En curso</span>';
   return '<span class="pill pa">En progreso</span>';
 }
 
-// ══════════ NAV ══════════
-let horasInit=false, cronInit=false;
-function nav(id, btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  btn.classList.add('active');
-  if(id==='modulos')   renderModulos();
-  if(id==='horas')     renderHoras();
-  if(id==='cronograma')renderCronograma();
-  if(id==='detalle')   renderTabla();
-}
-
-// ══════════ MÓDULOS ══════════
-function renderModulos(){
-  const fase = document.getElementById('selFase').value;
-  const sort = document.getElementById('selSort').value;
-  let rows = fase==='all' ? [...mods] : mods.filter(m=>m.fase==fase);
-  if(sort==='asc')  rows.sort((a,b)=>a.pct-b.pct);
-  else if(sort==='desc') rows.sort((a,b)=>b.pct-a.pct);
-  else rows.sort((a,b)=>a.mod.localeCompare(b.mod));
-  document.getElementById('modulos-wrap').innerHTML =
-    '<div class="card-title">'+rows.length+' módulos</div>' +
-    rows.map(m=>`<div class="pi">
-      <div class="pi-top"><span class="pi-name" style="font-weight:500">${m.mod}</span><span class="pi-pct" style="color:${gc(m.pct)}">${m.pct.toFixed(1)}%</span></div>
-      <div class="bar-bg"><div class="bar-fg" style="width:${Math.min(m.pct,100)}%;background:${gc(m.pct)}"></div></div>
-      <div class="pi-meta"><span>Fase ${m.fase}</span><span>${m.comp}/${m.tot} act.</span><span>${m.pend} pend.</span>${m.fecha?'<span class="pill pg">'+m.fecha+'</span>':''}${m.stopper?'<span class="pill pa">Stopper</span>':''}</div>
-      ${m.stopper?'<div class="stopper">⚠ '+m.stopper+'</div>':''}
-    </div>`).join('');
-}
-
-// ══════════ DETALLE ══════════
-function renderTabla(){
-  document.getElementById('tbody').innerHTML = mods.map(m=>`<tr>
-    <td><span class="pill ${m.fase===1?'pb':'pgy'}">Fase ${m.fase}</span></td>
-    <td style="font-weight:500">${m.mod}</td>
-    <td><span style="font-weight:500;color:${gc(m.pct)}">${m.pct.toFixed(1)}%</span></td>
-    <td style="text-align:center">${m.tot}</td>
-    <td style="text-align:center">${m.comp}</td>
-    <td style="text-align:center;color:${m.pend>0?'#854F0B':'#3B6D11'};font-weight:500">${m.pend}</td>
-    <td>${m.fecha||'—'}</td>
-    <td>${pillStatus(m.pct,m.stopper)}</td>
-  </tr>`).join('');
-}
-
-// ══════════ CHARTS ══════════
-let hChart, hPie, sChart;
-
-function renderHoras(){
-  if(horasInit) return; horasInit=true;
-  hChart = new Chart(document.getElementById('cHoras'),{
-    type:'bar',
-    data:{labels:['Contratadas','Consumidas','Restantes'],datasets:[{data:[350,225.71,124.29],backgroundColor:['#B5D4F4','#BA7517','#639922'],borderRadius:5}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'h',font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}
-  });
-  hPie = new Chart(document.getElementById('cHorasPie'),{
-    type:'doughnut',
-    data:{labels:['Consumidas','Restantes'],datasets:[{data:[225.71,124.29],backgroundColor:['#BA7517','#D3D1C7'],borderWidth:0,hoverOffset:4}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}
-  });
-}
-
-function renderCronograma(){
-  if(cronInit) return; cronInit=true;
-  sChart = new Chart(document.getElementById('cSesiones'),{
-    type:'bar',
-    data:{labels:['Alineación','Capacitación','Requerimientos','Pruebas funcionales'],datasets:[{data:[16,8,4,2],backgroundColor:['#185FA5','#3B6D11','#854F0B','#0C447C'],borderRadius:5}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:4,font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}
-  });
-}
-
-// ══════════ INIT CHARTS RESUMEN ══════════
+// ── KPIs calculados ──
 function initDashboard(){
+  const tc = mods.reduce((a,m)=>a+m.c, 0);
+  const tp = mods.reduce((a,m)=>a+m.pe, 0);
+  const gp = Math.round(mods.reduce((a,m)=>a+m.p, 0)/mods.length);
+  document.getElementById('kg').textContent       = gp + '%';
+  document.getElementById('kcomp').textContent    = tc.toFixed(1);
+  document.getElementById('kcomp-h').textContent  = 'de ' + (tc+tp).toFixed(1) + ' totales';
+  document.getElementById('leg-comp').textContent = tc.toFixed(1);
+  document.getElementById('leg-pend').textContent = tp.toFixed(1);
+
   // Barra horizontal Fase 2
-  const f2 = mods.filter(m=>m.fase===2 && m.mod!=='Discovery');
+  const f2 = mods.filter(m=>m.f===2 && m.n!=='Discovery');
   new Chart(document.getElementById('cBar'),{
     type:'bar',
-    data:{labels:f2.map(m=>m.mod), datasets:[{axis:'y', data:f2.map(m=>m.pct), backgroundColor:f2.map(m=>gc(m.pct)), borderRadius:4}]},
+    data:{labels:f2.map(m=>m.n), datasets:[{axis:'y', data:f2.map(m=>m.p), backgroundColor:f2.map(m=>gc(m.p)), borderRadius:4}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},y:{ticks:{font:{size:10}},grid:{display:false}}}}
   });
   // Donut actividades
   new Chart(document.getElementById('cDonut'),{
     type:'doughnut',
-    data:{labels:['Completadas','Pendientes'], datasets:[{data:[Math.round(totalComp*10)/10, Math.round(totalPend*10)/10], backgroundColor:['#185FA5','#D3D1C7'], borderWidth:0, hoverOffset:4}]},
+    data:{labels:['Completadas','Pendientes'], datasets:[{data:[Math.round(tc*10)/10, Math.round(tp*10)/10], backgroundColor:['#185FA5','#D3D1C7'], borderWidth:0, hoverOffset:4}]},
     options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}
   });
+}
+
+// ── NAV ──
+let hC,hP,sC,devInit=false;
+function nav(id, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='modulos')   renderMods();
+  if(id==='horas')     renderHoras();
+  if(id==='cronograma')renderCrono();
+  if(id==='backlog')   renderBacklog();
+  if(id==='detalle')   renderTabla();
+}
+
+// ── MÓDULOS ──
+function renderMods(){
+  const f = document.getElementById('selF').value;
+  const s = document.getElementById('selS').value;
+  let rows = f==='all' ? [...mods] : mods.filter(m=>m.f==f);
+  if(s==='asc')  rows.sort((a,b)=>a.p-b.p);
+  else if(s==='desc') rows.sort((a,b)=>b.p-a.p);
+  else rows.sort((a,b)=>a.n.localeCompare(b.n));
+  document.getElementById('mods-wrap').innerHTML =
+    '<div class="ct">'+rows.length+' módulos</div>' +
+    rows.map(m=>`<div class="pi">
+      <div class="pi-top"><span class="pi-n" style="font-weight:500">${m.n}</span><span class="pi-p" style="color:${gc(m.p)}">${m.p.toFixed(1)}%</span></div>
+      <div class="bar-bg"><div class="bar-fg" style="width:${Math.min(m.p,100)}%;background:${gc(m.p)}"></div></div>
+      <div class="pi-m"><span>Fase ${m.f}</span><span>${m.c}/${m.t} act.</span><span>${m.pe} pendientes</span>${m.d?'<span class="pill pg">'+m.d+'</span>':''}${m.s&&m.p<100?'<span class="pill pa">Stopper</span>':''}</div>
+      ${m.s&&m.p<100?'<div class="stopper">⚠ '+m.s+'</div>':''}
+    </div>`).join('');
+}
+
+// ── DETALLE ──
+function renderTabla(){
+  document.getElementById('tbody').innerHTML = mods.map(m=>`<tr>
+    <td><span class="pill ${m.f===1?'pb':'pgy'}">Fase ${m.f}</span></td>
+    <td style="font-weight:500">${m.n}</td>
+    <td><span style="font-weight:500;color:${gc(m.p)}">${m.p.toFixed(1)}%</span></td>
+    <td style="text-align:center">${m.t}</td>
+    <td style="text-align:center">${m.c}</td>
+    <td style="text-align:center;color:${m.pe>0?'#854F0B':'#3B6D11'};font-weight:500">${m.pe}</td>
+    <td>${m.d||'—'}</td>
+    <td>${ps(m.p)}</td>
+  </tr>`).join('');
+}
+
+// ── BACKLOG ──
+function renderBacklog(){
+  if(!devInit){ devInit=true; } else {
+    // destroy existing charts if re-entering
+    const c1=document.getElementById('cDev'),c2=document.getElementById('cDevFuente');
+    if(c1._ch)c1._ch.destroy();
+    if(c2._ch)c2._ch.destroy();
+  }
+  document.getElementById('dev-list').innerHTML = devItems.map(d=>`
+    <div class="dev-item">
+      <div class="dev-txt">${d.txt}</div>
+      <div class="dev-meta">
+        <span class="pill pp">${d.mod}</span>
+        <span class="pill pgy">${d.fuente}</span>
+        ${d.fecha?'<span class="pill pg">'+d.fecha+'</span>':''}
+        <span class="pill pr">Pendiente</span>
+      </div>
+    </div>`).join('');
+  const c1=document.getElementById('cDev'),c2=document.getElementById('cDevFuente');
+  if(!c1||!c2)return;
+  c1._ch=new Chart(c1,{type:'bar',data:{labels:['Diseño','Comercial','Proyectos','Inventario','Todos','Otros'],datasets:[{data:[30,9,5,2,1,6],backgroundColor:['#534AB7','#185FA5','#3B6D11','#BA7517','#888780','#0C447C'],borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},y:{ticks:{font:{size:10}},grid:{display:false}}}}});
+  c2._ch=new Chart(c2,{type:'doughnut',data:{labels:['Sesión cliente','Whiteboard','Pain points'],datasets:[{data:[20,4,29],backgroundColor:['#185FA5','#534AB7','#E24B4A'],borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}});
+}
+
+// ── HORAS ──
+function renderHoras(){
+  const c1=document.getElementById('cHoras'),c2=document.getElementById('cHPie');
+  if(!c1||!c2)return;
+  if(hC)hC.destroy(); if(hP)hP.destroy();
+  hC=new Chart(c1,{type:'bar',data:{labels:['Contratadas','Consumidas','Restantes'],datasets:[{data:[350,253.61,96.39],backgroundColor:['#B5D4F4','#BA7517','#639922'],borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'h',font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}});
+  hP=new Chart(c2,{type:'doughnut',data:{labels:['Consumidas','Restantes'],datasets:[{data:[253.61,96.39],backgroundColor:['#BA7517','#D3D1C7'],borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}});
+}
+
+// ── CRONOGRAMA ──
+function renderCrono(){
+  const c=document.getElementById('cSes');
+  if(!c)return;
+  if(sC)sC.destroy();
+  sC=new Chart(c,{type:'bar',data:{labels:['Alineación','Capacitación','Requerimientos','Pruebas func.','Otros'],datasets:[{data:[16,9,4,2,2],backgroundColor:['#185FA5','#3B6D11','#854F0B','#0C447C','#888780'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:4,font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}});
 }
 </script>
 </body>
