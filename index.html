@@ -18,8 +18,23 @@
   --border-radius-md:8px;
   --border-radius-lg:12px;
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+
+  /* Agregadas: usadas por los badges/estados del nuevo diseño 'eco'.
+     Reutilizan los mismos colores que ya usaban las píldoras .pg/.pb/.pa/.pr
+     del dashboard anterior, para mantener consistencia visual. */
+  --color-background-success:#EAF3DE;
+  --color-text-success:#27500A;
+  --color-background-info:#E6F1FB;
+  --color-text-info:#0C447C;
+  --color-border-info:rgba(24,95,165,0.35);
+  --color-background-warning:#FAEEDA;
+  --color-text-warning:#633806;
+  --color-background-danger:#FCEBEB;
+  --color-text-danger:#791F1F;
 }
 body{font-family:var(--font-sans);background:#f5f4f0;color:var(--color-text-primary);min-height:100vh}
+
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 
 /* ── LOGIN ── */
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f5f4f0}
@@ -33,69 +48,70 @@ body{font-family:var(--font-sans);background:#f5f4f0;color:var(--color-text-prim
 .login-box button:hover{background:#0e4a84}
 #login-error{color:#791F1F;font-size:12px;margin-top:10px;display:none}
 
-/* ── APP ── */
+/* ── APP (contenedor del nuevo dashboard 'eco') ── */
 #app{display:none}
 .w{padding:1.25rem 1.5rem 3rem;max-width:1200px;margin:0 auto}
-.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px}
-.hdr-l{display:flex;align-items:center;gap:10px}
-.logo{width:34px;height:34px;border-radius:var(--border-radius-md);background:#185FA5;display:flex;align-items:center;justify-content:center;color:#E6F1FB;font-size:12px;font-weight:500;flex-shrink:0}
-.h1{font-size:15px;font-weight:500;color:var(--color-text-primary)}
-.sub{font-size:11px;color:var(--color-text-secondary)}
-.tabs{display:flex;gap:2px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;width:fit-content;margin-bottom:1.25rem;border:0.5px solid var(--color-border-tertiary);flex-wrap:wrap}
-.tab{padding:6px 14px;font-size:12px;cursor:pointer;border:none;background:transparent;color:var(--color-text-secondary);border-radius:var(--border-radius-md);transition:all .15s;font-weight:400}
-.tab.active{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500;border:0.5px solid var(--color-border-secondary)}
-.tab:hover:not(.active){color:var(--color-text-primary);background:var(--color-background-primary)}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.25rem}
-.kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px}
-.kl{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
-.kv{font-size:24px;font-weight:500;line-height:1;color:var(--color-text-primary)}
-.kh{font-size:11px;color:var(--color-text-tertiary);margin-top:3px}
-.row2{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:12px}
-.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px}
-.ct{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:12px}
-.full{grid-column:1/-1}
-.page{display:none}
-.page.active{display:block}
-.pi{margin-bottom:13px}
-.pi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
-.pi-n{font-size:13px;color:var(--color-text-primary)}
-.pi-p{font-size:12px;font-weight:500}
-.bar-bg{height:7px;border-radius:4px;background:var(--color-background-secondary);overflow:hidden}
-.bar-fg{height:100%;border-radius:4px}
-.pi-m{font-size:11px;color:var(--color-text-tertiary);margin-top:4px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.pill{display:inline-block;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:500;white-space:nowrap}
-.pg{background:#EAF3DE;color:#27500A}
-.pa{background:#FAEEDA;color:#633806}
-.pr{background:#FCEBEB;color:#791F1F}
-.pb{background:#E6F1FB;color:#0C447C}
-.pgy{background:#F1EFE8;color:#444441}
-.pp{background:#EEEDFE;color:#26215C}
-.stopper{display:inline-block;font-size:10px;background:#FAEEDA;color:#633806;border-radius:4px;padding:2px 8px;margin-top:4px;border:0.5px solid #FAC775}
-.leg{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:11px;color:var(--color-text-secondary)}
-.lsq{width:9px;height:9px;border-radius:2px;flex-shrink:0}
-.fbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
-.fbar label{font-size:12px;color:var(--color-text-secondary)}
-select{font-size:12px;padding:5px 8px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer}
-.tbl{width:100%;border-collapse:collapse;font-size:12px}
-.tbl th{text-align:left;padding:6px 9px;font-size:10px;font-weight:500;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-secondary);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
-.tbl td{padding:8px 9px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle}
-.tbl tr:hover td{background:var(--color-background-secondary)}
-.insight{padding:11px 13px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border-left:3px solid #378ADD;border-bottom-left-radius:0;border-top-left-radius:0;font-size:12px;color:var(--color-text-primary);line-height:1.6;margin-top:10px}
-.tl-item{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
-.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.tl-d{font-size:10px;color:var(--color-text-secondary)}
-.tl-t{font-size:12px;color:var(--color-text-primary);font-weight:500}
-.tl-s{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
-.dev-item{padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
-.dev-item:last-child{border-bottom:none}
-.dev-txt{font-size:12px;color:var(--color-text-primary);line-height:1.5;margin-bottom:5px}
-.dev-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.alert-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:10px;border-left:3px solid #E24B4A;border-bottom-left-radius:0;border-top-left-radius:0}
-.alert-t{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
-.alert-s{font-size:11px;color:var(--color-text-secondary)}
+
+.eco-root { font-family: var(--font-sans); padding: 1rem 0; }
+.eco-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.eco-badge { font-size: 11px; padding: 3px 9px; border-radius: var(--border-radius-md); font-weight: 500; }
+.eco-badge.green { background: var(--color-background-success); color: var(--color-text-success); }
+.eco-badge.blue  { background: var(--color-background-info); color: var(--color-text-info); }
+.eco-badge.amber { background: var(--color-background-warning); color: var(--color-text-warning); }
+.eco-cards { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.eco-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.875rem 1rem; }
+.eco-card-label { font-size: 12px; color: var(--color-text-secondary); margin: 0 0 4px; }
+.eco-card-val { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin: 0; line-height: 1; }
+.eco-card-sub { font-size: 11px; color: var(--color-text-tertiary); margin: 4px 0 0; }
+.eco-tabs { display: flex; gap: 4px; margin-bottom: 1.25rem; border-bottom: 0.5px solid var(--color-border-tertiary); flex-wrap:wrap; }
+.eco-tab { font-size: 13px; padding: 6px 14px; border: none; background: transparent; color: var(--color-text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.eco-tab.active { color: var(--color-text-primary); border-bottom-color: var(--color-text-primary); font-weight: 500; }
+.eco-panel { display: none; }
+.eco-panel.active { display: block; }
+.eco-filters { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
+.eco-filters span { font-size: 12px; color: var(--color-text-secondary); }
+.eco-btn { font-size: 12px; padding: 4px 12px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-primary); cursor: pointer; }
+.eco-btn:hover { background: var(--color-background-secondary); }
+.eco-btn.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
+.eco-grid2 { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 14px; margin-bottom: 1.25rem; }
+.eco-box { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; }
+.eco-box-title { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 12px; }
+.eco-row { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; font-size: 13px; }
+.eco-row-name { min-width: 100px; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; }
+.eco-bar-bg { flex: 1; height: 6px; background: var(--color-border-tertiary); border-radius: 99px; overflow: hidden; }
+.eco-bar-fill { height: 100%; border-radius: 99px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+.eco-pct { width: 34px; text-align: right; color: var(--color-text-secondary); font-size: 11px; }
+.eco-status { display: inline-flex; font-size: 10px; padding: 1px 6px; border-radius: var(--border-radius-md); white-space: nowrap; }
+.eco-status.done { background: var(--color-background-success); color: var(--color-text-success); }
+.eco-status.prog { background: var(--color-background-warning); color: var(--color-text-warning); }
+.eco-status.pend { background: var(--color-background-danger); color: var(--color-text-danger); }
+.eco-hours-bar { position: relative; height: 18px; background: var(--color-border-tertiary); border-radius: 99px; overflow: hidden; margin: 8px 0 6px; }
+.eco-hours-fill { height: 100%; border-radius: 99px; transition: width 0.6s ease; }
+.eco-hours-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); flex-wrap:wrap; gap:4px; }
+.eco-stopper-list { list-style: none; margin: 0; padding: 0; }
+.eco-stopper-item { display: flex; gap: 8px; align-items: flex-start; padding: 7px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 12px; }
+.eco-stopper-item:last-child { border-bottom: none; }
+.eco-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.eco-stopper-mod { font-weight: 500; color: var(--color-text-primary); min-width: 90px; }
+.eco-stopper-desc { color: var(--color-text-secondary); }
+.eco-chart-wrap { position: relative; width: 100%; }
+.eco-hito { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 12px; }
+.eco-hito:last-child { border-bottom: none; }
+.eco-hito-date { min-width: 100px; color: var(--color-text-tertiary); }
+.eco-hito-desc { color: var(--color-text-primary); flex: 1; }
+.eco-hito-impact { color: var(--color-text-secondary); font-size: 11px; margin-top: 2px; }
+.eco-fase-pill { display: inline-flex; font-size: 10px; padding: 1px 6px; border-radius: var(--border-radius-md); margin-right: 4px; }
+.eco-fase-mig { background: var(--color-background-info); color: var(--color-text-info); }
+.eco-fase-cfg { background: var(--color-background-warning); color: var(--color-text-warning); }
+
+/* Responsive agregado (el snippet nuevo no traía media queries) */
 @media(max-width:700px){
-  .row2{grid-template-columns:1fr}
   .w{padding:1rem 1rem 2rem}
+  .eco-cards{grid-template-columns:repeat(2,1fr)}
+  .eco-grid2{grid-template-columns:1fr}
+}
+@media(max-width:420px){
+  .eco-cards{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -117,260 +133,147 @@ select{font-size:12px;padding:5px 8px;border-radius:var(--border-radius-md);bord
 <!-- ══════════ APP ══════════ -->
 <div id="app">
 <div class="w">
-  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Cuadro de mando Connector Agency 2026 — implementación Odoo, avance por módulo, horas, sesiones y backlog de desarrollo</h2>
+<h2 class="sr-only">Cuadro de mando interactivo del programa de trabajo Connector Agency — avance por módulo, horas, cronograma y stoppers.</h2>
 
-  <div class="hdr">
-    <div class="hdr-l">
-      <div class="logo">CA</div>
-      <div>
-        <div class="h1">Connector Agency — Implementación Odoo 2026</div>
-        <div class="sub">Cuadro de mando · Datos al 28 mayo 2026 · 33 sesiones realizadas</div>
-      </div>
-    </div>
-    <span class="pill pgy">2 Fases · 11 módulos</span>
+<div class="eco-root">
+  <div class="eco-header">
+    <span style="font-size:20px;font-weight:500;color:var(--color-text-primary)">Connector Agency — cuadro de mando</span>
+    <span class="eco-badge green">Go Live: 13–15 jul</span>
+    <span class="eco-badge blue">Capacitaciones: finalizadas</span>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" onclick="nav('resumen',this)">Resumen</button>
-    <button class="tab" onclick="nav('modulos',this)">Módulos</button>
-    <button class="tab" onclick="nav('horas',this)">Horas</button>
-    <button class="tab" onclick="nav('cronograma',this)">Cronograma</button>
-    <button class="tab" onclick="nav('backlog',this)">Backlog dev</button>
-    <button class="tab" onclick="nav('detalle',this)">Detalle</button>
+  <div class="eco-cards">
+    <div class="eco-card">
+      <p class="eco-card-label">Avance promedio</p>
+      <p class="eco-card-val" id="card-avance">—</p>
+      <p class="eco-card-sub">7 módulos + migración</p>
+    </div>
+    <div class="eco-card">
+      <p class="eco-card-label">Actividades completadas</p>
+      <p class="eco-card-val" id="card-completadas">—</p>
+      <p class="eco-card-sub" id="card-completadas-sub">—</p>
+    </div>
+    <div class="eco-card">
+      <p class="eco-card-label">Horas consumidas</p>
+      <p class="eco-card-val" id="card-horas-pct">—</p>
+      <p class="eco-card-sub" id="card-horas-sub">—</p>
+    </div>
+    <div class="eco-card">
+      <p class="eco-card-label">Horas restantes</p>
+      <p class="eco-card-val" id="card-horas-rest">—</p>
+      <p class="eco-card-sub">margen disponible</p>
+    </div>
   </div>
 
-  <!-- ── RESUMEN ── -->
-  <div class="page active" id="page-resumen">
-    <div class="kpis">
-      <div class="kpi"><div class="kl">Avance global</div><div class="kv" style="color:#185FA5" id="kg">—</div><div class="kh">prom. ponderado</div></div>
-      <div class="kpi"><div class="kl">Módulos 100%</div><div class="kv" style="color:#3B6D11">2</div><div class="kh">Clientes, Discovery</div></div>
-      <div class="kpi"><div class="kl">Act. completadas</div><div class="kv" id="kcomp">—</div><div class="kh" id="kcomp-h">—</div></div>
-      <div class="kpi"><div class="kl">Horas consumidas</div><div class="kv" style="color:#854F0B">253.6</div><div class="kh">de 350h (72.5%)</div></div>
-      <div class="kpi"><div class="kl">Horas restantes</div><div class="kv" style="color:#3B6D11">96.4</div><div class="kh">27.5% disponibles</div></div>
-      <div class="kpi"><div class="kl">Backlog dev</div><div class="kv" style="color:#534AB7">53</div><div class="kh">requerimientos</div></div>
+  <div class="eco-tabs">
+    <button class="eco-tab active" onclick="switchTab('avance', this)">Avance por módulo</button>
+    <button class="eco-tab" onclick="switchTab('actividades', this)">Actividades</button>
+    <button class="eco-tab" onclick="switchTab('horas', this)">Horas</button>
+    <button class="eco-tab" onclick="switchTab('cronograma', this)">Cronograma</button>
+  </div>
+
+  <div id="tab-avance" class="eco-panel active">
+    <div class="eco-filters">
+      <span>Filtrar:</span>
+      <button class="eco-btn active" onclick="filterMod('all',this)">Todos</button>
+      <button class="eco-btn" onclick="filterMod('done',this)">Completo (100%)</button>
+      <button class="eco-btn" onclick="filterMod('progress',this)">En progreso</button>
+      <button class="eco-btn" onclick="filterMod('risk',this)">Posible desviación (&lt;75%)</button>
     </div>
-    <div class="row2">
-      <div class="card">
-        <div class="ct">Avance por módulo — Fase 2</div>
-        <div style="position:relative;height:260px"><canvas id="cBar"></canvas></div>
+    <div class="eco-grid2">
+      <div class="eco-box">
+        <p class="eco-box-title">Avance por módulo</p>
+        <div id="module-list"></div>
       </div>
-      <div class="card">
-        <div class="ct">Actividades: completadas vs pendientes</div>
-        <div style="position:relative;height:180px"><canvas id="cDonut"></canvas></div>
-        <div class="leg">
-          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#185FA5"></span>Completadas <span id="leg-comp"></span></span>
-          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#D3D1C7"></span>Pendientes <span id="leg-pend"></span></span>
-        </div>
-      </div>
-    </div>
-    <div class="row2" style="margin-bottom:12px">
-      <div class="card">
-        <div class="ct">Fase 1 — Migración de datos</div>
-        <div class="pi">
-          <div class="pi-top"><span class="pi-n">Clientes y proveedores</span><span class="pi-p" style="color:#3B6D11">100%</span></div>
-          <div class="bar-bg"><div class="bar-fg" style="width:100%;background:#639922"></div></div>
-          <div class="pi-m"><span>1/1</span><span class="pill pg">Entregado 23/04</span></div>
-        </div>
-        <div class="pi">
-          <div class="pi-top"><span class="pi-n">Otros contactos</span><span class="pi-p" style="color:#3B6D11">100%</span></div>
-          <div class="bar-bg"><div class="bar-fg" style="width:100%;background:#639922"></div></div>
-          <div class="pi-m"><span>1/1</span><span class="pill pg">Entregado 23/04</span></div>
-        </div>
-        <div class="pi">
-          <div class="pi-top"><span class="pi-n">Productos y servicios</span><span class="pi-p" style="color:#854F0B">94.3%</span></div>
-          <div class="bar-bg"><div class="bar-fg" style="width:94.3%;background:#BA7517"></div></div>
-          <div class="pi-m"><span>6.6/7</span></div>
-          <div class="stopper">⚠ En espera de info del equipo Connector</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="ct">Riesgos activos</div>
-        <div class="alert-box">
-          <div class="alert-t">Bloqueo activo: pruebas funcionales</div>
-          <div class="alert-s">Requiere participación activa del equipo Connector para avanzar</div>
-        </div>
-        <div class="alert-box" style="border-color:#BA7517">
-          <div class="alert-t">72.5% de horas consumidas</div>
-          <div class="alert-s">Quedan 96.4h para cerrar 26.4 actividades pendientes</div>
-        </div>
-        <div class="alert-box" style="border-color:#7F77DD">
-          <div class="alert-t">53 requerimientos en backlog</div>
-          <div class="alert-s">Ninguno aprobado aún — todos marcados como pendientes</div>
-        </div>
-        <div class="alert-box" style="border-color:#3B6D11;margin-bottom:0">
-          <div class="alert-t">Desfase vs plan: ~2 meses</div>
-          <div class="alert-s">Afectado por dependencias de información y participación del cliente</div>
-        </div>
+      <div class="eco-box">
+        <p class="eco-box-title">Stoppers activos</p>
+        <ul class="eco-stopper-list" id="stopper-list"></ul>
       </div>
     </div>
   </div>
 
-  <!-- ── MÓDULOS ── -->
-  <div class="page" id="page-modulos">
-    <div class="fbar">
-      <label>Fase:</label>
-      <select id="selF" onchange="renderMods()">
-        <option value="all">Todas</option>
-        <option value="1">Fase 1 — Migración</option>
-        <option value="2">Fase 2 — Configuración</option>
-      </select>
-      <label>Ordenar:</label>
-      <select id="selS" onchange="renderMods()">
-        <option value="asc">Avance ↑</option>
-        <option value="desc">Avance ↓</option>
-        <option value="nom">Nombre</option>
-      </select>
-    </div>
-    <div class="card" id="mods-wrap"></div>
-  </div>
-
-  <!-- ── HORAS ── -->
-  <div class="page" id="page-horas">
-    <div class="kpis">
-      <div class="kpi"><div class="kl">Contratadas</div><div class="kv">350h</div></div>
-      <div class="kpi"><div class="kl">Consumidas</div><div class="kv" style="color:#854F0B">253.6h</div><div class="kh">72.5% del total</div></div>
-      <div class="kpi"><div class="kl">Restantes</div><div class="kv" style="color:#3B6D11">96.4h</div><div class="kh">27.5% disponible</div></div>
-      <div class="kpi"><div class="kl">Sesiones</div><div class="kv">33</div><div class="kh">27h 9min totales</div></div>
-      <div class="kpi"><div class="kl">Burn rate</div><div class="kv" style="color:#854F0B">72.5%</div><div class="kh">vs ~80% de avance</div></div>
-    </div>
-    <div class="row2">
-      <div class="card">
-        <div class="ct">Distribución de horas</div>
-        <div style="position:relative;height:200px"><canvas id="cHoras"></canvas></div>
+  <div id="tab-actividades" class="eco-panel">
+    <div class="eco-box" style="margin-bottom:1.25rem;">
+      <p class="eco-box-title">Actividades completadas vs pendientes</p>
+      <div class="eco-chart-wrap" style="height:300px;">
+        <canvas id="actChart" role="img" aria-label="Gráfica de actividades completadas e incompletas por módulo Connector Agency"></canvas>
       </div>
-      <div class="card">
-        <div class="ct">Proporción consumida vs disponible</div>
-        <div style="position:relative;height:160px"><canvas id="cHPie"></canvas></div>
-        <div class="leg">
-          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#BA7517"></span>Consumidas 253.6h</span>
-          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#D3D1C7"></span>Restantes 96.4h</span>
-        </div>
-      </div>
-    </div>
-    <div class="card full">
-      <div class="ct">Barra de progreso de horas</div>
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--color-text-secondary);margin-bottom:5px">
-        <span>0h</span><span style="font-weight:500;color:var(--color-text-primary)">253.6h consumidas de 350h contratadas</span><span>350h</span>
-      </div>
-      <div style="height:22px;border-radius:6px;background:var(--color-background-secondary);overflow:hidden">
-        <div style="width:72.5%;height:100%;background:#BA7517;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
-          <span style="font-size:11px;color:#FAEEDA;font-weight:500">72.5%</span>
-        </div>
-      </div>
-      <div class="insight">
-        Con 253.6h consumidas (72.5%) y un avance global del ~80%, la relación esfuerzo-resultado es positiva. Sin embargo, las 96.4h restantes son ajustadas para cerrar 26.4 actividades pendientes más el backlog de 53 requerimientos de desarrollo aún sin aprobar.
+      <div style="display:flex;gap:16px;margin-top:10px;font-size:12px;color:var(--color-text-secondary);">
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75;display:inline-block;"></span>Completadas</span>
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A;display:inline-block;"></span>Pendientes</span>
       </div>
     </div>
   </div>
 
-  <!-- ── CRONOGRAMA ── -->
-  <div class="page" id="page-cronograma">
-    <div class="row2">
-      <div class="card">
-        <div class="ct">Hitos del proyecto</div>
-        <div class="tl-item">
-          <div class="tl-dot" style="background:#639922"></div>
-          <div><div class="tl-d">26 feb 2026</div><div class="tl-t">Envío de plantillas de levantamiento</div><div class="tl-s">Inicio condicionado a entrega de datos del cliente</div></div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot" style="background:#639922"></div>
-          <div><div class="tl-d">10 abr 2026</div><div class="tl-t">Recepción completa de plantillas</div><div class="tl-s">Se habilitó el inicio de configuraciones</div></div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot" style="background:#639922"></div>
-          <div><div class="tl-d">13 abr 2026</div><div class="tl-t">Entrega de primeros avances</div><div class="tl-s">3 de 7 módulos avanzados</div></div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot" style="background:#BA7517"></div>
-          <div><div class="tl-d">9 may 2026 (plan)</div><div class="tl-t">Entrega proyectada</div><div class="tl-s">5 módulos: 3 pruebas, 2 conf. y 2 cierres — cumplimiento parcial</div></div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot" style="background:#639922"></div>
-          <div><div class="tl-d">25 may 2026</div><div class="tl-t">Entrega Fase 2 — configuración e implementación</div><div class="tl-s">5 módulos entregados</div></div>
-        </div>
-        <div class="tl-item" style="margin-bottom:0">
-          <div class="tl-dot" style="background:#E24B4A"></div>
-          <div><div class="tl-d">Actualidad — bloqueo activo</div><div class="tl-t">Pruebas funcionales pendientes</div><div class="tl-s">Requiere participación del equipo Connector</div></div>
-        </div>
+  <div id="tab-horas" class="eco-panel">
+    <div class="eco-box" style="margin-bottom:1.25rem;">
+      <p class="eco-box-title">Consumo de horas contratadas</p>
+      <div class="eco-hours-bar">
+        <div class="eco-hours-fill" id="hoursBar" style="width:0%;background:#378ADD;"></div>
       </div>
-      <div class="card">
-        <div class="ct">Periodos y métricas</div>
-        <div style="margin-bottom:14px">
-          <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em">Espera por información</div>
-          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">26 feb → 10 abr · 5 semanas</div>
-          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">Efecto: desfase en inicio de configuraciones</div>
-        </div>
-        <div style="margin-bottom:14px">
-          <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em">Configuración e implementación</div>
-          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">13 abr → 25 may · 6 semanas</div>
-          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">7 módulos en segunda fase</div>
-        </div>
-        <div style="border-top:0.5px solid var(--color-border-tertiary);padding-top:12px">
-          <table style="width:100%;font-size:12px">
-            <tr><td style="color:var(--color-text-secondary);padding:3px 0">Módulos con avance</td><td style="text-align:right;font-weight:500">7 / 7</td></tr>
-            <tr><td style="color:var(--color-text-secondary);padding:3px 0">Módulos sin iniciar</td><td style="text-align:right;font-weight:500;color:#3B6D11">0 — resuelto</td></tr>
-            <tr><td style="color:var(--color-text-secondary);padding:3px 0">Resp. del equipo cliente</td><td style="text-align:right"><span class="pill pa">~2 semanas</span></td></tr>
-            <tr><td style="color:var(--color-text-secondary);padding:3px 0">Riesgo principal</td><td style="text-align:right"><span class="pill pr">Pruebas funcionales</span></td></tr>
-            <tr><td style="color:var(--color-text-secondary);padding:3px 0">Desfase vs plan</td><td style="text-align:right;font-weight:500;color:#854F0B">~2 meses</td></tr>
-          </table>
-        </div>
+      <div class="eco-hours-labels">
+        <span>0h</span>
+        <span id="hours-mid" style="color:var(--color-text-info);font-weight:500;">—</span>
+        <span id="hours-rest" style="color:var(--color-text-success);">—</span>
+        <span id="hours-total">—</span>
       </div>
     </div>
-    <div class="card full">
-      <div class="ct">Sesiones con el cliente — por tipo de objetivo (33 sesiones · 27h 9min)</div>
-      <div style="position:relative;height:180px"><canvas id="cSes"></canvas></div>
-      <div class="leg" style="margin-top:8px">
-        <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#185FA5"></span>Alineación 16</span>
-        <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#3B6D11"></span>Capacitación 9</span>
-        <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#854F0B"></span>Requerimientos 4</span>
-        <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#0C447C"></span>Pruebas func. 2</span>
-        <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#888780"></span>Otros 2</span>
+    <div class="eco-grid2">
+      <div class="eco-box">
+        <p class="eco-box-title">Sesiones con cliente</p>
+        <div class="eco-chart-wrap" style="height:200px;">
+          <canvas id="sesChart" role="img" aria-label="Tipos de sesiones con cliente Connector Agency"></canvas>
+        </div>
+      </div>
+      <div class="eco-box">
+        <p class="eco-box-title">Datos clave de horas</p>
+        <div style="font-size:13px;color:var(--color-text-secondary);line-height:2;">
+          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:4px 0;"><span>Horas contratadas</span><span style="font-weight:500;color:var(--color-text-primary);" id="kv-contratadas">—</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:4px 0;"><span>Horas consumidas</span><span style="font-weight:500;color:var(--color-text-primary);" id="kv-consumidas">—</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:4px 0;"><span>Horas restantes</span><span style="font-weight:500;color:var(--color-text-success);" id="kv-restantes">—</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:4px 0;"><span>% consumido</span><span style="font-weight:500;color:var(--color-text-info);" id="kv-pct">—</span></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;"><span>Horas en sesiones</span><span style="font-weight:500;color:var(--color-text-primary);" id="kv-sesiones">—</span></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ── BACKLOG DEV ── -->
-  <div class="page" id="page-backlog">
-    <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
-      <div class="kpi"><div class="kl">Total reqs.</div><div class="kv" style="color:#534AB7">53</div></div>
-      <div class="kpi"><div class="kl">Aprobados</div><div class="kv" style="color:#E24B4A">0</div><div class="kh">todos pendientes</div></div>
-      <div class="kpi"><div class="kl">Módulo + reqs.</div><div class="kv" style="color:#534AB7">Diseño</div><div class="kh">30 requerimientos</div></div>
-      <div class="kpi"><div class="kl">En sesión</div><div class="kv">20</div><div class="kh">captados en reuniones</div></div>
-    </div>
-    <div class="row2" style="margin-bottom:12px">
-      <div class="card">
-        <div class="ct">Requerimientos por módulo</div>
-        <div style="position:relative;height:240px"><canvas id="cDev"></canvas></div>
+  <div id="tab-cronograma" class="eco-panel">
+    <div class="eco-grid2">
+      <div class="eco-box">
+        <p class="eco-box-title">Hitos del proyecto</p>
+        <div id="hitos-list"></div>
       </div>
-      <div class="card">
-        <div class="ct">Fuente de captura</div>
-        <div style="position:relative;height:180px"><canvas id="cDevFuente"></canvas></div>
-        <div class="leg">
-          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#185FA5"></span>Sesión cliente 20</span>
-          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#534AB7"></span>Whiteboard 4</span>
-          <span style="display:flex;align-items:center;gap:4px"><span class="lsq" style="background:#E24B4A"></span>Pain points 29</span>
+      <div class="eco-box">
+        <p class="eco-box-title">Dimensiones clave</p>
+        <div style="font-size:12px;color:var(--color-text-secondary);">
+          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:5px 0;"><span>Módulos con avance</span><span style="font-weight:500;color:var(--color-text-primary);">7/7</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:5px 0;"><span>Tiempo respuesta cliente</span><span style="font-weight:500;color:var(--color-text-warning);">~3 sem/solicitud</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:5px 0;"><span>Riesgo principal</span><span style="font-weight:500;color:var(--color-text-danger);">Pruebas funcionales</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:5px 0;"><span>Desfase vs plan</span><span style="font-weight:500;color:var(--color-text-warning);">2 meses</span></div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;"><span>Go Live</span><span style="font-weight:500;color:var(--color-text-success);">13–15 jul 2026</span></div>
+        </div>
+        <div style="margin-top:14px;">
+          <p class="eco-box-title">Periodos críticos</p>
+          <div style="font-size:12px;color:var(--color-text-secondary);">
+            <div style="padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);">
+              <span style="color:var(--color-text-danger);font-weight:500;">26 feb → 10 abr</span> — Espera info (5 sem)<br>
+              <span style="color:var(--color-text-tertiary);">Falta entrega de plantillas</span>
+            </div>
+            <div style="padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);">
+              <span style="color:var(--color-text-info);font-weight:500;">13 abr → 25 may</span> — Config e impl. (6 sem)<br>
+              <span style="color:var(--color-text-tertiary);">7 módulos completados</span>
+            </div>
+            <div style="padding:5px 0;">
+              <span style="color:var(--color-text-warning);font-weight:500;">Actual</span> — Riesgo pruebas funcionales<br>
+              <span style="color:var(--color-text-tertiary);">Requiere alta interacción del equipo</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="card full">
-      <div class="ct">Lista de requerimientos — muestra principales</div>
-      <div id="dev-list"></div>
-    </div>
   </div>
-
-  <!-- ── DETALLE ── -->
-  <div class="page" id="page-detalle">
-    <div class="card full">
-      <div class="ct">Tabla completa de módulos</div>
-      <div style="overflow-x:auto;margin-top:6px">
-        <table class="tbl">
-          <thead><tr><th>Fase</th><th>Módulo</th><th>Avance</th><th>Total</th><th>Comp.</th><th>Pend.</th><th>Entrega</th><th>Estado</th></tr></thead>
-          <tbody id="tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
+</div>
 </div><!-- /w -->
 </div><!-- /app -->
 
@@ -381,167 +284,199 @@ function checkPwd() {
   if (document.getElementById('pwd-input').value === PASS) {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    initDashboard();
+    initApp();
   } else {
     document.getElementById('login-error').style.display = 'block';
     document.getElementById('pwd-input').value = '';
   }
 }
 
-// ── DATOS ──
-const mods = [
-  {f:1,n:'Clientes y proveedores',       p:100,  t:1,  c:1,   pe:0,   d:'23/04/2026', s:''},
-  {f:1,n:'Otros contactos y registros',  p:100,  t:1,  c:1,   pe:0,   d:'23/04/2026', s:''},
-  {f:1,n:'Productos y servicios',        p:94.3, t:7,  c:6.6, pe:0.4, d:'',           s:'En espera de info del equipo Connector'},
-  {f:2,n:'Discovery',                    p:100,  t:10, c:10,  pe:0,   d:'23/04/2026', s:''},
-  {f:2,n:'CRM',                          p:72.7, t:22, c:16,  pe:6,   d:'',           s:'Módulo impl.; avanza a fase de incrementos'},
-  {f:2,n:'Ventas',                       p:89.5, t:19, c:17,  pe:2,   d:'',           s:''},
-  {f:2,n:'Contabilidad',                 p:66.7, t:12, c:8,   pe:4,   d:'',           s:''},
-  {f:2,n:'Compras',                      p:73.7, t:19, c:14,  pe:5,   d:'',           s:''},
-  {f:2,n:'Proyectos',                    p:76.5, t:17, c:13,  pe:4,   d:'',           s:''},
-  {f:2,n:'Inventario',                   p:76.9, t:13, c:10,  pe:3,   d:'',           s:''},
-  {f:2,n:'Fabricación',                  p:80,   t:5,  c:4,   pe:1,   d:'',           s:''},
+// ── DATOS DE MÓDULOS ──
+// Corregido: Productos/Servicios (done=7 no puede dar 94% si total=7; se deja en 6.6/7
+// para que el % sea consistente, igual que en la versión anterior del dashboard).
+// Corregido: Contabilidad tenía total=13 pero done+pending=12; se ajustó total=12.
+const modules = [
+  { name: 'Clientes/Proveedores', total: 1,  done: 1,   pending: 0,   fase: 'mig', stopper: null },
+  { name: 'Otros contactos',      total: 1,  done: 1,   pending: 0,   fase: 'mig', stopper: null },
+  { name: 'Productos/Servicios',  total: 7,  done: 6.6, pending: 0.4, fase: 'mig', stopper: 'En espera de información del equipo Connector' },
+  { name: 'Discovery',            total: 10, done: 10,  pending: 0,   fase: 'cfg', stopper: null },
+  { name: 'CRM',                  total: 29, done: 24,  pending: 5,   fase: 'cfg', stopper: 'Incrementos de desarrollo pendientes' },
+  { name: 'Ventas',               total: 20, done: 18,  pending: 2,   fase: 'cfg', stopper: 'Pruebas funcionales pendientes' },
+  { name: 'Contabilidad',         total: 12, done: 8,   pending: 4,   fase: 'cfg', stopper: 'Importación de activos e importación de saldos iniciales' },
+  { name: 'Compras',              total: 19, done: 14,  pending: 5,   fase: 'cfg', stopper: 'Actividades on hold / requerimientos fuera de alcance' },
+  { name: 'Proyectos',            total: 20, done: 17,  pending: 3,   fase: 'cfg', stopper: 'Pruebas funcionales pendientes' },
+  { name: 'Inventario',           total: 17, done: 14,  pending: 3,   fase: 'cfg', stopper: 'Pendientes de info de códigos de barras y categorías' },
+  { name: 'Fabricación',          total: 6,  done: 4,   pending: 2,   fase: 'cfg', stopper: 'Plantillas de materiales y subir plantillas pendientes' },
+];
+// pct calculado en vez de hardcodeado, para que nunca quede desalineado con done/total
+modules.forEach(m => { m.pct = m.total > 0 ? Math.round((m.done / m.total) * 100) : 0; });
+
+// ── HORAS (constantes únicas; todo lo demás se deriva de aquí) ──
+const HOURS_TOTAL = 350;
+const HOURS_USED = 300;
+const HOURS_REST = HOURS_TOTAL - HOURS_USED;
+const HOURS_PCT = Math.round((HOURS_USED / HOURS_TOTAL) * 100);
+const HOURS_IN_SESSIONS = 35; // aproximado, tal como en el dato original
+
+// ── SESIONES ──
+const sesData = { labels: ['Capacitación', 'Alineación', 'Requerimientos', 'Pruebas funcionales'], values: [14, 17, 4, 4] };
+
+// ── HITOS ──
+const hitos = [
+  { fecha: '26 feb',    desc: 'Envío de plantillas de levantamiento', impact: 'Inicio condicionado a entrega de datos' },
+  { fecha: '10 abr',    desc: 'Recepción completa de plantillas', impact: 'Se habilita inicio de configuraciones' },
+  { fecha: '25 abr',    desc: 'Entrega de primeros avances (3/7 módulos)', impact: 'Avance parcial del proyecto' },
+  { fecha: '25 may',    desc: 'Entrega configuración e implementación (5 módulos)', impact: '2ª fase completada' },
+  { fecha: 'Jun 2026',  desc: 'Capacitaciones', impact: 'Finalizado — 2 semanas' },
+  { fecha: '13–15 jul', desc: 'GO LIVE', impact: 'En proceso' },
 ];
 
-const devItems = [
-  {txt:'Cambiar idioma perfil de usuario a español en preferencias',                         mod:'Comercial', fuente:'Sesión',      fecha:'13/04'},
-  {txt:'Corregir permisos de usuario en todos los módulos',                                  mod:'Todos',     fuente:'Sesión',      fecha:''},
-  {txt:'Transferir oportunidades ganadas automáticamente desde CRM a Proyectos',             mod:'Comercial', fuente:'Sesión',      fecha:'22/04'},
-  {txt:'Agregar campo de Gasto Esperado (informativo) al CRM',                               mod:'Comercial', fuente:'Sesión',      fecha:'22/04'},
-  {txt:'Exportar tablero de proyectos a PDF con resumen de tareas',                          mod:'Proyectos', fuente:'Sesión',      fecha:'11/05'},
-  {txt:'Configurar restricciones de etapa hasta completar subtareas requeridas',             mod:'Proyectos', fuente:'Sesión',      fecha:'15/05'},
-  {txt:'QR para visualizar imágenes de contenido de cajas en inventario',                    mod:'Inventario',fuente:'Sesión',      fecha:'22/05'},
-  {txt:'Notificación automática al realizar salida de productos en bodega',                  mod:'Inventario',fuente:'Sesión',      fecha:'22/05'},
-  {txt:'Crear sección de Brief con checklist de lectura para diseñadores',                   mod:'Diseño',    fuente:'Pain point',  fecha:''},
-  {txt:'Sección de To-Dos con responsable, fecha de entrega y adjuntos por tarea',           mod:'Diseño',    fuente:'Pain point',  fecha:''},
-  {txt:'Restricción de finalización de To-Do únicamente a la persona asignada',              mod:'Diseño',    fuente:'Pain point',  fecha:''},
-  {txt:'Calendario automático que refleje tareas y fechas de To-Dos',                        mod:'Diseño',    fuente:'Pain point',  fecha:''},
-  {txt:'Carpeta de Recursos de Marca y Archivos Finales/Aprobados con permisos',             mod:'Diseño',    fuente:'Pain point',  fecha:''},
-  {txt:'Sección de Planos con aprobación doble (Comercial + PM) y notificación a taller',   mod:'Diseño',    fuente:'Pain point',  fecha:''},
-  {txt:'Botones: Solicitud de Cambios, Archivos de Impresión y Planos',                     mod:'Diseño',    fuente:'Pain point',  fecha:''},
-  {txt:'Automatización de reporting: hit rate, proyectos por creativo, tiempo promedio',     mod:'General',   fuente:'Whiteboard',  fecha:''},
-];
-
-// ── HELPERS ──
-function gc(p){ return p>=80?'#639922': p>=65?'#378ADD':'#BA7517'; }
-function ps(p){
-  if(p===100) return '<span class="pill pg">Completado</span>';
-  if(p>=80)   return '<span class="pill pb">Casi listo</span>';
-  if(p>=65)   return '<span class="pill pb">En curso</span>';
-  return '<span class="pill pa">En progreso</span>';
+function barColor(pct) {
+  if (pct === 100) return '#1D9E75';
+  if (pct >= 80)  return '#378ADD';
+  if (pct >= 65)  return '#EF9F27';
+  return '#E24B4A';
+}
+function statusTag(pct) {
+  if (pct === 100) return '<span class="eco-status done">Completo</span>';
+  if (pct >= 75)   return '<span class="eco-status prog">En progreso</span>';
+  return '<span class="eco-status pend">Posible desviación</span>';
+}
+function fasePill(f) {
+  return f === 'mig'
+    ? '<span class="eco-fase-pill eco-fase-mig">Migración</span>'
+    : '<span class="eco-fase-pill eco-fase-cfg">Config.</span>';
 }
 
-// ── KPIs calculados ──
-function initDashboard(){
-  const tc = mods.reduce((a,m)=>a+m.c, 0);
-  const tp = mods.reduce((a,m)=>a+m.pe, 0);
-  const gp = Math.round(mods.reduce((a,m)=>a+m.p, 0)/mods.length);
-  document.getElementById('kg').textContent       = gp + '%';
-  document.getElementById('kcomp').textContent    = tc.toFixed(1);
-  document.getElementById('kcomp-h').textContent  = 'de ' + (tc+tp).toFixed(1) + ' totales';
-  document.getElementById('leg-comp').textContent = tc.toFixed(1);
-  document.getElementById('leg-pend').textContent = tp.toFixed(1);
+let currentFilter = 'all';
+let actChartInstance = null;
+let sesChartInstance = null;
 
-  // Barra horizontal Fase 2
-  const f2 = mods.filter(m=>m.f===2 && m.n!=='Discovery');
-  new Chart(document.getElementById('cBar'),{
-    type:'bar',
-    data:{labels:f2.map(m=>m.n), datasets:[{axis:'y', data:f2.map(m=>m.p), backgroundColor:f2.map(m=>gc(m.p)), borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},y:{ticks:{font:{size:10}},grid:{display:false}}}}
-  });
-  // Donut actividades
-  new Chart(document.getElementById('cDonut'),{
-    type:'doughnut',
-    data:{labels:['Completadas','Pendientes'], datasets:[{data:[Math.round(tc*10)/10, Math.round(tp*10)/10], backgroundColor:['#185FA5','#D3D1C7'], borderWidth:0, hoverOffset:4}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}
-  });
-}
-
-// ── NAV ──
-let hC,hP,sC,devInit=false;
-function nav(id, btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
+function filterMod(type, btn) {
+  currentFilter = type;
+  document.querySelectorAll('.eco-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  if(id==='modulos')   renderMods();
-  if(id==='horas')     renderHoras();
-  if(id==='cronograma')renderCrono();
-  if(id==='backlog')   renderBacklog();
-  if(id==='detalle')   renderTabla();
+  renderList();
+}
+function filteredModules() {
+  if (currentFilter === 'done')     return modules.filter(m => m.pct === 100);
+  if (currentFilter === 'progress') return modules.filter(m => m.pct > 0 && m.pct < 100);
+  if (currentFilter === 'risk')     return modules.filter(m => m.pct < 75);
+  return modules;
+}
+function renderList() {
+  const list = document.getElementById('module-list');
+  const data = filteredModules();
+  list.innerHTML = data.map(m => `
+    <div class="eco-row">
+      ${fasePill(m.fase)}
+      <span class="eco-row-name">${m.name}</span>
+      <div class="eco-bar-bg"><div class="eco-bar-fill" style="width:${m.pct}%;background:${barColor(m.pct)};"></div></div>
+      <span class="eco-pct">${m.pct}%</span>
+      ${statusTag(m.pct)}
+    </div>
+  `).join('');
+}
+function renderStoppers() {
+  const list = document.getElementById('stopper-list');
+  const active = modules.filter(m => m.stopper);
+  list.innerHTML = active.map(m => `
+    <li class="eco-stopper-item">
+      <span class="eco-dot" style="background:${barColor(m.pct)};"></span>
+      <div><span class="eco-stopper-mod">${m.name}</span><br><span class="eco-stopper-desc">${m.stopper}</span></div>
+    </li>
+  `).join('');
+}
+function renderActChart() {
+  const labels = modules.map(m => m.name);
+  const done   = modules.map(m => m.done);
+  const pend   = modules.map(m => m.pending);
+  const h = Math.max(240, modules.length * 26 + 60);
+  document.querySelector('#actChart').parentElement.style.height = h + 'px';
+  if (actChartInstance) actChartInstance.destroy();
+  actChartInstance = new Chart(document.getElementById('actChart'), {
+    type: 'bar',
+    data: { labels, datasets: [
+      { label: 'Completadas', data: done, backgroundColor: '#1D9E75', borderRadius: 3 },
+      { label: 'Pendientes',  data: pend, backgroundColor: '#E24B4A', borderRadius: 3 },
+    ]},
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.x}` } } },
+      scales: {
+        x: { stacked: true, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: 'rgba(128,128,128,0.1)' } },
+        y: { stacked: true, ticks: { font: { size: 11 } }, grid: { display: false } }
+      }
+    }
+  });
+}
+function renderSesChart() {
+  if (sesChartInstance) sesChartInstance.destroy();
+  sesChartInstance = new Chart(document.getElementById('sesChart'), {
+    type: 'doughnut',
+    data: {
+      labels: sesData.labels,
+      datasets: [{ data: sesData.values, backgroundColor: ['#378ADD','#1D9E75','#EF9F27','#E24B4A'], borderWidth: 0 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 10, padding: 10 } }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} sesiones` } } }
+    }
+  });
+}
+function renderHitos() {
+  const list = document.getElementById('hitos-list');
+  list.innerHTML = hitos.map(h => `
+    <div class="eco-hito">
+      <div class="eco-hito-date">${h.fecha}</div>
+      <div><div class="eco-hito-desc">${h.desc}</div><div class="eco-hito-impact">${h.impact}</div></div>
+    </div>
+  `).join('');
 }
 
-// ── MÓDULOS ──
-function renderMods(){
-  const f = document.getElementById('selF').value;
-  const s = document.getElementById('selS').value;
-  let rows = f==='all' ? [...mods] : mods.filter(m=>m.f==f);
-  if(s==='asc')  rows.sort((a,b)=>a.p-b.p);
-  else if(s==='desc') rows.sort((a,b)=>b.p-a.p);
-  else rows.sort((a,b)=>a.n.localeCompare(b.n));
-  document.getElementById('mods-wrap').innerHTML =
-    '<div class="ct">'+rows.length+' módulos</div>' +
-    rows.map(m=>`<div class="pi">
-      <div class="pi-top"><span class="pi-n" style="font-weight:500">${m.n}</span><span class="pi-p" style="color:${gc(m.p)}">${m.p.toFixed(1)}%</span></div>
-      <div class="bar-bg"><div class="bar-fg" style="width:${Math.min(m.p,100)}%;background:${gc(m.p)}"></div></div>
-      <div class="pi-m"><span>Fase ${m.f}</span><span>${m.c}/${m.t} act.</span><span>${m.pe} pendientes</span>${m.d?'<span class="pill pg">'+m.d+'</span>':''}${m.s&&m.p<100?'<span class="pill pa">Stopper</span>':''}</div>
-      ${m.s&&m.p<100?'<div class="stopper">⚠ '+m.s+'</div>':''}
-    </div>`).join('');
+// ── Tarjetas resumen: derivadas de los datos, no hardcodeadas,
+// así nunca quedan desalineadas si se actualiza el array de módulos. ──
+function renderSummaryCards() {
+  const totalActs = modules.reduce((a, m) => a + m.total, 0);
+  const doneActs  = modules.reduce((a, m) => a + m.done, 0);
+  const avgPct    = Math.round((doneActs / totalActs) * 100);
+
+  document.getElementById('card-avance').textContent = avgPct + '%';
+  document.getElementById('card-completadas').textContent = Math.round(doneActs);
+  document.getElementById('card-completadas-sub').textContent = 'de ' + Math.round(totalActs) + ' totales';
+
+  document.getElementById('card-horas-pct').textContent = HOURS_PCT + '%';
+  document.getElementById('card-horas-sub').textContent = HOURS_USED + 'h de ' + HOURS_TOTAL + 'h contratadas';
+  document.getElementById('card-horas-rest').textContent = HOURS_REST + 'h';
+
+  document.getElementById('hours-mid').textContent = HOURS_USED + 'h consumidas (' + HOURS_PCT + '%)';
+  document.getElementById('hours-rest').textContent = HOURS_REST + 'h restantes';
+  document.getElementById('hours-total').textContent = HOURS_TOTAL + 'h';
+
+  document.getElementById('kv-contratadas').textContent = HOURS_TOTAL + 'h';
+  document.getElementById('kv-consumidas').textContent = HOURS_USED + 'h';
+  document.getElementById('kv-restantes').textContent = HOURS_REST + 'h';
+  document.getElementById('kv-pct').textContent = HOURS_PCT + '%';
+  document.getElementById('kv-sesiones').textContent = '~' + HOURS_IN_SESSIONS + 'h';
 }
 
-// ── DETALLE ──
-function renderTabla(){
-  document.getElementById('tbody').innerHTML = mods.map(m=>`<tr>
-    <td><span class="pill ${m.f===1?'pb':'pgy'}">Fase ${m.f}</span></td>
-    <td style="font-weight:500">${m.n}</td>
-    <td><span style="font-weight:500;color:${gc(m.p)}">${m.p.toFixed(1)}%</span></td>
-    <td style="text-align:center">${m.t}</td>
-    <td style="text-align:center">${m.c}</td>
-    <td style="text-align:center;color:${m.pe>0?'#854F0B':'#3B6D11'};font-weight:500">${m.pe}</td>
-    <td>${m.d||'—'}</td>
-    <td>${ps(m.p)}</td>
-  </tr>`).join('');
-}
-
-// ── BACKLOG ──
-function renderBacklog(){
-  if(!devInit){ devInit=true; } else {
-    // destroy existing charts if re-entering
-    const c1=document.getElementById('cDev'),c2=document.getElementById('cDevFuente');
-    if(c1._ch)c1._ch.destroy();
-    if(c2._ch)c2._ch.destroy();
+function switchTab(id, btn) {
+  document.querySelectorAll('.eco-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.eco-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+  if (id === 'actividades') { setTimeout(renderActChart, 50); }
+  if (id === 'horas') {
+    document.getElementById('hoursBar').style.width = HOURS_PCT + '%';
+    setTimeout(renderSesChart, 50);
   }
-  document.getElementById('dev-list').innerHTML = devItems.map(d=>`
-    <div class="dev-item">
-      <div class="dev-txt">${d.txt}</div>
-      <div class="dev-meta">
-        <span class="pill pp">${d.mod}</span>
-        <span class="pill pgy">${d.fuente}</span>
-        ${d.fecha?'<span class="pill pg">'+d.fecha+'</span>':''}
-        <span class="pill pr">Pendiente</span>
-      </div>
-    </div>`).join('');
-  const c1=document.getElementById('cDev'),c2=document.getElementById('cDevFuente');
-  if(!c1||!c2)return;
-  c1._ch=new Chart(c1,{type:'bar',data:{labels:['Diseño','Comercial','Proyectos','Inventario','Todos','Otros'],datasets:[{data:[30,9,5,2,1,6],backgroundColor:['#534AB7','#185FA5','#3B6D11','#BA7517','#888780','#0C447C'],borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},y:{ticks:{font:{size:10}},grid:{display:false}}}}});
-  c2._ch=new Chart(c2,{type:'doughnut',data:{labels:['Sesión cliente','Whiteboard','Pain points'],datasets:[{data:[20,4,29],backgroundColor:['#185FA5','#534AB7','#E24B4A'],borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}});
 }
 
-// ── HORAS ──
-function renderHoras(){
-  const c1=document.getElementById('cHoras'),c2=document.getElementById('cHPie');
-  if(!c1||!c2)return;
-  if(hC)hC.destroy(); if(hP)hP.destroy();
-  hC=new Chart(c1,{type:'bar',data:{labels:['Contratadas','Consumidas','Restantes'],datasets:[{data:[350,253.61,96.39],backgroundColor:['#B5D4F4','#BA7517','#639922'],borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'h',font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}});
-  hP=new Chart(c2,{type:'doughnut',data:{labels:['Consumidas','Restantes'],datasets:[{data:[253.61,96.39],backgroundColor:['#BA7517','#D3D1C7'],borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}});
-}
-
-// ── CRONOGRAMA ──
-function renderCrono(){
-  const c=document.getElementById('cSes');
-  if(!c)return;
-  if(sC)sC.destroy();
-  sC=new Chart(c,{type:'bar',data:{labels:['Alineación','Capacitación','Requerimientos','Pruebas func.','Otros'],datasets:[{data:[16,9,4,2,2],backgroundColor:['#185FA5','#3B6D11','#854F0B','#0C447C','#888780'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:4,font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}});
+function initApp() {
+  renderSummaryCards();
+  renderList();
+  renderStoppers();
+  renderHitos();
 }
 </script>
 </body>
