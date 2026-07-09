@@ -3,481 +3,640 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Connector Agency — Cuadro de Mando 2026</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<title>Connector Agency · Cuadro de mando ejecutivo</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --color-background-primary:#ffffff;
-  --color-background-secondary:#f5f4f0;
-  --color-text-primary:#1a1a18;
-  --color-text-secondary:#6b6b66;
-  --color-text-tertiary:#9e9e99;
-  --color-border-secondary:rgba(0,0,0,0.12);
-  --color-border-tertiary:rgba(0,0,0,0.07);
-  --border-radius-md:8px;
-  --border-radius-lg:12px;
-  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-
-  /* Agregadas: usadas por los badges/estados del nuevo diseño 'eco'.
-     Reutilizan los mismos colores que ya usaban las píldoras .pg/.pb/.pa/.pr
-     del dashboard anterior, para mantener consistencia visual. */
-  --color-background-success:#EAF3DE;
-  --color-text-success:#27500A;
-  --color-background-info:#E6F1FB;
-  --color-text-info:#0C447C;
-  --color-border-info:rgba(24,95,165,0.35);
-  --color-background-warning:#FAEEDA;
-  --color-text-warning:#633806;
-  --color-background-danger:#FCEBEB;
-  --color-text-danger:#791F1F;
+  --navy:#0e2340; --navy2:#16324f; --navy3:#1e4266;
+  --teal:#14a5a5; --teal-soft:#e3f4f4;
+  --gold:#d9a441; --gold-deep:#b5842f; --gold-soft:#f9efdc;
+  --ink:#22314a; --muted:#6b7a92; --line:#e2e8f1;
+  --bg:#f4f6fa; --card:#ffffff;
+  --ok:#1d9e74; --bad:#c9534f;
+  --r:14px; --shadow:0 1px 3px rgba(14,35,64,.08), 0 6px 18px rgba(14,35,64,.06);
 }
-body{font-family:var(--font-sans);background:#f5f4f0;color:var(--color-text-primary);min-height:100vh}
-
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
-
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
 /* ── LOGIN ── */
-#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f5f4f0}
-.login-box{background:#fff;border-radius:16px;padding:2.8rem 2.2rem;width:360px;box-shadow:0 8px 40px rgba(0,0,0,0.10);text-align:center;border:1px solid rgba(0,0,0,0.08)}
-.login-logo{width:52px;height:52px;border-radius:12px;background:#185FA5;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;margin:0 auto 16px;box-shadow:0 4px 16px rgba(24,95,165,0.3)}
-.login-title{font-size:18px;font-weight:700;color:var(--color-text-primary);margin-bottom:4px}
-.login-sub{font-size:13px;color:var(--color-text-secondary);margin-bottom:1.8rem}
-.login-box input{width:100%;padding:11px 14px;border:1px solid rgba(0,0,0,0.14);border-radius:var(--border-radius-md);font-size:14px;margin-bottom:12px;outline:none;transition:border 0.2s;color:var(--color-text-primary);background:#f5f4f0}
-.login-box input:focus{border-color:#185FA5;background:#fff}
-.login-box button{width:100%;padding:11px;background:#185FA5;color:#fff;border:none;border-radius:var(--border-radius-md);font-size:14px;font-weight:600;cursor:pointer;transition:background 0.2s}
-.login-box button:hover{background:#0e4a84}
-#login-error{color:#791F1F;font-size:12px;margin-top:10px;display:none}
-
-/* ── APP (contenedor del nuevo dashboard 'eco') ── */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--bg)}
+.login-box{background:#fff;border-radius:16px;padding:2.8rem 2.2rem;width:360px;box-shadow:0 8px 40px rgba(14,35,64,.14);text-align:center;border:1px solid var(--line)}
+.login-logo{width:52px;height:52px;border-radius:12px;background:var(--teal);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;margin:0 auto 16px;box-shadow:0 4px 16px rgba(20,165,165,.3)}
+.login-title{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:1.8rem}
+.login-box input{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:8px;font-size:14px;margin-bottom:12px;outline:none;transition:border .2s;color:var(--ink);background:var(--bg)}
+.login-box input:focus{border-color:var(--teal);background:#fff}
+.login-box button{width:100%;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s}
+.login-box button:hover{background:var(--navy3)}
+#login-error{color:var(--bad);font-size:12px;margin-top:10px;display:none}
+/* ── APP ── */
 #app{display:none}
-.w{padding:1.25rem 1.5rem 3rem;max-width:1200px;margin:0 auto}
-
-.eco-root { font-family: var(--font-sans); padding: 1rem 0; }
-.eco-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
-.eco-badge { font-size: 11px; padding: 3px 9px; border-radius: var(--border-radius-md); font-weight: 500; }
-.eco-badge.green { background: var(--color-background-success); color: var(--color-text-success); }
-.eco-badge.blue  { background: var(--color-background-info); color: var(--color-text-info); }
-.eco-badge.amber { background: var(--color-background-warning); color: var(--color-text-warning); }
-.eco-cards { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 1.5rem; }
-.eco-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.875rem 1rem; }
-.eco-card-label { font-size: 12px; color: var(--color-text-secondary); margin: 0 0 4px; }
-.eco-card-val { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin: 0; line-height: 1; }
-.eco-card-sub { font-size: 11px; color: var(--color-text-tertiary); margin: 4px 0 0; }
-.eco-tabs { display: flex; gap: 4px; margin-bottom: 1.25rem; border-bottom: 0.5px solid var(--color-border-tertiary); flex-wrap:wrap; }
-.eco-tab { font-size: 13px; padding: 6px 14px; border: none; background: transparent; color: var(--color-text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
-.eco-tab.active { color: var(--color-text-primary); border-bottom-color: var(--color-text-primary); font-weight: 500; }
-.eco-panel { display: none; }
-.eco-panel.active { display: block; }
-.eco-filters { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
-.eco-filters span { font-size: 12px; color: var(--color-text-secondary); }
-.eco-btn { font-size: 12px; padding: 4px 12px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-primary); cursor: pointer; }
-.eco-btn:hover { background: var(--color-background-secondary); }
-.eco-btn.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
-.eco-grid2 { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 14px; margin-bottom: 1.25rem; }
-.eco-box { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; }
-.eco-box-title { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 12px; }
-.eco-row { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; font-size: 13px; }
-.eco-row-name { min-width: 100px; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; }
-.eco-bar-bg { flex: 1; height: 6px; background: var(--color-border-tertiary); border-radius: 99px; overflow: hidden; }
-.eco-bar-fill { height: 100%; border-radius: 99px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
-.eco-pct { width: 34px; text-align: right; color: var(--color-text-secondary); font-size: 11px; }
-.eco-status { display: inline-flex; font-size: 10px; padding: 1px 6px; border-radius: var(--border-radius-md); white-space: nowrap; }
-.eco-status.done { background: var(--color-background-success); color: var(--color-text-success); }
-.eco-status.prog { background: var(--color-background-warning); color: var(--color-text-warning); }
-.eco-status.pend { background: var(--color-background-danger); color: var(--color-text-danger); }
-.eco-hours-bar { position: relative; height: 18px; background: var(--color-border-tertiary); border-radius: 99px; overflow: hidden; margin: 8px 0 6px; }
-.eco-hours-fill { height: 100%; border-radius: 99px; transition: width 0.6s ease; }
-.eco-hours-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); flex-wrap:wrap; gap:4px; }
-.eco-stopper-list { list-style: none; margin: 0; padding: 0; }
-.eco-stopper-item { display: flex; gap: 8px; align-items: flex-start; padding: 7px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 12px; }
-.eco-stopper-item:last-child { border-bottom: none; }
-.eco-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
-.eco-stopper-mod { font-weight: 500; color: var(--color-text-primary); min-width: 90px; }
-.eco-stopper-desc { color: var(--color-text-secondary); }
-.eco-chart-wrap { position: relative; width: 100%; }
-.eco-hito { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 12px; }
-.eco-hito:last-child { border-bottom: none; }
-.eco-hito-date { min-width: 100px; color: var(--color-text-tertiary); }
-.eco-hito-desc { color: var(--color-text-primary); flex: 1; }
-.eco-hito-impact { color: var(--color-text-secondary); font-size: 11px; margin-top: 2px; }
-.eco-fase-pill { display: inline-flex; font-size: 10px; padding: 1px 6px; border-radius: var(--border-radius-md); margin-right: 4px; }
-.eco-fase-mig { background: var(--color-background-info); color: var(--color-text-info); }
-.eco-fase-cfg { background: var(--color-background-warning); color: var(--color-text-warning); }
-
-/* Responsive agregado (el snippet nuevo no traía media queries) */
-@media(max-width:700px){
-  .w{padding:1rem 1rem 2rem}
-  .eco-cards{grid-template-columns:repeat(2,1fr)}
-  .eco-grid2{grid-template-columns:1fr}
-}
-@media(max-width:420px){
-  .eco-cards{grid-template-columns:1fr}
-}
+header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);color:#fff;padding:22px 28px 0}
+.hd-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:44px;height:44px;border-radius:10px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px;color:#fff;letter-spacing:-.5px}
+h1{font-size:20px;font-weight:700;letter-spacing:.2px}
+.sub{font-size:12.5px;color:#b9c8dc;margin-top:3px}
+.golive{background:rgba(217,164,65,.16);border:1px solid rgba(217,164,65,.5);border-radius:10px;padding:10px 16px;text-align:right}
+.golive b{color:var(--gold);font-size:16px;display:block}
+.golive span{font-size:11.5px;color:#d8c9a8}
+nav{display:flex;gap:4px;margin-top:18px;flex-wrap:wrap}
+nav button{background:transparent;border:none;color:#9fb2ca;font-size:13.5px;font-weight:600;padding:11px 18px;cursor:pointer;border-radius:10px 10px 0 0;transition:all .15s}
+nav button:hover{color:#fff;background:rgba(255,255,255,.06)}
+nav button.on{background:var(--bg);color:var(--navy)}
+main{padding:22px 28px;max-width:1400px;margin:0 auto}
+.view{display:none}.view.on{display:block}
+/* banner cortesía */
+.hero{background:linear-gradient(120deg,#fdf7ea 0%,#fbf1db 100%);border:1px solid #ecd9ae;border-left:6px solid var(--gold);border-radius:var(--r);padding:18px 24px;margin-bottom:18px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.hero .big{font-size:38px;font-weight:800;color:var(--gold-deep);letter-spacing:-1px;white-space:nowrap}
+.hero .big small{font-size:17px;font-weight:700}
+.hero .tx{flex:1;min-width:260px}
+.hero .tx b{color:var(--navy);font-size:15px;display:block;margin-bottom:3px}
+.hero .tx span{font-size:13px;color:#7a6a45;line-height:1.5}
+.hero .mini{display:flex;gap:18px}
+.hero .mini div{text-align:center}
+.hero .mini b{display:block;font-size:19px;color:var(--navy);font-weight:800}
+.hero .mini span{font-size:10.5px;color:#8a7b57;text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+/* filter bar */
+.fbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px;box-shadow:var(--shadow)}
+.fbar label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;display:block;margin-bottom:4px}
+.fbar select{border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--ink);background:#fff;min-width:150px;cursor:pointer}
+.fbar select:focus{outline:2px solid var(--teal);outline-offset:1px}
+.chip{background:var(--teal-soft);color:#0d7676;border:1px solid #bfe4e4;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;display:none;align-items:center;gap:8px}
+.chip button{background:none;border:none;color:#0d7676;font-weight:800;cursor:pointer;font-size:13px}
+.reset{margin-left:auto;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12.5px;font-weight:600;cursor:pointer}
+.reset:hover{background:var(--navy3)}
+.hint{font-size:11.5px;color:var(--muted);width:100%;margin-top:2px}
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:18px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--teal)}
+.kpi.gold::before{background:var(--gold)} .kpi.ok::before{background:var(--ok)} .kpi.navy::before{background:var(--navy)}
+.kpi.gold{background:linear-gradient(135deg,#fffdf8,#fbf4e4);border-color:#ecd9ae}
+.kpi .t{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
+.kpi .v{font-size:27px;font-weight:800;color:var(--navy);margin-top:5px;letter-spacing:-.5px}
+.kpi.gold .v{color:var(--gold-deep)}
+.kpi .v small{font-size:14px;font-weight:600;color:var(--muted)}
+.kpi .d{font-size:11.5px;color:var(--muted);margin-top:4px}
+/* grid + cards */
+.grid{display:grid;gap:16px;margin-bottom:16px}
+.g2{grid-template-columns:1.35fr 1fr}.g2b{grid-template-columns:1fr 1fr}
+@media(max-width:980px){.g2,.g2b{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
+.card h3{font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.card .cs{font-size:12px;color:var(--muted);margin-bottom:14px}
+.ch{position:relative;height:280px}
+.ch.tall{height:330px}.ch.short{height:230px}
+/* table */
+table{width:100%;border-collapse:collapse;font-size:12.8px}
+th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);padding:9px 10px;border-bottom:2px solid var(--line);cursor:pointer;user-select:none;white-space:nowrap}
+th:hover{color:var(--navy)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:hover{background:#f7fafc}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+th.num{text-align:right}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.p-done{background:#e2f5ee;color:#137a58}.p-prod{background:var(--teal-soft);color:#0d7676}.p-back{background:#eef1f6;color:#5d6d86}
+.p-free{background:var(--gold-soft);color:var(--gold-deep)}
+.bar-cell{display:flex;align-items:center;gap:8px}
+.bar-bg{flex:1;height:7px;background:#edf1f7;border-radius:4px;overflow:hidden;min-width:60px}
+.bar-fg{height:100%;border-radius:4px;background:var(--teal)}
+.tsum{font-size:12px;color:var(--muted);margin:10px 2px 0}
+/* insights */
+.ins{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.ins .card{border-left:4px solid var(--teal)}
+.ins .card.w{border-left-color:var(--gold)}.ins .card.g{border-left-color:var(--ok)}
+.ins h4{font-size:13.5px;color:var(--navy);margin-bottom:6px}
+.ins p{font-size:12.8px;color:#44536b;line-height:1.55}
+.tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;display:inline-block;padding:2px 8px;border-radius:4px}
+.tag.w{background:var(--gold-soft);color:var(--gold-deep)}.tag.g{background:#e2f5ee;color:#137a58}.tag.t{background:var(--teal-soft);color:#0d7676}
+/* timeline */
+.tl{position:relative;padding-left:26px}
+.tl::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl-it{position:relative;padding:0 0 18px 8px}
+.tl-it::before{content:'';position:absolute;left:-24px;top:4px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--teal)}
+.tl-it.gold::before{border-color:var(--gold)}
+.tl-it .dt{font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.5px}
+.tl-it.gold .dt{color:var(--gold-deep)}
+.tl-it .ti{font-size:13.5px;font-weight:700;color:var(--navy);margin:2px 0}
+.tl-it .tx{font-size:12.3px;color:var(--muted);line-height:1.5}
+.footer{text-align:center;font-size:11px;color:var(--muted);padding:18px 0 26px}
+@media(max-width:720px){header,main{padding-left:16px;padding-right:16px}.kpi .v{font-size:22px}.hero .big{font-size:30px}}
 </style>
 </head>
 <body>
-
 <!-- ══════════ LOGIN ══════════ -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">CA</div>
     <div class="login-title">Connector Agency</div>
-    <div class="login-sub">Dashboard de seguimiento · Acceso restringido</div>
+    <div class="login-sub">Cuadro de mando ejecutivo · Acceso restringido</div>
     <input type="password" id="pwd-input" placeholder="Contraseña"
            onkeydown="if(event.key==='Enter') checkPwd()" />
     <button onclick="checkPwd()">Ingresar</button>
     <div id="login-error">Contraseña incorrecta. Intenta de nuevo.</div>
   </div>
 </div>
-
 <!-- ══════════ APP ══════════ -->
 <div id="app">
-<div class="w">
-<h2 class="sr-only">Cuadro de mando interactivo del programa de trabajo Connector Agency — avance por módulo, horas, cronograma y stoppers.</h2>
-
-<div class="eco-root">
-  <div class="eco-header">
-    <span style="font-size:20px;font-weight:500;color:var(--color-text-primary)">Connector Agency — cuadro de mando</span>
-    <span class="eco-badge green">Go Live: 13–15 jul</span>
-    <span class="eco-badge blue">Capacitaciones: finalizadas</span>
+<header>
+  <div class="hd-top">
+    <div class="brand">
+      <div class="logo">Z</div>
+      <div>
+        <h1>Connector Agency · Implementación Odoo</h1>
+        <div class="sub">Cuadro de mando ejecutivo · Corte al 9 de julio de 2026 · Zublime</div>
+      </div>
+    </div>
+    <div class="golive"><b>Go-Live: 13–15 de julio</b><span>En proceso · a 4 días del corte</span></div>
   </div>
-
-  <div class="eco-cards">
-    <div class="eco-card">
-      <p class="eco-card-label">Avance promedio</p>
-      <p class="eco-card-val" id="card-avance">—</p>
-      <p class="eco-card-sub">7 módulos + migración</p>
-    </div>
-    <div class="eco-card">
-      <p class="eco-card-label">Actividades completadas</p>
-      <p class="eco-card-val" id="card-completadas">—</p>
-      <p class="eco-card-sub" id="card-completadas-sub">—</p>
-    </div>
-    <div class="eco-card">
-      <p class="eco-card-label">Horas consumidas</p>
-      <p class="eco-card-val" id="card-horas-pct">—</p>
-      <p class="eco-card-sub" id="card-horas-sub">—</p>
-    </div>
-    <div class="eco-card">
-      <p class="eco-card-label">Horas restantes</p>
-      <p class="eco-card-val" id="card-horas-rest">—</p>
-      <p class="eco-card-sub">margen disponible</p>
-    </div>
+  <nav>
+    <button class="on" data-v="resumen">Resumen ejecutivo</button>
+    <button data-v="horas">Horas y esfuerzo</button>
+    <button data-v="sesiones">Sesiones con cliente</button>
+    <button data-v="detalle">Explorador de actividades</button>
+    <button data-v="crono">Cronograma</button>
+  </nav>
+</header>
+<main>
+<div class="hero">
+  <div class="big">30.3 h<small> sin costo</small></div>
+  <div class="tx">
+    <b>Compromiso Zublime con el éxito del proyecto</b>
+    <span><b>27 h de cortesía</b> otorgadas para asegurar el Go-Live sin costo adicional, más <b>3.3 h de sesiones de acompañamiento no facturadas</b>. Este esfuerzo se absorbe íntegramente por Zublime como inversión en la relación.</span>
   </div>
-
-  <div class="eco-tabs">
-    <button class="eco-tab active" onclick="switchTab('avance', this)">Avance por módulo</button>
-    <button class="eco-tab" onclick="switchTab('actividades', this)">Actividades</button>
-    <button class="eco-tab" onclick="switchTab('horas', this)">Horas</button>
-    <button class="eco-tab" onclick="switchTab('cronograma', this)">Cronograma</button>
-  </div>
-
-  <div id="tab-avance" class="eco-panel active">
-    <div class="eco-filters">
-      <span>Filtrar:</span>
-      <button class="eco-btn active" onclick="filterMod('all',this)">Todos</button>
-      <button class="eco-btn" onclick="filterMod('done',this)">Completo (100%)</button>
-      <button class="eco-btn" onclick="filterMod('progress',this)">En progreso</button>
-      <button class="eco-btn" onclick="filterMod('risk',this)">Posible desviación (&lt;75%)</button>
-    </div>
-    <div class="eco-grid2">
-      <div class="eco-box">
-        <p class="eco-box-title">Avance por módulo</p>
-        <div id="module-list"></div>
-      </div>
-      <div class="eco-box">
-        <p class="eco-box-title">Stoppers activos</p>
-        <ul class="eco-stopper-list" id="stopper-list"></ul>
-      </div>
-    </div>
-  </div>
-
-  <div id="tab-actividades" class="eco-panel">
-    <div class="eco-box" style="margin-bottom:1.25rem;">
-      <p class="eco-box-title">Actividades completadas vs pendientes</p>
-      <div class="eco-chart-wrap" style="height:300px;">
-        <canvas id="actChart" role="img" aria-label="Gráfica de actividades completadas e incompletas por módulo Connector Agency"></canvas>
-      </div>
-      <div style="display:flex;gap:16px;margin-top:10px;font-size:12px;color:var(--color-text-secondary);">
-        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75;display:inline-block;"></span>Completadas</span>
-        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A;display:inline-block;"></span>Pendientes</span>
-      </div>
-    </div>
-  </div>
-
-  <div id="tab-horas" class="eco-panel">
-    <div class="eco-box" style="margin-bottom:1.25rem;">
-      <p class="eco-box-title">Consumo de horas contratadas</p>
-      <div class="eco-hours-bar">
-        <div class="eco-hours-fill" id="hoursBar" style="width:0%;background:#378ADD;"></div>
-      </div>
-      <div class="eco-hours-labels">
-        <span>0h</span>
-        <span id="hours-mid" style="color:var(--color-text-info);font-weight:500;">—</span>
-        <span id="hours-rest" style="color:var(--color-text-success);">—</span>
-        <span id="hours-total">—</span>
-      </div>
-    </div>
-    <div class="eco-grid2">
-      <div class="eco-box">
-        <p class="eco-box-title">Sesiones con cliente</p>
-        <div class="eco-chart-wrap" style="height:200px;">
-          <canvas id="sesChart" role="img" aria-label="Tipos de sesiones con cliente Connector Agency"></canvas>
-        </div>
-      </div>
-      <div class="eco-box">
-        <p class="eco-box-title">Datos clave de horas</p>
-        <div style="font-size:13px;color:var(--color-text-secondary);line-height:2;">
-          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:4px 0;"><span>Horas contratadas</span><span style="font-weight:500;color:var(--color-text-primary);" id="kv-contratadas">—</span></div>
-          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:4px 0;"><span>Horas consumidas</span><span style="font-weight:500;color:var(--color-text-primary);" id="kv-consumidas">—</span></div>
-          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:4px 0;"><span>Horas restantes</span><span style="font-weight:500;color:var(--color-text-success);" id="kv-restantes">—</span></div>
-          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:4px 0;"><span>% consumido</span><span style="font-weight:500;color:var(--color-text-info);" id="kv-pct">—</span></div>
-          <div style="display:flex;justify-content:space-between;padding:4px 0;"><span>Horas en sesiones</span><span style="font-weight:500;color:var(--color-text-primary);" id="kv-sesiones">—</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="tab-cronograma" class="eco-panel">
-    <div class="eco-grid2">
-      <div class="eco-box">
-        <p class="eco-box-title">Hitos del proyecto</p>
-        <div id="hitos-list"></div>
-      </div>
-      <div class="eco-box">
-        <p class="eco-box-title">Dimensiones clave</p>
-        <div style="font-size:12px;color:var(--color-text-secondary);">
-          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:5px 0;"><span>Módulos con avance</span><span style="font-weight:500;color:var(--color-text-primary);">7/7</span></div>
-          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:5px 0;"><span>Tiempo respuesta cliente</span><span style="font-weight:500;color:var(--color-text-warning);">~3 sem/solicitud</span></div>
-          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:5px 0;"><span>Riesgo principal</span><span style="font-weight:500;color:var(--color-text-danger);">Pruebas funcionales</span></div>
-          <div style="display:flex;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary);padding:5px 0;"><span>Desfase vs plan</span><span style="font-weight:500;color:var(--color-text-warning);">2 meses</span></div>
-          <div style="display:flex;justify-content:space-between;padding:5px 0;"><span>Go Live</span><span style="font-weight:500;color:var(--color-text-success);">13–15 jul 2026</span></div>
-        </div>
-        <div style="margin-top:14px;">
-          <p class="eco-box-title">Periodos críticos</p>
-          <div style="font-size:12px;color:var(--color-text-secondary);">
-            <div style="padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);">
-              <span style="color:var(--color-text-danger);font-weight:500;">26 feb → 10 abr</span> — Espera info (5 sem)<br>
-              <span style="color:var(--color-text-tertiary);">Falta entrega de plantillas</span>
-            </div>
-            <div style="padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);">
-              <span style="color:var(--color-text-info);font-weight:500;">13 abr → 25 may</span> — Config e impl. (6 sem)<br>
-              <span style="color:var(--color-text-tertiary);">7 módulos completados</span>
-            </div>
-            <div style="padding:5px 0;">
-              <span style="color:var(--color-text-warning);font-weight:500;">Actual</span> — Riesgo pruebas funcionales<br>
-              <span style="color:var(--color-text-tertiary);">Requiere alta interacción del equipo</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="mini">
+    <div><b>27 h</b><span>Cortesía Go-Live</span></div>
+    <div><b>3.3 h</b><span>Sesiones sin costo</span></div>
+    <div><b>6</b><span>Sesiones no facturadas</span></div>
   </div>
 </div>
-</div><!-- /w -->
+<div class="fbar">
+  <div><label>Módulo</label><select id="fMod"><option value="">Todos</option></select></div>
+  <div><label>Responsable</label><select id="fResp"><option value="">Todos</option></select></div>
+  <div><label>Estado</label><select id="fEst"><option value="">Todos</option></select></div>
+  <div><label>Tipo de actividad</label><select id="fTipo"><option value="">Todos</option></select></div>
+  <div class="chip" id="chip"><span id="chipTx"></span><button id="chipX" title="Quitar selección">✕</button></div>
+  <button class="reset" id="btnReset">Restablecer filtros</button>
+  <div class="hint">Sugerencia: haz clic en cualquier barra o segmento de las gráficas para filtrar todo el tablero (filtrado cruzado). Vuelve a hacer clic para deshacer.</div>
+</div>
+<!-- ==================== VISTA 1: RESUMEN ==================== -->
+<section class="view on" id="v-resumen">
+  <div class="kpis">
+    <div class="kpi ok"><div class="t">Avance de actividades</div><div class="v" id="kAvance">–</div><div class="d" id="kAvanceD"></div></div>
+    <div class="kpi navy"><div class="t">Actividades en alcance</div><div class="v" id="kTot">–</div><div class="d" id="kTotD"></div></div>
+    <div class="kpi"><div class="t">Horas consumidas / contratadas</div><div class="v">303<small> / 350 h</small></div><div class="d">47 h restantes en contrato</div></div>
+    <div class="kpi gold"><div class="t">Cortesía Zublime</div><div class="v">27<small> h</small></div><div class="d">Sin costo para asegurar el Go-Live</div></div>
+    <div class="kpi gold"><div class="t">Sesiones sin costo</div><div class="v">3.3<small> h</small></div><div class="d">35.4 h facturables de 38.7 h reales</div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Avance por módulo</h3>
+      <div class="cs">Actividades completadas, en producción y backlog de posventa · clic en una barra para filtrar</div>
+      <div class="ch tall"><canvas id="chMod"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Estado del alcance</h3>
+      <div class="cs">Distribución de las <span id="donutN"></span> actividades filtradas</div>
+      <div class="ch tall"><canvas id="chEstado"></canvas></div>
+    </div>
+  </div>
+  <div class="grid g2b">
+    <div class="card">
+      <h3>Contrato de horas y cortesía Zublime</h3>
+      <div class="cs">La cortesía de 27 h cubre el esfuerzo adicional requerido para el Go-Live</div>
+      <div class="ch short"><canvas id="chBolsa"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Porcentaje de avance por módulo (datos duros)</h3>
+      <div class="cs">Medición oficial reportada por PMO al corte</div>
+      <div id="modBars"></div>
+    </div>
+  </div>
+  <div class="ins">
+    <div class="card w"><span class="tag w">Compromiso Zublime</span><h4>27 h de cortesía para asegurar el Go-Live</h4><p>El cierre del proyecto requiere <b>72 h</b> de esfuerzo con <b>47 h</b> restantes en contrato. Zublime absorbe la diferencia con una <b>cortesía de 27 h sin costo</b>, garantizando que el Go-Live del 13–15 de julio no genere cargos adicionales al cliente.</p></div>
+    <div class="card w"><span class="tag w">Compromiso Zublime</span><h4>3.3 h de acompañamiento no facturadas</h4><p>De las <b>38.7 h reales</b> invertidas en 41 sesiones con el equipo Connector, solo se facturan <b>35.4 h</b>. Seis sesiones de seguimiento, alineación interna y revisión de avances se otorgaron <b>sin costo</b>.</p></div>
+    <div class="card g"><span class="tag g">Valor entregado</span><h4>Siete de siete módulos con avance</h4><p>CRM, Ventas, Compras, Proyectos e Inventario/Fabricación cierran al <b>100%</b> de configuración; <b>19 desarrollos a la medida</b> ya operan en producción y las capacitaciones concluyeron con 12 sesiones impartidas.</p></div>
+    <div class="card w"><span class="tag w">Atención</span><h4>Contabilidad es el único módulo bajo meta</h4><p>Avanza al <b>80%</b>: la importación de saldos iniciales y de activos históricos depende de información del cliente. Es el principal stopper funcional para operar tras el Go-Live.</p></div>
+    <div class="card t"><span class="tag t">Contexto</span><h4>El calendario dependió de la información del cliente</h4><p>El proyecto arrancó configuraciones tras <b>5 semanas</b> de espera de plantillas (26 feb – 10 abr), con un tiempo de respuesta promedio de <b>~3 semanas</b> por solicitud. Aun así, la fase de configuración se completó en 6 semanas.</p></div>
+    <div class="card t"><span class="tag t">Recomendación</span><h4>Backlog canalizado como fase 2</h4><p><b>20 actividades</b> quedaron identificadas como backlog de posventa (portal de proveedores, reportes PDF de rentabilidad, restricciones de flujo). No bloquean el Go-Live y representan la ruta natural de evolución de la plataforma.</p></div>
+  </div>
+</section>
+<!-- ==================== VISTA 2: HORAS ==================== -->
+<section class="view" id="v-horas">
+  <div class="kpis">
+    <div class="kpi navy"><div class="t">Horas invertidas en el alcance</div><div class="v" id="hReal">–</div><div class="d">Esfuerzo del equipo Zublime (selección actual)</div></div>
+    <div class="kpi"><div class="t">Actividades ejecutadas</div><div class="v" id="hN">–</div><div class="d" id="hND"></div></div>
+    <div class="kpi gold"><div class="t">Cortesía Zublime</div><div class="v">27<small> h</small></div><div class="d">Esfuerzo al Go-Live sin costo</div></div>
+    <div class="kpi gold"><div class="t">Total sin costo al cliente</div><div class="v">30.3<small> h</small></div><div class="d">27 h de cortesía + 3.3 h de sesiones</div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Esfuerzo invertido por módulo</h3>
+      <div class="cs">Horas reales del equipo · clic en una barra para filtrar</div>
+      <div class="ch tall"><canvas id="chHorasMod"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Esfuerzo por tipo de actividad</h3>
+      <div class="cs">Dónde se invirtió el trabajo · clic para filtrar</div>
+      <div class="ch tall"><canvas id="chTipo"></canvas></div>
+    </div>
+  </div>
+  <div class="grid g2b">
+    <div class="card">
+      <h3>Carga por responsable</h3>
+      <div class="cs">Horas reales y número de actividades · clic para filtrar</div>
+      <div class="ch"><canvas id="chResp"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Composición del contrato</h3>
+      <div class="cs">303 h consumidas + 47 h restantes + 27 h de cortesía Zublime</div>
+      <div class="ch"><canvas id="chContrato"></canvas></div>
+    </div>
+  </div>
+</section>
+<!-- ==================== VISTA 3: SESIONES ==================== -->
+<section class="view" id="v-sesiones">
+  <div class="kpis">
+    <div class="kpi navy"><div class="t">Sesiones con cliente</div><div class="v">41</div><div class="d">Demos, kickoffs, capacitación y seguimiento</div></div>
+    <div class="kpi"><div class="t">Horas reales invertidas</div><div class="v">38.7<small> h</small></div><div class="d">Tiempo total del equipo en sesiones</div></div>
+    <div class="kpi ok"><div class="t">Horas facturables</div><div class="v">35.4<small> h</small></div><div class="d">Lo que efectivamente se cobra al cliente</div></div>
+    <div class="kpi gold"><div class="t">Horas de sesión sin costo</div><div class="v">3.3<small> h</small></div><div class="d">6 sesiones de cortesía (8.5% del tiempo)</div></div>
+  </div>
+  <div class="grid g2b">
+    <div class="card">
+      <h3>Horas reales vs facturables por objetivo</h3>
+      <div class="cs">La diferencia entre ambas barras es cortesía Zublime</div>
+      <div class="ch"><canvas id="chSesObj"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Facturable vs sin costo</h3>
+      <div class="cs">Del total de 38.7 h reales en sesiones</div>
+      <div class="ch"><canvas id="chSesDona"></canvas></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Bitácora de sesiones</h3>
+    <div class="cs">Las 41 sesiones registradas · las marcadas como cortesía no se facturan · clic en encabezados para ordenar</div>
+    <div style="overflow-x:auto">
+    <table id="tblSes">
+      <thead><tr>
+        <th data-k="s">Sesión</th><th data-k="obj">Objetivo</th>
+        <th class="num" data-k="real">Horas reales</th><th class="num" data-k="bill">Horas facturables</th><th data-k="free">Facturación</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+    <div class="tsum" id="tsumSes"></div>
+  </div>
+</section>
+<!-- ==================== VISTA 4: DETALLE ==================== -->
+<section class="view" id="v-detalle">
+  <div class="card">
+    <h3>Explorador de actividades</h3>
+    <div class="cs">Haz clic en los encabezados para ordenar · la tabla responde a los filtros y al filtrado cruzado de las gráficas</div>
+    <div style="overflow-x:auto">
+    <table id="tbl">
+      <thead><tr>
+        <th data-k="id">ID</th><th data-k="act">Actividad</th><th data-k="mod">Módulo</th><th data-k="tipo">Tipo</th><th data-k="resp">Responsable</th><th data-k="estado">Estado</th>
+        <th class="num" data-k="real">Horas invertidas</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+    <div class="tsum" id="tsum"></div>
+  </div>
+</section>
+<!-- ==================== VISTA 5: CRONOGRAMA ==================== -->
+<section class="view" id="v-crono">
+  <div class="grid g2b">
+    <div class="card">
+      <h3>Hitos del proyecto</h3>
+      <div class="cs">Línea de tiempo febrero – julio de 2026</div>
+      <div class="tl">
+        <div class="tl-it"><div class="dt">26 feb</div><div class="ti">Envío de plantillas de levantamiento</div><div class="tx">Inicio condicionado a la entrega de datos por parte del cliente.</div></div>
+        <div class="tl-it gold"><div class="dt">10 abr</div><div class="ti">Recepción completa de plantillas</div><div class="tx">5 semanas de espera; se habilita el inicio de configuraciones.</div></div>
+        <div class="tl-it"><div class="dt">13 abr</div><div class="ti">Entrega de primeros avances</div><div class="tx">3 de 7 módulos avanzados.</div></div>
+        <div class="tl-it"><div class="dt">25 may</div><div class="ti">Cierre de configuración e implementación</div><div class="tx">5 módulos configurados e implementados; se cumple la segunda fase.</div></div>
+        <div class="tl-it"><div class="dt">jun</div><div class="ti">Capacitaciones finalizadas</div><div class="tx">2 semanas de sesiones con los equipos; 12 sesiones de capacitación.</div></div>
+        <div class="tl-it gold"><div class="dt">13–15 jul</div><div class="ti">Go-Live</div><div class="tx">Ventana de 3 días, en proceso, respaldada por 27 h de cortesía Zublime. Las pruebas funcionales requieren alta participación del equipo Connector.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <h3>Dependencias y seguimiento al corte</h3>
+        <div class="cs">Registro PMO</div>
+        <table>
+          <thead><tr><th>Dimensión</th><th>Estado</th><th>Observación</th></tr></thead>
+          <tbody>
+            <tr><td>Módulos con avance</td><td><span class="pill p-done">7 / 7</span></td><td>Todos en espera de pruebas funcionales finales.</td></tr>
+            <tr><td>Cobertura del Go-Live</td><td><span class="pill p-free">Cortesía 27 h</span></td><td>Zublime absorbe el esfuerzo adicional; sin cargos extra al cliente.</td></tr>
+            <tr><td>Pruebas funcionales</td><td><span class="pill p-back">En proceso</span></td><td>Requieren alta participación del equipo Connector en la ventana de Go-Live.</td></tr>
+            <tr><td>Contabilidad: saldos iniciales</td><td><span class="pill p-back">Pendiente</span></td><td>Importación de saldos y activos históricos sujeta a información del cliente.</td></tr>
+            <tr><td>Flujos de inventario e insumos</td><td><span class="pill p-prod">Controlado</span></td><td>Entrega 5 jun; carga manual habilitada para el usuario.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Backlog para posventa</h3>
+        <div class="cs">Alcance recomendado como fase 2 (no bloquea el Go-Live)</div>
+        <div class="ch short"><canvas id="chBacklog"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="footer">Zublime · Programa de trabajo Connector Agency 2026 · Fuente: programa de trabajo, sesiones, datos duros y cronograma PMO · Documento interno para dirección</div>
+</main>
 </div><!-- /app -->
-
 <script>
 // ── LOGIN ──
 const PASS = 'zublime-connector';
+let appInitialized = false;
 function checkPwd() {
   if (document.getElementById('pwd-input').value === PASS) {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    initApp();
+    if (!appInitialized) {
+      appInitialized = true;
+      render();
+    }
   } else {
     document.getElementById('login-error').style.display = 'block';
     document.getElementById('pwd-input').value = '';
   }
 }
-
-// ── DATOS DE MÓDULOS ──
-// Corregido: Productos/Servicios (done=7 no puede dar 94% si total=7; se deja en 6.6/7
-// para que el % sea consistente, igual que en la versión anterior del dashboard).
-// Corregido: Contabilidad tenía total=13 pero done+pending=12; se ajustó total=12.
-const modules = [
-  { name: 'Clientes/Proveedores', total: 1,  done: 1,   pending: 0,   fase: 'mig', stopper: null },
-  { name: 'Otros contactos',      total: 1,  done: 1,   pending: 0,   fase: 'mig', stopper: null },
-  { name: 'Productos/Servicios',  total: 7,  done: 6.6, pending: 0.4, fase: 'mig', stopper: 'En espera de información del equipo Connector' },
-  { name: 'Discovery',            total: 10, done: 10,  pending: 0,   fase: 'cfg', stopper: null },
-  { name: 'CRM',                  total: 29, done: 24,  pending: 5,   fase: 'cfg', stopper: 'Incrementos de desarrollo pendientes' },
-  { name: 'Ventas',               total: 20, done: 18,  pending: 2,   fase: 'cfg', stopper: 'Pruebas funcionales pendientes' },
-  { name: 'Contabilidad',         total: 12, done: 8,   pending: 4,   fase: 'cfg', stopper: 'Importación de activos e importación de saldos iniciales' },
-  { name: 'Compras',              total: 19, done: 14,  pending: 5,   fase: 'cfg', stopper: 'Actividades on hold / requerimientos fuera de alcance' },
-  { name: 'Proyectos',            total: 20, done: 17,  pending: 3,   fase: 'cfg', stopper: 'Pruebas funcionales pendientes' },
-  { name: 'Inventario',           total: 17, done: 14,  pending: 3,   fase: 'cfg', stopper: 'Pendientes de info de códigos de barras y categorías' },
-  { name: 'Fabricación',          total: 6,  done: 4,   pending: 2,   fase: 'cfg', stopper: 'Plantillas de materiales y subir plantillas pendientes' },
+const DATA = [{"id": "2.5", "act": "Carga de usuarios a la base de datos de producción", "mod": "General", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 4.0}, {"id": "2.6", "act": "Verificación de llamadas de kickoff comercial", "mod": "General", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 4.0, "real": 4.5}, {"id": "2.7", "act": "Verificación de llamadas de kickoff inventario", "mod": "General", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 3.0, "real": 4.0}, {"id": "2.7", "act": "Revisión de formatos compartidos por el cliente", "mod": "General", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.5}, {"id": "2.8", "act": "Contabilidad", "mod": "General", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.5, "real": 2.0}, {"id": "2.9", "act": "Creación de manuales correspondiente a cada uno de los módulos activos\n\nContabilidad-Facturación\n\nCRM\n\nVentas\n\nArticulos\n\nCompras\n\nGastos\n\nTaller \n\nInventario\n\n", "mod": "General", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.0, "real": 8.0}, {"id": "3.1", "act": "Configuraciones generales de CRM", "mod": "Comercial", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.3, "real": 0.12}, {"id": "3.2", "act": "Creación de pipeline", "mod": "Comercial", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.3, "real": 0.15}, {"id": "3.3", "act": "Creación de actividades para los equipos de ventas", "mod": "Comercial", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 1.43}, {"id": "3.4", "act": "Asignación de clientes a cada vendedor correspondiente", "mod": "Comercial", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Backlog", "plan": "Backlog", "est": 1.0, "real": 0.0}, {"id": "3.5", "act": "Creacino de campos necesarios en las oportunidades CRM", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 3.15}, {"id": "3.6", "act": "Pruebas de campos y sincronización entre CRM y ventas", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 4.0, "real": 6.0}, {"id": "3.6", "act": "Diseño e implementación de solución \"Planeación comercial y diseño creativo de proyecto\"", "mod": "Comercial", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 3.0, "real": 4.0}, {"id": "3.7", "act": "Agregar flujo de validación de viabilidad del proyecto del prospecto - CRM", "mod": "Comercial", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 3.0}, {"id": "3.8", "act": "Nuevo flujo de módulo de artículos", "mod": "Comercial", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 4.0, "real": 8.0}, {"id": "3.9", "act": "[Desarrollo] - vincular crm a artículos", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 3.0, "real": 4.0}, {"id": "3.91", "act": "[Desarrollo] - Pruebas de vinculo en vistas", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 3.0, "real": 3.0}, {"id": "3.92", "act": "[Desarollo] - Pruebas en vista móvil", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 3.0}, {"id": "3.8", "act": "Flujo de creacion de cotizaciones y cambios", "mod": "Comercial", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 0.1}, {"id": "3.9", "act": "Solicitud de nuevos requerimientos", "mod": "Comercial", "tipo": "Análisis", "resp": "Abigail Diaz", "estado": "Completada", "plan": "Cambio", "est": 3.0, "real": 2.0}, {"id": "3.9", "act": "Seguimiento con el equipo de connector", "mod": "Comercial", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.0}, {"id": "3.9", "act": "Validación y preparación de flujos de CRM, artúculos, comercial", "mod": "Comercial", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 5.0}, {"id": "3.9", "act": "[Desarrollo] Cuando una oportunidad se gane, perdido o cancelado la información de la oportunidad se mande proyecto dentro de la app del proyecto.", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 2.0, "real": 2.0}, {"id": "3.91", "act": "[Desarrollo] Agregar campo informativo de egreso esperado en la oportunidad", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 1.0, "real": 1.0}, {"id": "3.92", "act": "[Desarrollo] Ocultar el botón de enriquecer dentro del registro de oportunidad", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 1.0, "real": 1.0}, {"id": "3.93", "act": "[Desarrollo] Que en las actividades se pueda asignar a más de una persona", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 2.0, "real": 0.0}, {"id": "3.94", "act": "[Desarrollo] Asignar plantilla de artículos de manera autómatica al crear una oportunidad en CRM", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 2.0, "real": 2.0}, {"id": "3.96", "act": "Dejar cargar archivos de más de 67 MB por actividad o carga", "mod": "Comercial", "tipo": "Configuración", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 1.0, "real": 0.0}, {"id": "3.97", "act": "Sesión de recap de comercial", "mod": "Comercial", "tipo": "Capacitación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 1.0}, {"id": "3.98", "act": "[Desarrollo] - Hacer plantilla estandar de proyecto en árticulo y asignarlo automaticamente al crear una oportunidad", "mod": "Comercial", "tipo": "Otro", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 0.0, "real": 0.0}, {"id": "3.99", "act": "[Desarrollo] - Crear restricción en Todos o hojas de trabajo y que no permita avanzar con actividades hasta que se completen las actividades previas", "mod": "Comercial", "tipo": "Otro", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 0.0, "real": 0.0}, {"id": "3.99", "act": "[Desarrollo] Notificación para no olvidar oportunidad en etapa", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 2.0, "real": 2.0}, {"id": "3.99", "act": "[Desarrollo] - Notificación al completar to do", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 2.3, "real": 2.3}, {"id": "3.99", "act": "[Desarrollo] - Notificación sobre actividades vencidas sin seguimiento.", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 4.0, "real": 4.0}, {"id": "3.99", "act": "Desarrollo de Manual de CRM", "mod": "Comercial", "tipo": "Capacitación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.5, "real": 2.0}, {"id": "3.99", "act": "[Desarrollo] - Acomodo de árticulos en la vista de índice", "mod": "Comercial", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 5.0, "real": 4.0}, {"id": "4.1", "act": "Configuraciones generales", "mod": "Ventas", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 0.2}, {"id": "4.2", "act": "Implementacion del equipo de ventas", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.3, "real": 2.0}, {"id": "4.2", "act": "Equipos de ventas", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.3, "real": 6.0}, {"id": "4.3", "act": "Asignación de miembros de equipos", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 1.0}, {"id": "4.3", "act": "Creacion de campos necesarios", "mod": "Ventas", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 8.0}, {"id": "4.4", "act": "Terminos de pago (Solicitar al cliente)", "mod": "Ventas", "tipo": "Configuración", "resp": "Salvador Macías", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 0.0}, {"id": "4.5", "act": "[Desarrollo] Notificacion a usuarios especificos al confirmar una venta", "mod": "Ventas", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 4.0, "real": 3.3}, {"id": "4.6", "act": "Pruebas de desarrollo de notificación a usuarios al confirmar venta", "mod": "Ventas", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.0, "real": 4.0}, {"id": "4.5", "act": "Productos que en la Venta generan Proyectos para su seguimiento", "mod": "Ventas", "tipo": "Configuración", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 0.3, "real": 0.0}, {"id": "4.6", "act": "Firma de propuestas", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 0.2}, {"id": "4.7", "act": "Creacion de actividades necesarias en este módulo", "mod": "Ventas", "tipo": "Implementación", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 1.0, "real": 0.0}, {"id": "4.8", "act": "Implementación de términos y condiciones en cotizaciones y ventas", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 0.3}, {"id": "4.9", "act": "Configurar terminos y condiciones predeterminados (solicitar a cliente)", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.2, "real": 0.1}, {"id": "4.91", "act": "Carga de productos tabulados- cotización el santo prod", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 5.0}, {"id": "4.93", "act": "Acomodo de información de plantilla de productos", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 4.0, "real": 4.0}, {"id": "4.94", "act": "Creación de categorías", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 2.0}, {"id": "4.95", "act": "Creación de unidades de medida", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 3.0}, {"id": "4.96", "act": "Pruebas de cargas de productos", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 3.0}, {"id": "4.97", "act": "Pruebas completas de ventas con proyectos", "mod": "Ventas", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 3.0}, {"id": "4.98", "act": "[Desarrollo] - Modificar documento de cotización y documento de orden de venta", "mod": "Ventas", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 1.5, "real": 1.5}, {"id": "4.99", "act": "Desarrollo de manual de ventas", "mod": "Ventas", "tipo": "Capacitación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.5, "real": 2.0}, {"id": "5.1", "act": "Solicitud y analisis de plan contable actual", "mod": "Contabilidad", "tipo": "Análisis", "resp": "Salvador Macías", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 1.0}, {"id": "5.2", "act": "Preparación y envío plantilla para importar plan de cuentas, clientes y proveedores", "mod": "Contabilidad", "tipo": "Configuración", "resp": "Salvador Macías", "estado": "Completada", "plan": "Planeado", "est": 3.0, "real": 5.0}, {"id": "5.3", "act": "Alta de cuentas bancarias", "mod": "Contabilidad", "tipo": "Configuración", "resp": "Salvador Macías", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 1.0}, {"id": "5.4", "act": "Creación y configuración de centros de costos", "mod": "Contabilidad", "tipo": "Configuración", "resp": "Laura Ávila", "estado": "Completada", "plan": "Backlog", "est": 3.0, "real": 1.0}, {"id": "5.5", "act": "Creación de prestamos y lineas de credito", "mod": "Contabilidad", "tipo": "Configuración", "resp": "Laura Ávila", "estado": "Backlog", "plan": "Cambio", "est": 3.0, "real": 0.0}, {"id": "5.6", "act": "Configuración de impuestos basicos", "mod": "Contabilidad", "tipo": "Configuración", "resp": "Laura Ávila", "estado": "Completada", "plan": "Backlog", "est": 2.0, "real": 1.0}, {"id": "5.7", "act": "Importación de activos historicos", "mod": "Contabilidad", "tipo": "Implementación", "resp": "Salvador Macías", "estado": "Backlog", "plan": "Backlog", "est": 3.0, "real": 0.0}, {"id": "5.8", "act": "Importación de saldos inciales de cuentas", "mod": "Contabilidad", "tipo": "Implementación", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 4.0, "real": 0.0}, {"id": "5.9", "act": "Configuración de cuentas contables en catgorias de productos para costeos", "mod": "Contabilidad", "tipo": "Configuración", "resp": "Sin asignar", "estado": "Completada", "plan": "Backlog", "est": 2.0, "real": 1.0}, {"id": "5.91", "act": "Configuración de facturación CFDI, para emitir facturas", "mod": "Contabilidad", "tipo": "Otro", "resp": "Sin asignar", "estado": "Completada", "plan": "Backlog", "est": 1.0, "real": 1.0}, {"id": "5.92", "act": "Configuración de claves de unidades de medida de los productos", "mod": "Contabilidad", "tipo": "Otro", "resp": "Sin asignar", "estado": "Completada", "plan": "Backlog", "est": 1.0, "real": 1.0}, {"id": "5.93", "act": "Configuración y revisión de las claves de productos", "mod": "Contabilidad", "tipo": "Otro", "resp": "Sin asignar", "estado": "Completada", "plan": "Backlog", "est": 2.0, "real": 1.0}, {"id": "6.1", "act": "[Desarrollo] Gestionar campo para desbloquear compras conforme fecha de alta.", "mod": "Compras", "tipo": "Desarrollo", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 2.0, "real": 0.0}, {"id": "6.2", "act": "[Desarrollo] Bloqueo de limite de compras conforme presupuesto analitico, con Tope de 50%", "mod": "Compras", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 3.0, "real": 3.0}, {"id": "6.3", "act": "[Desarrollo] Creación de grupo de permisos para usuario que puede desbloquear limite de presupuesto", "mod": "Compras", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 2.0, "real": 2.0}, {"id": "3.31", "act": "Pruebas de permisos sobre límite de presupuesto en compras", "mod": "Compras", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 3.0, "real": 6.0}, {"id": "6.4", "act": "Validación de información de proveedores", "mod": "Compras", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 5.0}, {"id": "6.5", "act": "Gestión de Plazos de pago de proveedor", "mod": "Compras", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.5}, {"id": "6.6", "act": "Gestión de Presupuestos", "mod": "Compras", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 1.0}, {"id": "6.7", "act": "Analiticas para gestionar requisiciones de compra por proyecto", "mod": "Compras", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.3, "real": 1.5}, {"id": "6.8", "act": "Solicitud requisiciones de compra para aprobar", "mod": "Compras", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 0.2}, {"id": "6.9", "act": "Anticipos a proveedores", "mod": "Compras", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 0.11}, {"id": "6.91", "act": "Facturas de proveedor con Requisición de compra", "mod": "Compras", "tipo": "Implementación", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 1.0, "real": 0.0}, {"id": "6.92", "act": "[Desarrollo] Validación de Factura en registro de requisición obligatoria para crear Orden de compra", "mod": "Compras", "tipo": "Desarrollo", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 3.0, "real": 0.0}, {"id": "6.93", "act": "Flujo de compras, hasta validar recepción u entrega a cliente con inventario", "mod": "Compras", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 0.15}, {"id": "6.94", "act": "Seguimiento con tablero de compras", "mod": "Compras", "tipo": "Implementación", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 2.0, "real": 0.0}, {"id": "6.95", "act": "[Desarrollo] Notificación cuando el PM o el Comercial suban la factura de proveedor", "mod": "Compras", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 4.0, "real": 5.0}, {"id": "6.97", "act": "Pruebas de notificación cuando el PM o el Comercial suban la factura de proveedor", "mod": "Compras", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 3.0, "real": 4.0}, {"id": "6.96", "act": "[Desarrollo] Portal de proveedores para que suban sus facturas", "mod": "Compras", "tipo": "Desarrollo", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 4.0, "real": 0.0}, {"id": "6.97", "act": "Pruebas funcionales de compras y vinculo a proyecto", "mod": "Compras", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 3.0}, {"id": "6.98", "act": "Implementación y pruebas generales", "mod": "Compras", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 5.0}, {"id": "6.99", "act": "Desarrollo de manual de compras", "mod": "Compras", "tipo": "Capacitación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.5, "real": 2.0}, {"id": "7.1", "act": "Gestión analítica de proyectos asociado a Orden de venta", "mod": "Proyectos", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.3, "real": 1.5}, {"id": "7.2", "act": "Productos que gestionan proyectos en ventas y plantilla de Proyecto (ejemplo Desarrollo creativo)", "mod": "Proyectos", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.3, "real": 1.0}, {"id": "7.3", "act": "Diseño de tareas entregables de proyecto y subtareas con proveedores", "mod": "Proyectos", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.0}, {"id": "7.4", "act": "Usuarios ejecutivos y asignación de tareas", "mod": "Proyectos", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.0}, {"id": "7.5", "act": "Áreas comerciales, seguimiento en proyectos para marcas y su respectiva área", "mod": "Proyectos", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.0}, {"id": "7.6", "act": "Definición de etapas del proyecto (Pre producción, producción, Ejecución, Cierre)", "mod": "Proyectos", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 0.3, "real": 1.0}, {"id": "7.7", "act": "[Desarrollo] Notificación cuando se crea el proyecto para poder iniciarlo", "mod": "Proyectos", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 2.0, "real": 2.0}, {"id": "7.71", "act": "[Desarrollo] Activar permiso de notificaciones para aviso a nuevos proyectos", "mod": "Proyectos", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 1.0, "real": 1.0}, {"id": "7.8", "act": "Hacer match de campos de proyectos con bitacora de proyecto (Que productor lo lleva\nQué comercial lo lleva\nCuando se llevará\nEl estatus del proyecto\nDonde se ll", "mod": "Proyectos", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 3.0, "real": 3.0}, {"id": "7.9", "act": "Configurar la gestión de tiempo de las tareas y configurar módulo de horas", "mod": "Proyectos", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.0}, {"id": "7.91", "act": "Pruebas de desarrollo de permiso de límite de compra", "mod": "Proyectos", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 4.0, "real": 6.0}, {"id": "7.92", "act": "Pruebas de desarrollo de límte de compra en presupuesto", "mod": "Proyectos", "tipo": "Análisis", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 3.0, "real": 5.0}, {"id": "7.93", "act": "Pruebas en confirmación de compras con límite", "mod": "Proyectos", "tipo": "Desarrollo", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.0}, {"id": "7.94", "act": "Sesiones de recap y muestra de proyectos", "mod": "Proyectos", "tipo": "Capacitación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 1.0}, {"id": "7.95", "act": "Implementación general", "mod": "Proyectos", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 4.0, "real": 6.0}, {"id": "7.96", "act": "[Desarrollo] - Crear reporte PDF de rentabilidad del proyecto", "mod": "Proyectos", "tipo": "Otro", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 0.0, "real": 0.0}, {"id": "7.97", "act": "[Desarrollo] - Notificación de planos aprobados para fabricar", "mod": "Proyectos", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 3.0, "real": 3.0}, {"id": "7.98", "act": "[Desarrollo] - Valor de ajuste predeterminado en configuración de usuario", "mod": "Proyectos", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 1.0, "real": 1.0}, {"id": "7.99", "act": "Desarrollo de manual de Proyectos", "mod": "Proyectos", "tipo": "Capacitación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.5, "real": 2.0}, {"id": "", "act": "Llenado de plantillas", "mod": "Inventario y lógistica", "tipo": "Capacitación", "resp": "Abigail Diaz", "estado": "Completada", "plan": "Planeado", "est": 0.2, "real": 0.2}, {"id": "8.1", "act": "Productos de inventario propios", "mod": "Inventario y lógistica", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 3.0}, {"id": "8.2", "act": "Gestión de productos inventariados de terceros", "mod": "Inventario y lógistica", "tipo": "Configuración", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 1.0, "real": 0.0}, {"id": "8.3", "act": "Definición de productos por código de barras", "mod": "Inventario y lógistica", "tipo": "Implementación", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 1.0, "real": 0.0}, {"id": "8.4", "act": "Productos y sus unidades de medida", "mod": "Inventario y lógistica", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 1.5}, {"id": "8.5", "act": "Categorias de productos, para seguimiento en inventario y contable", "mod": "Inventario y lógistica", "tipo": "Implementación", "resp": "Sin asignar", "estado": "Backlog", "plan": "Backlog", "est": 1.0, "real": 0.0}, {"id": "8.6", "act": "Inventarios, movimientos de almacen, gestión", "mod": "Inventario y lógistica", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 5.0}, {"id": "8.7", "act": "Ubicaciones de Inventario", "mod": "Inventario y lógistica", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 2.0, "real": 6.0}, {"id": "8.8", "act": "Recepciones derivadas de compras", "mod": "Inventario y lógistica", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.0}, {"id": "8.9", "act": "Seguimiento en recepción parcial y completa", "mod": "Inventario y lógistica", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.0}, {"id": "8.91", "act": "Operaciones de traslados internos", "mod": "Inventario y lógistica", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 1.5}, {"id": "8.92", "act": "Ajustes de inventario", "mod": "Inventario y lógistica", "tipo": "Capacitación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 1.5}, {"id": "8.93", "act": "Informes de inventario", "mod": "Inventario y lógistica", "tipo": "Capacitación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 1.5}, {"id": "8.94", "act": "[Desarrollo] - Notificación de productos de línea", "mod": "Inventario y lógistica", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 3.0, "real": 3.0}, {"id": "8.95", "act": "[Desarrollo] - Notificación sobre bajo y alto consumo en inventario", "mod": "Inventario y lógistica", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 3.0, "real": 3.0}, {"id": "8.96", "act": "[Desarrollo] - Formato entrada de inventario", "mod": "Inventario y lógistica", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 2.0, "real": 2.0}, {"id": "8.97", "act": "[Desarrollo] - Formato salida checklist de inventario", "mod": "Inventario y lógistica", "tipo": "Desarrollo", "resp": "Arturo Serpa", "estado": "En producción", "plan": "Planeado", "est": 2.0, "real": 2.0}, {"id": "8.98", "act": "Desarrollo de manual de inventario", "mod": "Inventario y lógistica", "tipo": "Capacitación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.5, "real": 2.0}, {"id": "9.1", "act": "Generar plantilas de listas de materiales", "mod": "Fabricación", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Backlog", "est": 0.3, "real": 1.5}, {"id": "9.2", "act": "Subir plantillas de listas de materiales", "mod": "Fabricación", "tipo": "Implementación", "resp": "Mizraim Avila", "estado": "Backlog", "plan": "Backlog", "est": 0.3, "real": 0.0}, {"id": "9.3", "act": "Configurar estaciones de fabricación", "mod": "Fabricación", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Backlog", "est": 1.0, "real": 3.0}, {"id": "9.4", "act": "Configurar control de calidad de estaciones", "mod": "Fabricación", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Backlog", "est": 1.0, "real": 2.0}, {"id": "9.5", "act": "Configurar operaciones", "mod": "Fabricación", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Backlog", "est": 2.0, "real": 4.0}, {"id": "10.1", "act": "Configuración de gastos con distribución análitica y proyectos", "mod": "Proyectos", "tipo": "Configuración", "resp": "Mizraim Avila", "estado": "Completada", "plan": "Planeado", "est": 1.0, "real": 2.0}];
+const SES = [{"s": "[Connector Agency] Demo", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector Agency] Kickoff Implementación Odoo", "obj": "Alineación", "real": 0.5, "bill": 0.5}, {"s": "[Connector Agency] - Kickoff Contabilidad", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector Agency] - Kickoff comercial", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector Agency] - Kickoff Compras", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector Agency] - Kickoff comercial continuación", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector Agency] - Revisión plan contable y explicación de plantilla", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector Agency] - Kickoff Inventario y Logística", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector Agency] Implementación Odoo", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector Agency] Proyecto", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector]- Revisión de avances", "obj": "Alineación", "real": 0.5, "bill": 0.5}, {"s": "[Connector]- Pruebas de usuarios", "obj": "Capacitación", "real": 0.5, "bill": 0.5}, {"s": "[Connector]- Seguimiento comercial", "obj": "Requerimientos", "real": 1.0, "bill": 1.0}, {"s": "[Connector]- Seguimiento del proyecto", "obj": "Alineación", "real": 1.0, "bill": 0.0}, {"s": "[Connector]- Inventario_ llenado de plantillas", "obj": "Capacitación", "real": 0.5, "bill": 0.5}, {"s": "[Connector]- Ventas-Alineación del flujo", "obj": "Requerimientos", "real": 0.33, "bill": 0.0}, {"s": "[Connector]- Contabilidad- flujo de trabajo", "obj": "Pruebas funcionales", "real": 1.0, "bill": 1.0}, {"s": "[Coonector]-proyectos- plantillas", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector]-contabilidad- pruebas de interfaz", "obj": "Capacitación", "real": 0.5, "bill": 0.5}, {"s": "[Connector]-comercial-flujo comercial", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector]-Review-Revisión de avances", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector]-contabilidad- claves", "obj": "Alineación", "real": 1.0, "bill": 1.0}, {"s": "[Connector]-proyectos-recap del módulo", "obj": "Alineación", "real": 0.5, "bill": 0.5}, {"s": "[Connector]-Comercial- pruebas funcionales-", "obj": "Capacitación", "real": 1.5, "bill": 1.5}, {"s": "[Connector]-proyectos- pruebas funcionales", "obj": "Capacitación", "real": 1.18, "bill": 1.18}, {"s": "[Connector]-inventario-flujo de trabajo", "obj": "Alineación", "real": 1.37, "bill": 1.37}, {"s": "[Connector]-Review-Revisión de avances", "obj": "Alineación", "real": 1.1, "bill": 1.1}, {"s": "[Connector]-inventario-insumos", "obj": "Capacitación", "real": 1.17, "bill": 1.17}, {"s": "[Connector]-diseño-wishlist", "obj": "Requerimientos", "real": 1.0, "bill": 1.0}, {"s": "[Connector]-contabilidas-pruebas funcionales", "obj": "Pruebas funcionales", "real": 0.5, "bill": 0.5}, {"s": "[Connector]-diseño-wishlist", "obj": "Alineación", "real": 0.33, "bill": 0.0}, {"s": "[Connector]-Monthly Business Review", "obj": "Alineación", "real": 0.5, "bill": 0.0}, {"s": "[Connector]-inventario-fabricación", "obj": "Capacitación", "real": 1.0, "bill": 1.0}, {"s": "[Connector]-Avance global del proyecto", "obj": "Alineación", "real": 1.33, "bill": 1.33}, {"s": "[Connector]-capacitación- proyectos", "obj": "Capacitación", "real": 1.25, "bill": 1.25}, {"s": "Connector]-capacitación", "obj": "Capacitación", "real": 1.17, "bill": 1.17}, {"s": "Connector]-capacitación-contabilidad:", "obj": "Capacitación", "real": 1.5, "bill": 1.5}, {"s": "[Connector]-capacitación-Comercial", "obj": "Capacitación", "real": 1.5, "bill": 1.5}, {"s": "Connector]-Capacitación de contabilidad", "obj": "Capacitación", "real": 1.83, "bill": 1.83}, {"s": "Connector]-Alineación de información:", "obj": "Alineación", "real": 0.67, "bill": 0.0}, {"s": "[Connector]-Desarrollador", "obj": "Alineación", "real": 0.5, "bill": 0.0}];
+SES.forEach(s=>s.free = +(s.real - s.bill).toFixed(2));
+const MODS = ['General','Comercial','Ventas','Contabilidad','Compras','Proyectos','Inventario y lógistica','Fabricación'];
+const AVANCE_OFICIAL = [
+  {m:'CRM / Artículos', p:100},{m:'Ventas', p:100},{m:'Compras', p:100},{m:'Proyectos', p:100},
+  {m:'Inventario / Fabricación', p:100},{m:'Productos (migración)', p:94},{m:'Contabilidad', p:80}
 ];
-// pct calculado en vez de hardcodeado, para que nunca quede desalineado con done/total
-modules.forEach(m => { m.pct = m.total > 0 ? Math.round((m.done / m.total) * 100) : 0; });
-
-// ── HORAS (constantes únicas; todo lo demás se deriva de aquí) ──
-const HOURS_TOTAL = 350;
-const HOURS_USED = 300;
-const HOURS_REST = HOURS_TOTAL - HOURS_USED;
-const HOURS_PCT = Math.round((HOURS_USED / HOURS_TOTAL) * 100);
-const HOURS_IN_SESSIONS = 35; // aproximado, tal como en el dato original
-
-// ── SESIONES ──
-const sesData = { labels: ['Capacitación', 'Alineación', 'Requerimientos', 'Pruebas funcionales'], values: [14, 17, 4, 4] };
-
-// ── HITOS ──
-const hitos = [
-  { fecha: '26 feb',    desc: 'Envío de plantillas de levantamiento', impact: 'Inicio condicionado a entrega de datos' },
-  { fecha: '10 abr',    desc: 'Recepción completa de plantillas', impact: 'Se habilita inicio de configuraciones' },
-  { fecha: '25 abr',    desc: 'Entrega de primeros avances (3/7 módulos)', impact: 'Avance parcial del proyecto' },
-  { fecha: '25 may',    desc: 'Entrega configuración e implementación (5 módulos)', impact: '2ª fase completada' },
-  { fecha: 'Jun 2026',  desc: 'Capacitaciones', impact: 'Finalizado — 2 semanas' },
-  { fecha: '13–15 jul', desc: 'GO LIVE', impact: 'En proceso' },
-];
-
-function barColor(pct) {
-  if (pct === 100) return '#1D9E75';
-  if (pct >= 80)  return '#378ADD';
-  if (pct >= 65)  return '#EF9F27';
-  return '#E24B4A';
+const C = {navy:'#0e2340', navy2:'#3a5a80', teal:'#14a5a5', gold:'#d9a441', goldDeep:'#b5842f', ok:'#1d9e74', grey:'#c7d1de'};
+// ---------- estado de filtros ----------
+const F = {mod:'', resp:'', est:'', tipo:''};
+let cross = null;
+function filtered(){
+  return DATA.filter(t =>
+    (!F.mod || t.mod===F.mod) && (!F.resp || t.resp===F.resp) &&
+    (!F.est || t.estado===F.est) && (!F.tipo || t.tipo===F.tipo) &&
+    (!cross || t[cross.dim]===cross.val)
+  );
 }
-function statusTag(pct) {
-  if (pct === 100) return '<span class="eco-status done">Completo</span>';
-  if (pct >= 75)   return '<span class="eco-status prog">En progreso</span>';
-  return '<span class="eco-status pend">Posible desviación</span>';
+// ---------- selects ----------
+function fillSelect(id, vals){
+  const s = document.getElementById(id);
+  vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o);});
 }
-function fasePill(f) {
-  return f === 'mig'
-    ? '<span class="eco-fase-pill eco-fase-mig">Migración</span>'
-    : '<span class="eco-fase-pill eco-fase-cfg">Config.</span>';
-}
-
-let currentFilter = 'all';
-let actChartInstance = null;
-let sesChartInstance = null;
-
-function filterMod(type, btn) {
-  currentFilter = type;
-  document.querySelectorAll('.eco-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderList();
-}
-function filteredModules() {
-  if (currentFilter === 'done')     return modules.filter(m => m.pct === 100);
-  if (currentFilter === 'progress') return modules.filter(m => m.pct > 0 && m.pct < 100);
-  if (currentFilter === 'risk')     return modules.filter(m => m.pct < 75);
-  return modules;
-}
-function renderList() {
-  const list = document.getElementById('module-list');
-  const data = filteredModules();
-  list.innerHTML = data.map(m => `
-    <div class="eco-row">
-      ${fasePill(m.fase)}
-      <span class="eco-row-name">${m.name}</span>
-      <div class="eco-bar-bg"><div class="eco-bar-fill" style="width:${m.pct}%;background:${barColor(m.pct)};"></div></div>
-      <span class="eco-pct">${m.pct}%</span>
-      ${statusTag(m.pct)}
-    </div>
-  `).join('');
-}
-function renderStoppers() {
-  const list = document.getElementById('stopper-list');
-  const active = modules.filter(m => m.stopper);
-  list.innerHTML = active.map(m => `
-    <li class="eco-stopper-item">
-      <span class="eco-dot" style="background:${barColor(m.pct)};"></span>
-      <div><span class="eco-stopper-mod">${m.name}</span><br><span class="eco-stopper-desc">${m.stopper}</span></div>
-    </li>
-  `).join('');
-}
-function renderActChart() {
-  const labels = modules.map(m => m.name);
-  const done   = modules.map(m => m.done);
-  const pend   = modules.map(m => m.pending);
-  const h = Math.max(240, modules.length * 26 + 60);
-  document.querySelector('#actChart').parentElement.style.height = h + 'px';
-  if (actChartInstance) actChartInstance.destroy();
-  actChartInstance = new Chart(document.getElementById('actChart'), {
-    type: 'bar',
-    data: { labels, datasets: [
-      { label: 'Completadas', data: done, backgroundColor: '#1D9E75', borderRadius: 3 },
-      { label: 'Pendientes',  data: pend, backgroundColor: '#E24B4A', borderRadius: 3 },
-    ]},
-    options: {
-      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.x}` } } },
-      scales: {
-        x: { stacked: true, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: 'rgba(128,128,128,0.1)' } },
-        y: { stacked: true, ticks: { font: { size: 11 } }, grid: { display: false } }
-      }
-    }
+fillSelect('fMod', MODS);
+fillSelect('fResp', [...new Set(DATA.map(t=>t.resp))].sort());
+fillSelect('fEst', ['Completada','En producción','Backlog']);
+fillSelect('fTipo', [...new Set(DATA.map(t=>t.tipo))].sort());
+['fMod','fResp','fEst','fTipo'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', e=>{
+    F[{fMod:'mod',fResp:'resp',fEst:'est',fTipo:'tipo'}[id]] = e.target.value;
+    render();
   });
+});
+document.getElementById('btnReset').onclick = ()=>{
+  F.mod=F.resp=F.est=F.tipo=''; cross=null;
+  ['fMod','fResp','fEst','fTipo'].forEach(id=>document.getElementById(id).value='');
+  render();
+};
+document.getElementById('chipX').onclick = ()=>{cross=null;render();};
+function setCross(dim, val){
+  if(cross && cross.dim===dim && cross.val===val) cross=null; else cross={dim,val};
+  render();
 }
-function renderSesChart() {
-  if (sesChartInstance) sesChartInstance.destroy();
-  sesChartInstance = new Chart(document.getElementById('sesChart'), {
-    type: 'doughnut',
-    data: {
-      labels: sesData.labels,
-      datasets: [{ data: sesData.values, backgroundColor: ['#378ADD','#1D9E75','#EF9F27','#E24B4A'], borderWidth: 0 }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 10, padding: 10 } }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} sesiones` } } }
-    }
+// ---------- helpers ----------
+const sum = (a,k)=>a.reduce((s,t)=>s+t[k],0);
+const fmt = n=>n.toLocaleString('es-MX',{maximumFractionDigits:1});
+Chart.defaults.font.family = "'Segoe UI',system-ui,sans-serif";
+Chart.defaults.font.size = 11.5;
+Chart.defaults.color = '#6b7a92';
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+Chart.defaults.plugins.legend.labels.boxHeight = 12;
+const charts = {};
+function mk(id, cfg){
+  if(charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), cfg);
+}
+// ---------- render ----------
+function render(){
+  const d = filtered();
+  const chip = document.getElementById('chip');
+  if(cross){
+    chip.style.display='inline-flex';
+    const dimN = {mod:'Módulo',resp:'Responsable',tipo:'Tipo',estado:'Estado'}[cross.dim];
+    document.getElementById('chipTx').textContent = 'Selección: '+dimN+' = '+cross.val;
+  } else chip.style.display='none';
+  // KPIs resumen
+  const done = d.filter(t=>t.estado==='Completada').length;
+  const prod = d.filter(t=>t.estado==='En producción').length;
+  const back = d.filter(t=>t.estado==='Backlog').length;
+  const av = d.length ? Math.round((done+prod)/d.length*100) : 0;
+  document.getElementById('kAvance').textContent = av+'%';
+  document.getElementById('kAvanceD').innerHTML = done+' completadas · '+prod+' en producción';
+  document.getElementById('kTot').textContent = d.length;
+  document.getElementById('kTotD').textContent = back+' en backlog (posventa)';
+  const real = sum(d,'real');
+  document.getElementById('hReal').innerHTML = fmt(real)+'<small> h</small>';
+  const ejec = done+prod;
+  document.getElementById('hN').textContent = ejec;
+  document.getElementById('hND').textContent = 'De '+d.length+' actividades en la selección';
+  // agregados por módulo
+  const mods = MODS.filter(m=>d.some(t=>t.mod===m));
+  const byMod = mods.map(m=>{
+    const g = d.filter(t=>t.mod===m);
+    return {m, real:sum(g,'real'),
+      done:g.filter(t=>t.estado==='Completada').length,
+      prod:g.filter(t=>t.estado==='En producción').length,
+      back:g.filter(t=>t.estado==='Backlog').length};
   });
+  // ---- avance por módulo (apilada) ----
+  mk('chMod', {type:'bar',
+    data:{labels:byMod.map(x=>x.m.replace('Inventario y lógistica','Inventario')),
+      datasets:[
+        {label:'Completadas', data:byMod.map(x=>x.done), backgroundColor:C.teal, stack:'s', borderRadius:3},
+        {label:'En producción', data:byMod.map(x=>x.prod), backgroundColor:C.gold, stack:'s', borderRadius:3},
+        {label:'Backlog posventa', data:byMod.map(x=>x.back), backgroundColor:C.grey, stack:'s', borderRadius:3}
+      ]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      onClick:(e,el)=>{ if(el.length) setCross('mod', byMod[el[0].index].m); },
+      plugins:{legend:{position:'bottom'}},
+      scales:{x:{stacked:true, grid:{color:'#eef2f7'}, title:{display:true,text:'Actividades'}}, y:{stacked:true, grid:{display:false}}}
+    }});
+  // ---- dona de estado ----
+  document.getElementById('donutN').textContent = d.length;
+  mk('chEstado', {type:'doughnut',
+    data:{labels:['Completadas','En producción','Backlog posventa'],
+      datasets:[{data:[done,prod,back], backgroundColor:[C.teal,C.gold,C.grey], borderWidth:2, borderColor:'#fff'}]},
+    options:{responsive:true, maintainAspectRatio:false, cutout:'62%',
+      onClick:(e,el)=>{ if(el.length) setCross('estado', ['Completada','En producción','Backlog'][el[0].index]); },
+      plugins:{legend:{position:'bottom'},
+        tooltip:{callbacks:{label:c=>' '+c.label+': '+c.parsed+' ('+(d.length?Math.round(c.parsed/d.length*100):0)+'%)'}}}
+    }});
+  // ---- bolsa de horas con cortesía destacada ----
+  mk('chBolsa', {type:'bar',
+    data:{labels:['Consumidas','Restantes en contrato','Cortesía Zublime (sin costo)'],
+      datasets:[{data:[303,47,27], backgroundColor:[C.navy,C.teal,C.gold], borderRadius:5, barThickness:28}]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:c=>c.dataIndex===2? ' 27 h que Zublime absorbe para asegurar el Go-Live' : ' '+c.parsed.x+' h'}}},
+      scales:{x:{grid:{color:'#eef2f7'}, title:{display:true,text:'Horas'}, max:350}, y:{grid:{display:false}}}
+    }});
+  // ---- barras de avance oficial ----
+  document.getElementById('modBars').innerHTML = AVANCE_OFICIAL.map(x=>{
+    const col = x.p>=100?C.teal : x.p>=90?C.gold : '#c9534f';
+    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:11px">
+      <div style="width:190px;font-size:12.5px;color:#44536b">${x.m}</div>
+      <div class="bar-bg" style="height:9px"><div class="bar-fg" style="width:${x.p}%;background:${col}"></div></div>
+      <div style="width:44px;text-align:right;font-weight:700;font-size:12.5px;color:${col}">${x.p}%</div></div>`;
+  }).join('');
+  // ---- esfuerzo por módulo ----
+  const byModS = [...byMod].sort((a,b)=>b.real-a.real);
+  mk('chHorasMod', {type:'bar',
+    data:{labels:byModS.map(x=>x.m.replace('Inventario y lógistica','Inventario')),
+      datasets:[{label:'Horas invertidas', data:byModS.map(x=>+x.real.toFixed(1)), backgroundColor:C.teal, borderRadius:4}]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      onClick:(e,el)=>{ if(el.length) setCross('mod', byModS[el[0].index].m); },
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fmt(c.parsed.x)+' h'}}},
+      scales:{x:{grid:{color:'#eef2f7'}, title:{display:true,text:'Horas reales'}}, y:{grid:{display:false}}}
+    }});
+  // ---- tipo de actividad ----
+  const tipos = [...new Set(d.map(t=>t.tipo))];
+  const byTipo = tipos.map(tp=>{const g=d.filter(t=>t.tipo===tp);return {tp, real:sum(g,'real'), n:g.length};})
+    .sort((a,b)=>b.real-a.real);
+  mk('chTipo', {type:'bar',
+    data:{labels:byTipo.map(x=>x.tp),
+      datasets:[{label:'Horas invertidas', data:byTipo.map(x=>+x.real.toFixed(1)), backgroundColor:C.navy2, borderRadius:4}]},
+    options:{responsive:true, maintainAspectRatio:false,
+      onClick:(e,el)=>{ if(el.length) setCross('tipo', byTipo[el[0].index].tp); },
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:c=>{const x=byTipo[c.dataIndex];return ' '+fmt(x.real)+' h · '+x.n+' actividades';}}}},
+      scales:{y:{grid:{color:'#eef2f7'}, title:{display:true,text:'Horas'}}, x:{grid:{display:false}}}
+    }});
+  // ---- responsables ----
+  const resps = [...new Set(d.map(t=>t.resp))];
+  const byResp = resps.map(r=>{const g=d.filter(t=>t.resp===r);return {r, real:sum(g,'real'), n:g.length};})
+    .sort((a,b)=>b.real-a.real);
+  mk('chResp', {type:'bar',
+    data:{labels:byResp.map(x=>x.r),
+      datasets:[{label:'Horas reales', data:byResp.map(x=>+x.real.toFixed(1)),
+        backgroundColor:byResp.map(x=>x.r==='Sin asignar'?C.grey:C.teal), borderRadius:4}]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      onClick:(e,el)=>{ if(el.length) setCross('resp', byResp[el[0].index].r); },
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:c=>{const x=byResp[c.dataIndex];return ' '+fmt(x.real)+' h · '+x.n+' actividades';}}}},
+      scales:{x:{grid:{color:'#eef2f7'}, title:{display:true,text:'Horas reales'}}, y:{grid:{display:false}}}
+    }});
+  // ---- composición del contrato (dona) ----
+  mk('chContrato', {type:'doughnut',
+    data:{labels:['Horas consumidas','Horas restantes','Cortesía Zublime (sin costo)'],
+      datasets:[{data:[303,47,27], backgroundColor:[C.navy,C.teal,C.gold], borderWidth:2, borderColor:'#fff'}]},
+    options:{responsive:true, maintainAspectRatio:false, cutout:'62%',
+      plugins:{legend:{position:'bottom'},
+        tooltip:{callbacks:{label:c=>' '+c.label+': '+c.parsed+' h'}}}
+    }});
+  // ---- backlog por módulo ----
+  const backTasks = DATA.filter(t=>t.estado==='Backlog');
+  const bMods = MODS.filter(m=>backTasks.some(t=>t.mod===m));
+  mk('chBacklog', {type:'bar',
+    data:{labels:bMods.map(m=>m.replace('Inventario y lógistica','Inventario')),
+      datasets:[{data:bMods.map(m=>backTasks.filter(t=>t.mod===m).length), backgroundColor:C.navy2, borderRadius:4}]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+c.parsed.x+' actividades'}}},
+      scales:{x:{grid:{color:'#eef2f7'}, ticks:{stepSize:1}, title:{display:true,text:'Actividades en backlog'}}, y:{grid:{display:false}}}
+    }});
+  renderSesiones();
+  renderTable(d);
 }
-function renderHitos() {
-  const list = document.getElementById('hitos-list');
-  list.innerHTML = hitos.map(h => `
-    <div class="eco-hito">
-      <div class="eco-hito-date">${h.fecha}</div>
-      <div><div class="eco-hito-desc">${h.desc}</div><div class="eco-hito-impact">${h.impact}</div></div>
-    </div>
-  `).join('');
+// ---------- vista sesiones (datos fijos, no filtrados) ----------
+function renderSesiones(){
+  const objs = [...new Set(SES.map(s=>s.obj))];
+  const byObj = objs.map(o=>{const g=SES.filter(s=>s.obj===o);
+    return {o, real:+sum(g,'real').toFixed(2), bill:+sum(g,'bill').toFixed(2)};}).sort((a,b)=>b.real-a.real);
+  mk('chSesObj', {type:'bar',
+    data:{labels:byObj.map(x=>x.o),
+      datasets:[
+        {label:'Horas reales', data:byObj.map(x=>x.real), backgroundColor:C.navy2, borderRadius:3},
+        {label:'Horas facturables', data:byObj.map(x=>x.bill), backgroundColor:C.ok, borderRadius:3}
+      ]},
+    options:{responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom'},
+        tooltip:{callbacks:{footer:items=>{
+          const x=byObj[items[0].dataIndex]; const f=+(x.real-x.bill).toFixed(2);
+          return f>0? 'Cortesía: '+fmt(f)+' h sin costo' : '';
+        }}}},
+      scales:{y:{grid:{color:'#eef2f7'}, title:{display:true,text:'Horas'}}, x:{grid:{display:false}}}
+    }});
+  const billT = +sum(SES,'bill').toFixed(1), freeT = +sum(SES,'free').toFixed(1);
+  mk('chSesDona', {type:'doughnut',
+    data:{labels:['Horas facturables','Cortesía (sin costo)'],
+      datasets:[{data:[billT,freeT], backgroundColor:[C.ok,C.gold], borderWidth:2, borderColor:'#fff'}]},
+    options:{responsive:true, maintainAspectRatio:false, cutout:'62%',
+      plugins:{legend:{position:'bottom'},
+        tooltip:{callbacks:{label:c=>' '+c.label+': '+fmt(c.parsed)+' h ('+Math.round(c.parsed/(billT+freeT)*100)+'%)'}}}
+    }});
+  renderSesTable();
 }
-
-// ── Tarjetas resumen: derivadas de los datos, no hardcodeadas,
-// así nunca quedan desalineadas si se actualiza el array de módulos. ──
-function renderSummaryCards() {
-  const totalActs = modules.reduce((a, m) => a + m.total, 0);
-  const doneActs  = modules.reduce((a, m) => a + m.done, 0);
-  const avgPct    = Math.round((doneActs / totalActs) * 100);
-
-  document.getElementById('card-avance').textContent = avgPct + '%';
-  document.getElementById('card-completadas').textContent = Math.round(doneActs);
-  document.getElementById('card-completadas-sub').textContent = 'de ' + Math.round(totalActs) + ' totales';
-
-  document.getElementById('card-horas-pct').textContent = HOURS_PCT + '%';
-  document.getElementById('card-horas-sub').textContent = HOURS_USED + 'h de ' + HOURS_TOTAL + 'h contratadas';
-  document.getElementById('card-horas-rest').textContent = HOURS_REST + 'h';
-
-  document.getElementById('hours-mid').textContent = HOURS_USED + 'h consumidas (' + HOURS_PCT + '%)';
-  document.getElementById('hours-rest').textContent = HOURS_REST + 'h restantes';
-  document.getElementById('hours-total').textContent = HOURS_TOTAL + 'h';
-
-  document.getElementById('kv-contratadas').textContent = HOURS_TOTAL + 'h';
-  document.getElementById('kv-consumidas').textContent = HOURS_USED + 'h';
-  document.getElementById('kv-restantes').textContent = HOURS_REST + 'h';
-  document.getElementById('kv-pct').textContent = HOURS_PCT + '%';
-  document.getElementById('kv-sesiones').textContent = '~' + HOURS_IN_SESSIONS + 'h';
+let sesK='real', sesDir=-1;
+document.querySelectorAll('#tblSes th').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const k = th.dataset.k;
+    if(sesK===k) sesDir*=-1; else {sesK=k; sesDir = ['real','bill','free'].includes(k)? -1 : 1;}
+    renderSesTable();
+  });
+});
+function renderSesTable(){
+  const rows = [...SES].sort((a,b)=>{
+    const va=a[sesK]!==undefined?a[sesK]:'', vb=b[sesK]!==undefined?b[sesK]:'';
+    if(typeof va==='number') return (va-vb)*sesDir;
+    return String(va).localeCompare(String(vb),'es')*sesDir;
+  });
+  document.querySelector('#tblSes tbody').innerHTML = rows.map(s=>{
+    const isFree = s.free>0.01;
+    return `<tr><td style="max-width:420px">${s.s}</td><td>${s.obj}</td>
+    <td class="num">${fmt(s.real)}</td>
+    <td class="num" style="font-weight:700;color:${isFree&&s.bill===0?'#b5842f':'#137a58'}">${fmt(s.bill)}</td>
+    <td>${isFree? '<span class="pill p-free">Cortesía'+(s.bill>0?' parcial':'')+'</span>' : '<span class="pill p-done">Facturable</span>'}</td></tr>`;
+  }).join('');
+  document.getElementById('tsumSes').textContent = rows.length+' sesiones · '+fmt(sum(rows,'real'))+' h reales · '+fmt(sum(rows,'bill'))+' h facturables · '+fmt(sum(rows,'free'))+' h de cortesía sin costo';
 }
-
-function switchTab(id, btn) {
-  document.querySelectorAll('.eco-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.eco-panel').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tab-' + id).classList.add('active');
-  if (id === 'actividades') { setTimeout(renderActChart, 50); }
-  if (id === 'horas') {
-    document.getElementById('hoursBar').style.width = HOURS_PCT + '%';
-    setTimeout(renderSesChart, 50);
-  }
+// ---------- tabla actividades ----------
+let sortK='real', sortDir=-1;
+document.querySelectorAll('#tbl th').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const k = th.dataset.k;
+    if(sortK===k) sortDir*=-1; else {sortK=k; sortDir = k==='real'? -1 : 1;}
+    renderTable(filtered());
+  });
+});
+function renderTable(d){
+  const rows = [...d].sort((a,b)=>{
+    const va=a[sortK], vb=b[sortK];
+    if(typeof va==='number') return (va-vb)*sortDir;
+    return String(va).localeCompare(String(vb),'es')*sortDir;
+  });
+  const pillC = {Completada:'p-done','En producción':'p-prod',Backlog:'p-back'};
+  const pillT = {Completada:'Completada','En producción':'En producción',Backlog:'Backlog posventa'};
+  document.querySelector('#tbl tbody').innerHTML = rows.map(t=>
+    `<tr><td>${t.id}</td><td style="max-width:420px">${t.act}</td><td>${t.mod}</td><td>${t.tipo}</td><td>${t.resp}</td>
+    <td><span class="pill ${pillC[t.estado]}">${pillT[t.estado]}</span></td>
+    <td class="num">${t.real?fmt(t.real):'–'}</td></tr>`
+  ).join('');
+  document.getElementById('tsum').textContent = rows.length+' actividades · '+fmt(sum(rows,'real'))+' h invertidas por el equipo Zublime';
 }
-
-function initApp() {
-  renderSummaryCards();
-  renderList();
-  renderStoppers();
-  renderHitos();
-}
+// ---------- navegación ----------
+document.querySelectorAll('nav button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    document.getElementById('v-'+b.dataset.v).classList.add('on');
+    render();
+  });
+});
 </script>
 </body>
 </html>
